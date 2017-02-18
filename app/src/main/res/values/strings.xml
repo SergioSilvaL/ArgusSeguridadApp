@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Argus App</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="Guardia">Guardia</string>
+    <string name="Zona">Zona</string>
+
+</resources>
