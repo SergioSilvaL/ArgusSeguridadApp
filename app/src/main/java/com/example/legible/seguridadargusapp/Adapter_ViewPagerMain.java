@@ -1,7 +1,6 @@
-package com.example.legible.argusapp;
+package com.example.legible.seguridadargusapp;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -60,9 +59,9 @@ public class Adapter_ViewPagerMain extends FragmentPagerAdapter {
         switch (position) {
 
             case 0: // The first tab will always initialize at 0.
-                return mContext.getString(R.string.Zona);
+                return "Zona";//mContext.getString(R.string.Zona);
             case 1:
-                return mContext.getString(R.string.Guardia);
+                return "Guardias";//mContext.getString(R.string.Guardia);
 
             // If the position we receive doesn't correspond to any section.
             default:

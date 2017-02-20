@@ -1,4 +1,4 @@
-package com.example.legible.argusapp;
+package com.example.legible.seguridadargusapp;
 
 import org.junit.Test;
 

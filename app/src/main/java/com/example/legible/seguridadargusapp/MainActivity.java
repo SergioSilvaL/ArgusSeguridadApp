@@ -1,4 +1,4 @@
-package com.example.legible.argusapp;
+package com.example.legible.seguridadargusapp;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
 
         //Create Costum Adapter for our View Pager in Main.
         setViewPagerMain();
+
+
 
     }
 
@@ -58,11 +60,13 @@ public class MainActivity extends AppCompatActivity {
 
         mTabLayout = (TabLayout) findViewById(R.id.tabLayoutMain);
 
+
+        // We also asign a centered gravity.
+        mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
         // Add "Fixed Mode" so  all the tabs are the same size.
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
 
-        // We also asign a centered gravity.
-        mTabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
 
         //Added two tabs to tabLayout
         mTabLayout.addTab(mTabLayout.newTab());
@@ -91,6 +95,9 @@ public class MainActivity extends AppCompatActivity {
         //Bind View Pager to the Adapter we just created.
 
         mViewPager.setAdapter(mAdapter_viewPagerMain);
+
+        //? Enables Swiping
+        mTabLayout.setupWithViewPager(mViewPager);
 
     }
 

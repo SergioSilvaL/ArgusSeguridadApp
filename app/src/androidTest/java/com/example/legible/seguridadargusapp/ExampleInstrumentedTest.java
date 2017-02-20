@@ -1,4 +1,4 @@
-package com.example.legible.argusapp;
+package com.example.legible.seguridadargusapp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
