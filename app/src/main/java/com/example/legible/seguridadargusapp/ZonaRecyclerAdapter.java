@@ -38,13 +38,15 @@ public class ZonaRecyclerAdapter extends RecyclerView.Adapter<ZonaRecyclerAdapte
 
     private String getRandomZona() {
         String[] names = new String[]{
-                "StarBucks",
-                "Dairy Queen",
-                "Galerias",
-                "La Rioja",
-                "Los Lagos",
-                "Real de Sevilla",
-                "La Joya"
+                "SALUD",
+                "ISSSTESON",
+                "NORTE",
+                "RIO",
+                "NOROESTE",
+                "CENTRO",
+                "CFE",
+                "AGUA DE HERMOSILLO",
+                "CUBREDESCANSO"
         };
         return names[mRandom.nextInt(names.length)];
     }
