@@ -23,7 +23,7 @@ public class GuardiaListaActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(ClienteRef);
 
 
-        mAdapter =  new GuardiaListaAdapter(this);
+        mAdapter =  new GuardiaListaAdapter(this, ClienteRef);
 
 
         RecyclerView view = (RecyclerView) findViewById(R.id.recycler_view_guardia_lista);

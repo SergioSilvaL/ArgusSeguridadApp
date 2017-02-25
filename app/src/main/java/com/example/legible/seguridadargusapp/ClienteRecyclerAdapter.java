@@ -45,8 +45,10 @@ public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecycler
         mClientRef = FirebaseDatabase.getInstance().getReference()
                 .child("Argus")
                 .child("Zonas")
+
                 //.child(ZonaRef)
                 .child("ZONA3")
+
                 .child("zonaClientes");
 
 

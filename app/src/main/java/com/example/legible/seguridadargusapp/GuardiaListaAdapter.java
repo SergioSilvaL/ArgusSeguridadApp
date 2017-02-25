@@ -25,19 +25,26 @@ public class GuardiaListaAdapter extends RecyclerView.Adapter<GuardiaListaAdapte
     private List<guardias> mGuardiasList;
     private Context mContext;
     private DatabaseReference guardiaListaRef;
+    private String clienteRef;
 
 
-    public GuardiaListaAdapter(Context context){
+    public GuardiaListaAdapter(Context context, String clienteRef){
+
         mGuardiasList =  new ArrayList<>();
+        this.clienteRef = clienteRef;
         mContext = context;
+
+
 
         //Database Reference Setup
 
         guardiaListaRef = FirebaseDatabase.getInstance().getReference()
                 .child("Argus")
                 .child("Clientes")
-                .child("TECNO")
+
                 //.child("TECNO")
+                .child(clienteRef)
+
                 .child("clienteGuardias");
 
         guardiaListaRef.addChildEventListener(new GuardiaListChildEventListener());
