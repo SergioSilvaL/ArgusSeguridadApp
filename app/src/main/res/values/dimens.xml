@@ -3,5 +3,12 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="logo_w_h">100dp</dimen>
+    <dimen name="logo_w_h">150dp</dimen>
+    <dimen name="edit_Text_size_login">16sp</dimen>
+    <dimen name="padding_horizontal_login">32dp</dimen>
+    <dimen name="textsize_donthaveaccount">16sp</dimen>
+    <dimen name="ancho_ic_correo">40dp</dimen>
+    <dimen name="alto_ic_correo">30dp</dimen>
+    <dimen name="ancho_logo">150dp</dimen>
+
 </resources>
