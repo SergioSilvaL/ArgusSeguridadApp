@@ -4,13 +4,9 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <TextView
-        android:text="Fragmento de Guardias en construcion"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/textView"
 
-        android:gravity="center"
-        android:textStyle="normal|bold"
-        android:textSize="36sp"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView_guardia"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>
