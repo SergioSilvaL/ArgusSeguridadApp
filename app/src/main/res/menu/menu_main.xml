@@ -2,9 +2,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.legible.seguridadargusapp.MainActivity">
+
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_search"
+        android:icon="@android:drawable/ic_menu_search"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView"
+        android:title="Seach"/>
+
+    <item
+        android:id="@+id/action_sign_out"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/action_sign_out"
         app:showAsAction="never" />
 </menu>

@@ -1,18 +1,32 @@
 package com.example.legible.seguridadargusapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = MainActivity.class.getSimpleName();
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     private Adapter_ViewPagerMain mAdapter_viewPagerMain;
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
+
+    //UI Elements
+    //TextView mUserEmailTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +41,13 @@ public class MainActivity extends AppCompatActivity {
         //Create Costum Adapter for our View Pager in Main.
         setViewPagerMain();
 
+        String userID = "no se recibio un correo valido";
+
+        if(user.getUid()!= null){
+            userID = user.getUid();
+        }
+
+        Log.v(TAG, "User ID: " + userID);
 
 
     }
@@ -35,7 +56,14 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+
         return true;
+
+
     }
 
     @Override
@@ -46,13 +74,18 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_sign_out) {
+            signOut();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    private void signOut() {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(this,SignInActivity.class));
+    }
 
     public void setTabLayoutMain(){
 
@@ -101,4 +134,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        moveTaskToBack(true);
+    }
 }

@@ -39,7 +39,7 @@
                     android:paddingBottom="5dp"
                     android:text="AGUA DE HERMOSILLO"
                     android:textSize="24sp"
-                    android:layout_alignParentBottom="true"/>
+                    android:layout_alignBottom="@+id/cardview_image"/>
 
                 <!--<TextView-->
                     <!--android:id="@+id/short_description"-->

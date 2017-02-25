@@ -37,7 +37,7 @@ public class Adapter_ViewPagerMain extends FragmentPagerAdapter {
          switch (position) {
 
             case 0: // I'll always begin in 0.
-                return new ZonaFragment();
+                return new ClienteFragment();
 
             case 1:
                 return new GuardiaFragment();
@@ -59,7 +59,7 @@ public class Adapter_ViewPagerMain extends FragmentPagerAdapter {
         switch (position) {
 
             case 0: // The first tab will always initialize at 0.
-                return "Zona";//mContext.getString(R.string.Zona);
+                return "Cliente";//mContext.getString(R.string.Cliente);
             case 1:
                 return "Guardias";//mContext.getString(R.string.Guardia);
 

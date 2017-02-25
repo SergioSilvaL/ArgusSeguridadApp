@@ -15,11 +15,11 @@ import android.view.ViewGroup;
  * Created by Legible on 2/17/2017.
  */
 
-public class ZonaFragment extends Fragment {
+public class ClienteFragment extends Fragment {
 
-    private ZonaRecyclerAdapter mAdapter;
+    private ClienteRecyclerAdapter mAdapter;
 
-    public ZonaFragment(){
+    public ClienteFragment(){
         // Required empty public constructor
     }
 
@@ -29,7 +29,7 @@ public class ZonaFragment extends Fragment {
 
         //Inflates the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_zona,container,false);
+        View view = inflater.inflate(R.layout.fragment_cliente,container,false);
 
         //Capture the recyclerView
 
@@ -39,17 +39,11 @@ public class ZonaFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
 
         //Create the Adapter
-        mAdapter = new ZonaRecyclerAdapter(this.getContext(),recyclerView);
+        mAdapter = new ClienteRecyclerAdapter(this.getContext(),recyclerView);
 
         //Binding
         recyclerView.setAdapter(mAdapter);
 
-
         return view;
-
-
-
-
-
     }
 }

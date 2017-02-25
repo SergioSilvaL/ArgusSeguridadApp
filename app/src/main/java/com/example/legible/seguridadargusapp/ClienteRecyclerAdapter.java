@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.textservice.TextInfo;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,15 +15,15 @@ import java.util.Random;
  * Created by SERGIO on 20/02/2017.
  */
 
-public class ZonaRecyclerAdapter extends RecyclerView.Adapter<ZonaRecyclerAdapter.ViewHolder> {
+public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecyclerAdapter.ViewHolder> {
 
     private Context mContext;
     private RecyclerView mRecyclerView;
-    private final List<Zona> mZona;
+    private final List<Cliente> mCliente;
     private Random mRandom;
 
-    public ZonaRecyclerAdapter(Context context, RecyclerView recyclerView) {
-        mZona = new ArrayList<>();//mPasswords = new ArrayList<>();
+    public ClienteRecyclerAdapter(Context context, RecyclerView recyclerView) {
+        mCliente = new ArrayList<>();//mPasswords = new ArrayList<>();
         mContext = context;//mInflator = LayoutInflator.from(context);
         mRandom = new Random();
         mRecyclerView = recyclerView;
@@ -32,7 +31,7 @@ public class ZonaRecyclerAdapter extends RecyclerView.Adapter<ZonaRecyclerAdapte
 
         //Dummy Content
         for (int i = 0; i < 19; i++) {
-            mZona.add(new Zona(getRandomZona()));
+            mCliente.add(new Cliente(getRandomZona()));
         }
     }
 
@@ -62,14 +61,14 @@ public class ZonaRecyclerAdapter extends RecyclerView.Adapter<ZonaRecyclerAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        Zona currentZona = mZona.get(position);
+        Cliente currentCliente = mCliente.get(position);
 
-        holder.bindToView(currentZona);
+        holder.bindToView(currentCliente);
     }
 
     @Override
     public int getItemCount() {
-        return mZona.size();
+        return mCliente.size();
     }
 
 
@@ -85,8 +84,8 @@ public class ZonaRecyclerAdapter extends RecyclerView.Adapter<ZonaRecyclerAdapte
 
         }
 
-        public void bindToView(Zona currentZona) {
-            textViewZonaName.setText(currentZona.getZona_Nombre());
+        public void bindToView(Cliente currentCliente) {
+            textViewZonaName.setText(currentCliente.getClienteNombre());
         }
     }
 }
