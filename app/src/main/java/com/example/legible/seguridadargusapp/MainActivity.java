@@ -15,11 +15,21 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private DatabaseReference mDatabaseReference;
+    public String ZonaSupervisorRef;
+
+
 
     private Adapter_ViewPagerMain mAdapter_viewPagerMain;
     private ViewPager mViewPager;
@@ -50,7 +60,57 @@ public class MainActivity extends AppCompatActivity {
         Log.v(TAG, "User ID: " + userID);
 
 
+        //Get Firebase Reference
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference mSupervisorRef = mDatabaseReference
+                .child("Argus")
+                .child("supervisores");
+
+        mSupervisorRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot data: dataSnapshot.getChildren()){
+                    supervisores supervisor = data.getValue(supervisores.class);
+
+//                    Log.v(TAG,user.getEmail());
+//                    Log.v(TAG,supervisor.getUsuarioEmail());
+//                    Log.v(TAG,supervisor.getUsuarioZona());
+
+                    if(user.getEmail().equals(supervisor.getUsuarioEmail())){
+                        Log.v(TAG, supervisor.getUsuarioZona());
+
+                        ZonaSupervisorRef = supervisor.getUsuarioZona();
+
+
+                    }
+
+
+                }
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+        //Save the Zona Database Reference
+        Bundle bundle = new Bundle();
+        bundle.putString("ZonaSupervisorRef",ZonaSupervisorRef);
+
+        // set Fragmentclass Arguments
+        ClienteFragment fragobj = new ClienteFragment();
+        fragobj.setArguments(bundle);
+
+
     }
+
+    public String getInfo(){return ZonaSupervisorRef;}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -139,4 +199,6 @@ public class MainActivity extends AppCompatActivity {
         super.onBackPressed();
         moveTaskToBack(true);
     }
+
+
 }

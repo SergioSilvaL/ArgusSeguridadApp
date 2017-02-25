@@ -61,7 +61,7 @@ public class Adapter_ViewPagerMain extends FragmentPagerAdapter {
             case 0: // The first tab will always initialize at 0.
                 return "Cliente";//mContext.getString(R.string.Cliente);
             case 1:
-                return "Guardias";//mContext.getString(R.string.Guardia);
+                return "Guardias";//mContext.getString(R.string.guardias);
 
             // If the position we receive doesn't correspond to any section.
             default:
