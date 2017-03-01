@@ -39,8 +39,8 @@ public class SignInActivity extends AppCompatActivity {
         //set the view
         setContentView(R.layout.activity_sign_in);
 
-        inputEmail = (EditText) findViewById(R.id.email);
-        inputPassword = (EditText) findViewById(R.id.password);
+        inputEmail = (EditText) findViewById(R.id.input_email);
+        inputPassword = (EditText) findViewById(R.id.input_password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         btnLogin = (Button) findViewById(R.id.btn_login);
 

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "792155953924",
+    "firebase_url": "https://argusseguridad-41e35.firebaseio.com",
+    "project_id": "argusseguridad-41e35",
+    "storage_bucket": "argusseguridad-41e35.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:792155953924:android:6b00bee77670b3fd",
+        "android_client_info": {
+          "package_name": "com.tecnologiasintech.argusapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "792155953924-m3jco7r0qbv0vp4eil22uidjobht5rog.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tecnologiasintech.argusapp",
+            "certificate_hash": "6019b0292612e9c0cbb37781a1ddd67404ec713b"
+          }
+        },
+        {
+          "client_id": "792155953924-s06b4f79fvpetpf1gn2lvtiua5ubgl09.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfONuq1XTsebK01pTibGxTQu7AQGokUOc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "792155953924-s06b4f79fvpetpf1gn2lvtiua5ubgl09.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
