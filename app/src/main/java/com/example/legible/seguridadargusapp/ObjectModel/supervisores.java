@@ -1,4 +1,4 @@
-package com.example.legible.seguridadargusapp;
+package com.example.legible.seguridadargusapp.ObjectModel;
 
 import com.google.firebase.database.Exclude;
 

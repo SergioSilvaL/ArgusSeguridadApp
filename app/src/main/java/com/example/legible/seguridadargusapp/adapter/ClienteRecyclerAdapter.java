@@ -1,4 +1,4 @@
-package com.example.legible.seguridadargusapp;
+package com.example.legible.seguridadargusapp.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.legible.seguridadargusapp.GuardiaListaActivity;
+import com.example.legible.seguridadargusapp.ObjectModel.Cliente;
+import com.example.legible.seguridadargusapp.R;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,14 +44,13 @@ public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecycler
         mRecyclerView = recyclerView;
         this.ZonaRef=ZonaRef;
 
+        //
+
         //get all the clients from the database reference
         mClientRef = FirebaseDatabase.getInstance().getReference()
                 .child("Argus")
                 .child("Zonas")
-
-                //.child(ZonaRef)
-                .child("ZONA3")
-
+                .child(ZonaRef)
                 .child("zonaClientes");
 
 

@@ -1,4 +1,4 @@
-package com.example.legible.seguridadargusapp;
+package com.example.legible.seguridadargusapp.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.legible.seguridadargusapp.R;
+import com.example.legible.seguridadargusapp.adapter.GuardiaRecyclerAdapter;
 
 /**
  * Created by Legible on 2/17/2017.

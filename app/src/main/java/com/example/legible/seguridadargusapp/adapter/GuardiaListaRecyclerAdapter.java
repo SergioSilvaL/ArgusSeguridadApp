@@ -1,4 +1,4 @@
-package com.example.legible.seguridadargusapp;
+package com.example.legible.seguridadargusapp.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.legible.seguridadargusapp.ObjectModel.guardias;
+import com.example.legible.seguridadargusapp.R;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,32 +22,43 @@ import java.util.List;
  * Created by SERGIO on 25/02/2017.
  */
 
-public class GuardiaRecyclerAdapter extends RecyclerView.Adapter<GuardiaRecyclerAdapter.ViewHolder>{
+public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaListaRecyclerAdapter.ViewHolder>{
 
+    private List<guardias> mGuardiasList;
     private Context mContext;
-    private final List<guardias> mGuardia;
+    private DatabaseReference guardiaListaRef;
+    private String clienteRef;
 
-    private DatabaseReference mGuardiasRef;
 
+    public GuardiaListaRecyclerAdapter(Context context, String clienteRef){
 
-    public GuardiaRecyclerAdapter(Context context){
-        mGuardia =  new ArrayList<>();
+        mGuardiasList =  new ArrayList<>();
+        this.clienteRef = clienteRef;
         mContext = context;
 
-        //Database reference
-        mGuardiasRef = FirebaseDatabase.getInstance().getReference()
-                .child("Argus")
-                .child("guardias");
 
-        mGuardiasRef.addChildEventListener(new GuardiaChildEventListener());
+
+        //Database Reference Setup
+
+        guardiaListaRef = FirebaseDatabase.getInstance().getReference()
+                .child("Argus")
+                .child("Clientes")
+
+                //.child("TECNO")
+                .child(clienteRef)
+
+                .child("clienteGuardias");
+
+        guardiaListaRef.addChildEventListener(new GuardiaListChildEventListener());
+
 
     }
 
-    class GuardiaChildEventListener implements ChildEventListener{
+    class GuardiaListChildEventListener implements ChildEventListener{
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            guardias currentGuardia =  dataSnapshot.getValue(guardias.class);
-            mGuardia.add(0,currentGuardia);
+            guardias guardia = dataSnapshot.getValue(guardias.class);
+            mGuardiasList.add(0,guardia);
             notifyDataSetChanged();
         }
 
@@ -70,48 +83,30 @@ public class GuardiaRecyclerAdapter extends RecyclerView.Adapter<GuardiaRecycler
         }
     }
 
-
-
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_lista_guardia,parent,false);
 
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.view_guardia,parent,false);
-
-
-        return new ViewHolder(itemView);
-
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        final guardias currentGuardia = mGuardia.get(position);
-
-        holder.bindToView(currentGuardia);
-
+        final guardias guardia = mGuardiasList.get(position);
+        holder.nameTxt.setText(guardia.getUsuarioNombre());
     }
 
     @Override
     public int getItemCount() {
-        return mGuardia.size();
+        return mGuardiasList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
-
-        private TextView mTextView;
-
+        TextView nameTxt;
         public ViewHolder(View itemView) {
             super(itemView);
-
-            mTextView = (TextView) itemView.findViewById(R.id.nameTxtGuardia);
-
-        }
-
-        public void bindToView(guardias currentGuardia) {
-            mTextView.setText(currentGuardia.getUsuarioNombre());
+            nameTxt = (TextView) itemView.findViewById(R.id.nameTxt);
         }
     }
 }

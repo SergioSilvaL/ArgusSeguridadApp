@@ -1,4 +1,4 @@
-package com.example.legible.seguridadargusapp;
+package com.example.legible.seguridadargusapp.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.legible.seguridadargusapp.ObjectModel.guardias;
+import com.example.legible.seguridadargusapp.R;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,43 +22,32 @@ import java.util.List;
  * Created by SERGIO on 25/02/2017.
  */
 
-public class GuardiaListaAdapter extends RecyclerView.Adapter<GuardiaListaAdapter.ViewHolder>{
+public class GuardiaRecyclerAdapter extends RecyclerView.Adapter<GuardiaRecyclerAdapter.ViewHolder>{
 
-    private List<guardias> mGuardiasList;
     private Context mContext;
-    private DatabaseReference guardiaListaRef;
-    private String clienteRef;
+    private final List<guardias> mGuardia;
+
+    private DatabaseReference mGuardiasRef;
 
 
-    public GuardiaListaAdapter(Context context, String clienteRef){
-
-        mGuardiasList =  new ArrayList<>();
-        this.clienteRef = clienteRef;
+    public GuardiaRecyclerAdapter(Context context){
+        mGuardia =  new ArrayList<>();
         mContext = context;
 
-
-
-        //Database Reference Setup
-
-        guardiaListaRef = FirebaseDatabase.getInstance().getReference()
+        //Database reference
+        mGuardiasRef = FirebaseDatabase.getInstance().getReference()
                 .child("Argus")
-                .child("Clientes")
+                .child("guardias");
 
-                //.child("TECNO")
-                .child(clienteRef)
-
-                .child("clienteGuardias");
-
-        guardiaListaRef.addChildEventListener(new GuardiaListChildEventListener());
-
+        mGuardiasRef.addChildEventListener(new GuardiaChildEventListener());
 
     }
 
-    class GuardiaListChildEventListener implements ChildEventListener{
+    class GuardiaChildEventListener implements ChildEventListener{
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            guardias guardia = dataSnapshot.getValue(guardias.class);
-            mGuardiasList.add(0,guardia);
+            guardias currentGuardia =  dataSnapshot.getValue(guardias.class);
+            mGuardia.add(0,currentGuardia);
             notifyDataSetChanged();
         }
 
@@ -81,30 +72,48 @@ public class GuardiaListaAdapter extends RecyclerView.Adapter<GuardiaListaAdapte
         }
     }
 
+
+
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_lista_guardia,parent,false);
 
-        return new ViewHolder(view);
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.view_guardia,parent,false);
+
+
+        return new ViewHolder(itemView);
+
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        final guardias guardia = mGuardiasList.get(position);
-        holder.nameTxt.setText(guardia.getUsuarioNombre());
+        final guardias currentGuardia = mGuardia.get(position);
+
+        holder.bindToView(currentGuardia);
+
     }
 
     @Override
     public int getItemCount() {
-        return mGuardiasList.size();
+        return mGuardia.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView nameTxt;
+
+
+        private TextView mTextView;
+
         public ViewHolder(View itemView) {
             super(itemView);
-            nameTxt = (TextView) itemView.findViewById(R.id.nameTxt);
+
+            mTextView = (TextView) itemView.findViewById(R.id.nameTxtGuardia);
+
+        }
+
+        public void bindToView(guardias currentGuardia) {
+            mTextView.setText(currentGuardia.getUsuarioNombre());
         }
     }
 }

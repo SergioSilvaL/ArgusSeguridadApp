@@ -1,9 +1,12 @@
-package com.example.legible.seguridadargusapp;
+package com.example.legible.seguridadargusapp.adapter;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.example.legible.seguridadargusapp.fragment.ClienteFragment;
+import com.example.legible.seguridadargusapp.fragment.GuardiaFragment;
 
 /**
  * Created by Legible on 17/02/2017.
@@ -19,9 +22,6 @@ public class Adapter_ViewPagerMain extends FragmentPagerAdapter {
         this.mNumberOfTabs = numberOfTabs;
         this.mContext = mContext;
     }
-
-
-
     /**
      * Return the Fragment associated with a specified position.
      *
@@ -38,6 +38,7 @@ public class Adapter_ViewPagerMain extends FragmentPagerAdapter {
 
             case 0: // I'll always begin in 0.
                 return new ClienteFragment();
+             //ClienteFragment.newInstance(zonaSupervisorRef);
 
             case 1:
                 return new GuardiaFragment();
