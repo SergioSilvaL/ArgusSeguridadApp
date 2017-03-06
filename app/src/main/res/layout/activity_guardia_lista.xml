@@ -7,7 +7,7 @@
 
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.legible.seguridadargusapp.GuardiaListaActivity">
+    tools:context="com.example.legible.seguridadargusapp.View.GuardiaListaActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"

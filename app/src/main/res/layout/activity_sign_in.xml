@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.legible.seguridadargusapp.SignInActivity"
+    tools:context="com.example.legible.seguridadargusapp.View.SignInActivity"
     android:background="@color/colorPrimary">
 
     <LinearLayout
