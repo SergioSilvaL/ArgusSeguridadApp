@@ -12,4 +12,5 @@
     <string name="hint_username">Correo electronico</string>
     <string name="text_button_login">Ingresar</string>
     <string name="lose_password">Olvidaste tu contraseña?</string>
+    <string name="title_activity_add_guardia">AddGuardiaActivity</string>
 </resources>
