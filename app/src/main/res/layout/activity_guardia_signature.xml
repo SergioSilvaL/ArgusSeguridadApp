@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:paddingBottom="@dimen/activity_vertical_margin"
+android:paddingLeft="@dimen/activity_horizontal_margin"
+android:paddingRight="@dimen/activity_horizontal_margin"
+android:paddingTop="@dimen/activity_vertical_margin"
+tools:context="com.example.legible.seguridadargusapp.View.GuardiaSignatureActivity"
+android:orientation="vertical"
+android:weightSum="1">
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text='Estatus'
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:gravity="center"
+                    android:layout_margin="20sp"
+                    android:textColor="@android:color/black"
+                    android:textStyle="normal|bold" />
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="1" >
+
+                        <RadioButton
+                            android:text="Asistió"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/radioButton"
+                            android:buttonTint="@android:color/holo_green_light"
+                            android:layout_weight="1"/>
+                        <RadioButton
+                            android:text="No Asistió"
+                            android:buttonTint="@android:color/holo_green_light"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/radioButton1"
+                            android:layout_weight="1" />
+
+                        <RadioButton
+                            android:text="Llego Tarde"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/radioButton2"
+                            android:layout_weight="1"
+                            android:buttonTint="@android:color/holo_green_light" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:text='Firma'
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:gravity="center"
+                android:layout_margin="18sp"
+                android:textColor="@android:color/black"
+                android:textStyle="normal|bold" />
+
+            <com.github.gcacace.signaturepad.views.SignaturePad
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:id="@+id/signaturePad"
+                android:background="@drawable/back"
+                android:layout_marginBottom="10sp"
+                android:layout_weight="0.95" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10sp"
+                android:layout_marginBottom="10sp">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/saveButton"
+                    android:text="Capturar"
+                    android:layout_weight="1"
+                    android:background="@android:color/holo_blue_dark"
+                    android:textColor="@android:color/white"
+                    android:layout_margin="2sp"
+                    android:textStyle="normal|bold"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/clearButton"
+                    android:text="Clear"
+                    android:layout_weight="1"
+                    android:background="@android:color/holo_blue_dark"
+                    android:textColor="@android:color/white"
+                    android:layout_margin="2sp"
+                    android:textStyle="normal|bold"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

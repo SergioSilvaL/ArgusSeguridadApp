@@ -3,6 +3,7 @@ package com.example.legible.seguridadargusapp.Controller;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.nfc.Tag;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.guardias;
 import com.example.legible.seguridadargusapp.R;
 import com.example.legible.seguridadargusapp.View.GuardiaInfoDialogFragment;
+import com.example.legible.seguridadargusapp.View.GuardiaSignatureActivity;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -104,6 +106,14 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
         final guardias guardia = mGuardiasList.get(position);
 
         holder.nameTxt.setText(guardia.getUsuarioNombre());
+        //Todo Delete ASAP tested to see example of Signature
+        holder.nameTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mContext.startActivity(new Intent(mContext, GuardiaSignatureActivity.class));
+            }
+        });
+
 
 
         holder.optionMenu.setOnClickListener(new View.OnClickListener() {
