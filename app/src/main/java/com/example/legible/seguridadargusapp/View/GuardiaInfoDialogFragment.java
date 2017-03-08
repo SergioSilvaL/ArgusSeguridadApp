@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.legible.seguridadargusapp.Model.ObjectModel.guardias;
 import com.example.legible.seguridadargusapp.R;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 public class GuardiaInfoDialogFragment extends DialogFragment{
 
     private guardias mGuardia;
+    private TextView nombre;
     //Firebase Database reference for the current Guardia
     private DatabaseReference mDatabaseReference =
             FirebaseDatabase.getInstance()
@@ -32,11 +34,11 @@ public class GuardiaInfoDialogFragment extends DialogFragment{
 
     public GuardiaInfoDialogFragment(){}
 
-    public static GuardiaInfoDialogFragment newInstance(String guardiaNombreRef){
+    public static GuardiaInfoDialogFragment newInstance(String guardiaKeyRef){
 
         GuardiaInfoDialogFragment frag = new GuardiaInfoDialogFragment();
         Bundle args = new Bundle();
-        args.putString("currentGuardia",guardiaNombreRef);
+        args.putString("currentGuardia",guardiaKeyRef);
         frag.setArguments(args);
 
         return frag;
@@ -58,45 +60,28 @@ public class GuardiaInfoDialogFragment extends DialogFragment{
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TextView nombre  = (TextView) view.findViewById(R.id.textViewUsuarioNombre);
+        nombre  = (TextView) view.findViewById(R.id.textViewUsuarioNombre);
 
+        DatabaseReference ref = mDatabaseReference.child(getArguments().getString("currentGuardia"));
 
-        mDatabaseReference.addValueEventListener(new GuardiaReferenceEventListener());
-
-
-            //Todo: Change this, bug it's a very bad practice due to the fact it depends on chance
-
-            //Set Stuff up
-
-            if (mGuardia!=null){
-                nombre.setText(mGuardia.getUsuarioNombre());
-            }
-
-
-
+        ref.addValueEventListener(new GuardiaReferenceEventListener());
 
 
     }
+
+
 
     class GuardiaReferenceEventListener implements ValueEventListener{
 
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            String guardiaNombreRef = getArguments().getString("currentGuardia","sinNombre");
-
-            for (DataSnapshot data: dataSnapshot.getChildren()){
-
-                guardias guardia = data.getValue(guardias.class);
-
-                if (guardiaNombreRef.equals(guardia.getUsuarioNombre())){
-
-                    mGuardia = guardia;
-                    return;
-
-                }
 
 
-            }
+            mGuardia  = dataSnapshot.getValue(guardias.class);
+            //Todo add all the textProperties
+            nombre.setText(mGuardia.getUsuarioNombre());
+
+
         }
 
         @Override
@@ -104,4 +89,6 @@ public class GuardiaInfoDialogFragment extends DialogFragment{
 
         }
     }
+
+
 }
