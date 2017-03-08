@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:text="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewUsuarioDisponible" />
+
+    <TextView
+        android:text="Calle 16 Ave Las Quintas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewUsuarioDomicilio" />
+
+    <TextView
+        android:text="Juan Perez Osorio Mexes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewUsuarioNombre" />
+
+    <TextView
+        android:text="662 220 1023"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewUsuarioTelefono" />
+
+    <TextView
+        android:text="Guardia Temporal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewUsuarioTipo" />
+
+    <TextView
+        android:text="Noche"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewUsuarioTurno" />
+</LinearLayout>
