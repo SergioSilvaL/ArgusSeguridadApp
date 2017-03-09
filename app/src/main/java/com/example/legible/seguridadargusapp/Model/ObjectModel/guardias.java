@@ -6,20 +6,23 @@ package com.example.legible.seguridadargusapp.Model.ObjectModel;
 
 public class guardias {
 
-    //private boolean usuarioDisponible;
+    private boolean usuarioDisponible;
     private String usuarioDomicilio;
     private String usuarioNombre;
-    //private long usuarioTelefono;
+    private long usuarioTelefono;
     private String usuarioTipo;
     private String usuarioTurno;
+    //Really? Zona are you even using that bro...
     private String usuarioZona;
     private String key;
 
     public guardias(){}
 
-    public guardias(String usuarioDomicilio, String usuarioNombre, String usuarioTipo, String usuarioTurno, String usuarioZona) {
+    public guardias(boolean usuarioDisponible,String usuarioDomicilio, String usuarioNombre, String usuarioTipo,long usuarioTelefono,String usuarioTurno, String usuarioZona) {
+        this.usuarioDisponible = usuarioDisponible;
         this.usuarioDomicilio = usuarioDomicilio;
         this.usuarioNombre = usuarioNombre;
+        this.usuarioTelefono = usuarioTelefono;
         this.usuarioTipo = usuarioTipo;
         this.usuarioTurno = usuarioTurno;
         this.usuarioZona = usuarioZona;
@@ -50,6 +53,14 @@ public class guardias {
         this.usuarioNombre = usuarioNombre;
     }
 
+    public long getUsuarioTelefono() {
+        return usuarioTelefono;
+    }
+
+    public void setUsuarioTelefono(long usuarioTelefono) {
+        this.usuarioTelefono = usuarioTelefono;
+    }
+
     public String getUsuarioTipo() {
         return usuarioTipo;
     }
@@ -72,5 +83,13 @@ public class guardias {
 
     public void setUsuarioZona(String usuarioZona) {
         this.usuarioZona = usuarioZona;
+    }
+
+    public boolean isUsuarioDisponible() {
+        return usuarioDisponible;
+    }
+
+    public void setUsuarioDisponible(boolean usuarioDisponible) {
+        this.usuarioDisponible = usuarioDisponible;
     }
 }
