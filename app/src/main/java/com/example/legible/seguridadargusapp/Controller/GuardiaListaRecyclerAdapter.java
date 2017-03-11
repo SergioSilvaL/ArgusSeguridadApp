@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.guardias;
 import com.example.legible.seguridadargusapp.R;
 import com.example.legible.seguridadargusapp.View.GuardiaInfoDialogFragment;
+import com.example.legible.seguridadargusapp.View.GuardiaMoveDialogFragment;
 import com.example.legible.seguridadargusapp.View.GuardiaSignatureActivity;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.security.Guard;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,7 +125,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
             public void onClick(View v) {
 
 
-                showGuardiaOptionsMenu(guardia.getKey());
+                showGuardiaOptionsMenu(guardia.getKey(),guardia.getUsuarioNombre());
 
 
                 //showDialogFragment(guardia.getKey());
@@ -135,7 +137,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
     }
 
 
-    public void showGuardiaOptionsMenu(final String key){
+    public void showGuardiaOptionsMenu(final String key,final String guardiaNombre){
 
         final String options[] = {"Detalles", "Mover"};
 
@@ -147,11 +149,12 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
                 switch (which){
                     case 0 :
                         // Detallles;
-                        showDialogFragment(key);
+                        showGuardiaInfoDialogFragment(key);
                         break;
 
                     case 1 :
                         //Mover
+                        showMoveGuardiaDialogFragment(key,guardiaNombre);
 
                         break;
                     default:
@@ -164,11 +167,17 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
 
     }
 
-    public void showDialogFragment(String guardiaRef){
+    public void showGuardiaInfoDialogFragment(String guardiaRef){
 
         GuardiaInfoDialogFragment df = GuardiaInfoDialogFragment.newInstance(guardiaRef);
         df.show(fm,"fragment_guardia_info");
     }
+
+    public void showMoveGuardiaDialogFragment(String key,String guardiaNombre){
+        GuardiaMoveDialogFragment df = GuardiaMoveDialogFragment.newInstance(clienteRef,"supervisor",key,guardiaNombre);
+        df.show(fm,"fragment_guardia_move");
+    }
+
 
     @Override
     public int getItemCount() {
