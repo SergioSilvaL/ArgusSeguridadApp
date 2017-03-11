@@ -1,8 +1,10 @@
 package com.example.legible.seguridadargusapp.Controller;
 
+import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.nfc.Tag;
 import android.support.v4.app.Fragment;
@@ -120,12 +122,45 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
             @Override
             public void onClick(View v) {
 
-                //Todo Should get the guardias key not the name;
-                showDialogFragment(guardia.getKey());
+
+                showGuardiaOptionsMenu(guardia.getKey());
+
+
+                //showDialogFragment(guardia.getKey());
 
             }
         });
 
+
+    }
+
+
+    public void showGuardiaOptionsMenu(final String key){
+
+        final String options[] = {"Detalles", "Mover"};
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+        dialog.setTitle("Opciones");
+        dialog.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case 0 :
+                        // Detallles;
+                        showDialogFragment(key);
+                        break;
+
+                    case 1 :
+                        //Mover
+
+                        break;
+                    default:
+                        dialog.dismiss();
+                }
+            }
+        });
+
+        dialog.show();
 
     }
 
