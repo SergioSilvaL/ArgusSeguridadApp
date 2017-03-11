@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:paddingBottom="@dimen/activity_vertical_margin"
-android:paddingLeft="@dimen/activity_horizontal_margin"
-android:paddingRight="@dimen/activity_horizontal_margin"
-android:paddingTop="@dimen/activity_vertical_margin"
-tools:context="com.example.legible.seguridadargusapp.View.GuardiaSignatureActivity"
-android:orientation="vertical"
-android:weightSum="1">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+
+    tools:context="com.example.legible.seguridadargusapp.View.GuardiaSignatureActivity"
+    android:orientation="vertical"
+    android:weightSum="1">
 
 
     <android.support.v4.widget.NestedScrollView
@@ -27,14 +27,14 @@ android:weightSum="1">
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:text='Estatus'
+                    android:text='Estado'
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="24sp"
                     android:gravity="center"
-                    android:layout_margin="20sp"
+                    android:layout_margin="5dp"
                     android:textColor="@android:color/black"
-                    android:textStyle="normal|bold" />
+                    android:textStyle="normal" />
 
 
                 <LinearLayout
@@ -95,17 +95,26 @@ android:weightSum="1">
                 android:layout_height="wrap_content"
                 android:textSize="24sp"
                 android:gravity="center"
-                android:layout_margin="18sp"
+                android:layout_margin="5dp"
                 android:textColor="@android:color/black"
-                android:textStyle="normal|bold" />
+                android:textStyle="normal" />
 
             <com.github.gcacace.signaturepad.views.SignaturePad
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="270dp"
                 android:id="@+id/signaturePad"
                 android:background="@drawable/back"
                 android:layout_marginBottom="10sp"
                 android:layout_weight="0.95" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:lines="1"
+                android:gravity="top|left"
+                android:scrollbars="vertical"
+                android:hint="Observaciones"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -119,24 +128,24 @@ android:weightSum="1">
                     android:layout_height="wrap_content"
                     android:id="@+id/saveButton"
                     android:text="Capturar"
-                    android:layout_weight="1"
-                    android:background="@android:color/holo_blue_dark"
+                    android:layout_weight="0.7"
+                    android:background="@color/colorPrimary"
                     android:textColor="@android:color/white"
                     android:layout_margin="2sp"
-                    android:textStyle="normal|bold"
-                    android:textSize="18sp" />
+                    android:textStyle="normal"
+                    android:textSize="15sp" />
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/clearButton"
-                    android:text="Clear"
-                    android:layout_weight="1"
-                    android:background="@android:color/holo_blue_dark"
+                    android:text="Limpiar"
+                    android:layout_weight="0.7"
+                    android:background="@color/colorPrimary"
                     android:textColor="@android:color/white"
                     android:layout_margin="2sp"
-                    android:textStyle="normal|bold"
-                    android:textSize="18sp" />
+                    android:textStyle="normal"
+                    android:textSize="15sp" />
             </LinearLayout>
         </LinearLayout>
 

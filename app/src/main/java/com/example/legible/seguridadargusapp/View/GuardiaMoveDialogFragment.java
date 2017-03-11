@@ -73,7 +73,7 @@ public class GuardiaMoveDialogFragment extends DialogFragment{
                 }
 
                 spinner = (Spinner) view.findViewById(R.id.spinnerCliente);
-                ArrayAdapter<String> clientesAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,clientes);
+                ArrayAdapter<String> clientesAdapter = new ArrayAdapter<String>(getActivity(),R.layout.spinner_item,clientes);
                 clientesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(clientesAdapter);
             }

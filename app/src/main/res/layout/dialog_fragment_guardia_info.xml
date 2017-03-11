@@ -4,73 +4,73 @@
     android:layout_height="wrap_content">
 
 
-    <TextView
-        android:text="Juan Perez Osorio Mexes"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="25sp"
-        android:paddingTop="5dp"
-        android:id="@+id/textViewUsuarioNombre"
-        android:background="#48A1B1"/>
+        android:orientation="horizontal"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp">
 
-    <TextView
-        android:text="Guardia Temporal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:paddingBottom="15dp"
-        android:id="@+id/textViewUsuarioTipo"
-        android:background="#48A1B1"
-        />
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/usuario"/>
 
-
+        <TextView
+            android:text="Juan Perez Osorio Mexes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textSize="20sp"
+            android:paddingLeft="10dp"
+            android:id="@+id/textViewUsuarioNombre"
+            />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp">
 
-        <TextView
-            android:text="Turno:"
-            android:layout_width="@dimen/sizeEtiquetaDialog"
+        <ImageView
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:id="@+id/textViewTurno"
-            android:paddingTop="15dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:paddingLeft="25dp"/>
+            android:src="@drawable/noche"/>
 
         <TextView
             android:text="Noche"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:paddingRight="25dp"
+            android:gravity="center_vertical"
+            android:textSize="20sp"
+            android:paddingLeft="10dp"
             android:id="@+id/textViewUsuarioTurno" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp">
 
-        <TextView
-            android:text="Telefono:"
-            android:layout_width="@dimen/sizeEtiquetaDialog"
+        <ImageView
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:id="@+id/textViewTelefono"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:paddingLeft="25dp"/>
+            android:src="@drawable/phone"/>
 
         <TextView
             android:text="662 220 1023"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingRight="25dp"
-            android:textSize="17sp"
+            android:gravity="center_vertical"
+            android:textSize="20sp"
+            android:paddingLeft="10dp"
             android:id="@+id/textViewUsuarioTelefono" />
     </LinearLayout>
 
@@ -78,27 +78,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="20dp">
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="15dp"
+        android:paddingBottom="20dp"
+        android:layout_marginTop="10dp">
 
-        <TextView
-            android:text="Direccion:"
-            android:layout_width="@dimen/sizeEtiquetaDialog"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:paddingLeft="25dp"
-            android:id="@+id/textViewDomicilio"/>
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="40dp"
+            android:src="@drawable/home"/>
+
         <TextView
             android:text="Calle 16 Ave Las Quintas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:paddingRight="25dp"
+            android:gravity="center_vertical"
+            android:textSize="20sp"
+            android:paddingLeft="10dp"
             android:id="@+id/textViewUsuarioDomicilio"/>
 
     </LinearLayout>
-
-
-
 
 </LinearLayout>

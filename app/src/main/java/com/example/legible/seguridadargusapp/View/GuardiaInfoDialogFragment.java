@@ -24,11 +24,11 @@ import com.google.firebase.database.ValueEventListener;
 public class GuardiaInfoDialogFragment extends DialogFragment{
 
     private guardias mGuardia;
-    private TextView disponible;
+    //private TextView disponible;
     private TextView domicillio;
     private TextView nombre;
     private TextView telefono;
-    private TextView tipo;
+    //private TextView tipo;
     private TextView turno;
 
     //Firebase Database reference for the current Guardia
@@ -43,9 +43,13 @@ public class GuardiaInfoDialogFragment extends DialogFragment{
     public static GuardiaInfoDialogFragment newInstance(String guardiaKeyRef){
 
         GuardiaInfoDialogFragment frag = new GuardiaInfoDialogFragment();
+
+
         Bundle args = new Bundle();
+
         args.putString("currentGuardia",guardiaKeyRef);
         frag.setArguments(args);
+
 
         return frag;
 
@@ -72,7 +76,7 @@ public class GuardiaInfoDialogFragment extends DialogFragment{
         domicillio = (TextView) view.findViewById(R.id.textViewUsuarioDomicilio);
         nombre  = (TextView) view.findViewById(R.id.textViewUsuarioNombre);
         telefono = (TextView) view.findViewById(R.id.textViewUsuarioTelefono);
-        tipo = (TextView) view.findViewById(R.id.textViewUsuarioTipo);
+        //tipo = (TextView) view.findViewById(R.id.textViewUsuarioTipo);
         turno = (TextView) view.findViewById(R.id.textViewUsuarioTurno);
 
         DatabaseReference ref = mDatabaseReference.child(getArguments().getString("currentGuardia"));
@@ -94,7 +98,7 @@ public class GuardiaInfoDialogFragment extends DialogFragment{
             domicillio.setText(mGuardia.getUsuarioDomicilio());
             nombre.setText(mGuardia.getUsuarioNombre());
             telefono.setText(String.valueOf(mGuardia.getUsuarioTelefono()));
-            tipo.setText(mGuardia.getUsuarioTipo());
+            //tipo.setText(mGuardia.getUsuarioTipo());
             turno.setText(mGuardia.getUsuarioTurno());
 
 
