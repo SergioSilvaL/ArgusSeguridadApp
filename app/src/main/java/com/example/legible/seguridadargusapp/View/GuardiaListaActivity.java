@@ -1,5 +1,6 @@
 package com.example.legible.seguridadargusapp.View;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.legible.seguridadargusapp.R;
 import com.example.legible.seguridadargusapp.Controller.GuardiaListaRecyclerAdapter;
@@ -17,6 +19,7 @@ import com.example.legible.seguridadargusapp.Controller.GuardiaListaRecyclerAdap
 public class GuardiaListaActivity extends AppCompatActivity {
 
     private String ClienteRef;
+    private android.support.v4.app.FragmentManager fm;
 
 
     private GuardiaListaRecyclerAdapter mAdapter;
@@ -44,7 +47,9 @@ public class GuardiaListaActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
         ClienteRef = getIntent().getStringExtra("Cliente");
+
         actionBar.setTitle(ClienteRef);
 
 
@@ -84,7 +89,7 @@ public class GuardiaListaActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_add_guardia:
-                //Do Something
+                addGuardiaTemporal();
             return true;
 
             case R.id.action_add_incidente:
@@ -95,5 +100,21 @@ public class GuardiaListaActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void addGuardiaTemporal(){
+
+
+        //Todo getStringExtra supervisorNombre from bundle
+
+//        Intent in = getIntent();
+//        Bundle bundle  = getIntent().getExtras();
+//        String supervisor = bundle.getString("SupervisorNombre");
+        String supervisor = "";
+
+        GuardiaTemporalAddDialogFragment dialogFragment = GuardiaTemporalAddDialogFragment.newInstance(ClienteRef,supervisor);
+        fm = getSupportFragmentManager();
+        dialogFragment.show(fm,"fragment_guarida_temporal_add");
+
     }
 }
