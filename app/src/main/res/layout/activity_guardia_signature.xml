@@ -80,14 +80,6 @@
 
             </LinearLayout>
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/editTextObservacion"
-                android:hint="Observacion"
-                android:background="@color/cardview_light_background" />
 
             <TextView
                 android:text='Firma'
@@ -101,7 +93,7 @@
 
             <com.github.gcacace.signaturepad.views.SignaturePad
                 android:layout_width="match_parent"
-                android:layout_height="270dp"
+                android:layout_height="325dp"
                 android:id="@+id/signaturePad"
                 android:background="@drawable/back"
                 android:layout_marginBottom="10sp"
@@ -112,16 +104,18 @@
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
                 android:lines="1"
-                android:gravity="top|left"
+                android:focusable=""
                 android:scrollbars="vertical"
-                android:hint="Observaciones"/>
+                android:hint="Observaciones"
+                android:id="@+id/editTextObservacion"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="10sp"
-                android:layout_marginBottom="10sp">
+                android:layout_marginBottom="10sp"
+                >
 
                 <Button
                     android:layout_width="match_parent"
