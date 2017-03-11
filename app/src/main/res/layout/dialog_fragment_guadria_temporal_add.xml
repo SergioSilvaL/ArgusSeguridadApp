@@ -1,33 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingLeft="25dp"
+    android:paddingRight="25dp">
 
-    <EditText
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/editTextGuardiaNombre"
-        android:hint="Nombre "
-        android:layout_margin="5dp" />
+        android:orientation="horizontal"
+        android:paddingTop="30dp">
 
-    <EditText
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/usuario"
+            android:gravity="bottom"
+            android:layout_marginRight="10dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/color_black"
+            android:inputType="textPersonName"
+            android:hint="Nombre"
+            android:ems="10"
+            android:id="@+id/editTextGuardiaNombre" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/editTextGuardiaDomicillio"
-        android:hint="Domicilio"
-        android:layout_margin="5dp" />
+        android:orientation="horizontal"
+        android:paddingTop="15dp">
 
-    <EditText
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/home"
+            android:gravity="bottom"
+            android:layout_marginRight="10dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:textColorHint="@color/color_black"
+            android:hint="Domicilio"
+            android:ems="10"
+            android:id="@+id/editTextGuardiaDomicillio" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="phone"
-        android:ems="10"
-        android:id="@+id/editTextGuardiaTelefono"
-        android:hint="Telefono"
-        android:layout_margin="5dp" />
+        android:orientation="horizontal"
+        android:paddingTop="15dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/phone"
+            android:gravity="bottom"
+            android:layout_marginRight="10dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/color_black"
+            android:inputType="phone"
+            android:ems="10"
+            android:hint="Telefono"
+            android:id="@+id/editTextGuardiaTelefono" />
+
+    </LinearLayout>
 
 </LinearLayout>

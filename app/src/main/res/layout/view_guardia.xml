@@ -13,11 +13,10 @@
     android:layout_marginBottom="5dp">
 
     <RelativeLayout
-        android:layout_width="312dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        >
+        android:layout_marginEnd="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,12 +24,10 @@
             android:weightSum="1"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true">
+            android:layout_alignParentStart="true">
 
             <ImageView
-                android:src="@drawable/icon_alumno"
+                android:src="@drawable/guardia_seguridad"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:id="@+id/imageView"
@@ -39,30 +36,22 @@
                 android:layout_gravity="center"
                 android:layout_margin="12dp"/>
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp">
-
-
-                <TextView
-                    android:text="ZEPEDA MIRAMONTES FRANCISCA LORENA"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/nameTxtGuardia"
-                    android:textSize="14sp"
-                    android:textStyle="normal|bold"/>
-
-
-            </LinearLayout>
+            <TextView
+                android:text="ZEPEDA MIRAMONTES FRANCISCA LORENA"
+                android:layout_width="230dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:id="@+id/nameTxtGuardia"
+                android:paddingLeft="10dp"
+                android:textSize="16sp"
+                android:textStyle="normal|bold"/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/ic_more_vert_black_24dp"
+                app:srcCompat="@drawable/disponible"
+                android:layout_gravity="center_vertical"
                 android:id="@+id/imageView3" />
-
 
         </LinearLayout>
 

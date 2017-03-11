@@ -10,5 +10,7 @@
     <dimen name="ancho_ic_correo">40dp</dimen>
     <dimen name="alto_ic_correo">30dp</dimen>
     <dimen name="ancho_logo">150dp</dimen>
+    <dimen name="sizeDisponibilidad">50dp</dimen>
+    <dimen name="sizeEtiquetaDialog">120dp</dimen>
 
 </resources>

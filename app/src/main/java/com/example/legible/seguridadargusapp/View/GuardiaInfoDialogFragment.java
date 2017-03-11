@@ -68,7 +68,7 @@ public class GuardiaInfoDialogFragment extends DialogFragment{
 
 
 
-        disponible = (TextView) view.findViewById(R.id.textViewUsuarioDisponible);
+        //disponible = (TextView) view.findViewById(R.id.textViewUsuarioDisponible);
         domicillio = (TextView) view.findViewById(R.id.textViewUsuarioDomicilio);
         nombre  = (TextView) view.findViewById(R.id.textViewUsuarioNombre);
         telefono = (TextView) view.findViewById(R.id.textViewUsuarioTelefono);
@@ -90,7 +90,7 @@ public class GuardiaInfoDialogFragment extends DialogFragment{
 
 
             mGuardia  = dataSnapshot.getValue(guardias.class);
-            disponible.setText(String.valueOf(mGuardia.isUsuarioDisponible()));
+            //disponible.setText(String.valueOf(mGuardia.isUsuarioDisponible()));
             domicillio.setText(mGuardia.getUsuarioDomicilio());
             nombre.setText(mGuardia.getUsuarioNombre());
             telefono.setText(String.valueOf(mGuardia.getUsuarioTelefono()));

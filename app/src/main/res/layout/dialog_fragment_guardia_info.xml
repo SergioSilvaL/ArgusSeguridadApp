@@ -3,39 +3,102 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:text="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewUsuarioDisponible" />
-
-    <TextView
-        android:text="Calle 16 Ave Las Quintas"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewUsuarioDomicilio" />
 
     <TextView
         android:text="Juan Perez Osorio Mexes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewUsuarioNombre" />
-
-    <TextView
-        android:text="662 220 1023"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewUsuarioTelefono" />
+        android:gravity="center"
+        android:textSize="25sp"
+        android:paddingTop="5dp"
+        android:id="@+id/textViewUsuarioNombre"
+        android:background="#48A1B1"/>
 
     <TextView
         android:text="Guardia Temporal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewUsuarioTipo" />
+        android:gravity="center"
+        android:textSize="18sp"
+        android:paddingBottom="15dp"
+        android:id="@+id/textViewUsuarioTipo"
+        android:background="#48A1B1"
+        />
 
-    <TextView
-        android:text="Noche"
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="Turno:"
+            android:layout_width="@dimen/sizeEtiquetaDialog"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewTurno"
+            android:paddingTop="15dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingLeft="25dp"/>
+
+        <TextView
+            android:text="Noche"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:paddingRight="25dp"
+            android:id="@+id/textViewUsuarioTurno" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewUsuarioTurno" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="Telefono:"
+            android:layout_width="@dimen/sizeEtiquetaDialog"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewTelefono"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingLeft="25dp"/>
+
+        <TextView
+            android:text="662 220 1023"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingRight="25dp"
+            android:textSize="17sp"
+            android:id="@+id/textViewUsuarioTelefono" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:text="Direccion:"
+            android:layout_width="@dimen/sizeEtiquetaDialog"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:paddingLeft="25dp"
+            android:id="@+id/textViewDomicilio"/>
+        <TextView
+            android:text="Calle 16 Ave Las Quintas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:paddingRight="25dp"
+            android:id="@+id/textViewUsuarioDomicilio"/>
+
+    </LinearLayout>
+
+
+
+
 </LinearLayout>
