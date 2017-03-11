@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:paddingLeft="8dp"
     android:paddingRight="8dp"
-
     tools:context="com.example.legible.seguridadargusapp.View.GuardiaSignatureActivity"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:focusable="true"
+    android:focusableInTouchMode="true" >
 
 
     <android.support.v4.widget.NestedScrollView
@@ -104,7 +104,6 @@
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
                 android:lines="1"
-                android:focusable=""
                 android:scrollbars="vertical"
                 android:hint="Observaciones"
                 android:id="@+id/editTextObservacion"/>
