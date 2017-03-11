@@ -1,8 +1,10 @@
 package com.example.legible.seguridadargusapp.Controller;
 
+import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.nfc.Tag;
 import android.support.v4.app.Fragment;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.guardias;
 import com.example.legible.seguridadargusapp.R;
 import com.example.legible.seguridadargusapp.View.GuardiaInfoDialogFragment;
+import com.example.legible.seguridadargusapp.View.GuardiaMoveDialogFragment;
 import com.example.legible.seguridadargusapp.View.GuardiaSignatureActivity;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.security.Guard;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,8 +124,11 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
             @Override
             public void onClick(View v) {
 
-                //Todo Should get the guardias key not the name;
-                showDialogFragment(guardia.getKey());
+
+                showGuardiaOptionsMenu(guardia.getKey(),guardia.getUsuarioNombre());
+
+
+                //showDialogFragment(guardia.getKey());
 
             }
         });
@@ -129,11 +136,48 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
 
     }
 
-    public void showDialogFragment(String guardiaRef){
+
+    public void showGuardiaOptionsMenu(final String key,final String guardiaNombre){
+
+        final String options[] = {"Detalles", "Mover"};
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+        dialog.setTitle("Opciones");
+        dialog.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case 0 :
+                        // Detallles;
+                        showGuardiaInfoDialogFragment(key);
+                        break;
+
+                    case 1 :
+                        //Mover
+                        showMoveGuardiaDialogFragment(key,guardiaNombre);
+
+                        break;
+                    default:
+                        dialog.dismiss();
+                }
+            }
+        });
+
+        dialog.show();
+
+    }
+
+    public void showGuardiaInfoDialogFragment(String guardiaRef){
 
         GuardiaInfoDialogFragment df = GuardiaInfoDialogFragment.newInstance(guardiaRef);
         df.show(fm,"fragment_guardia_info");
     }
+
+    public void showMoveGuardiaDialogFragment(String key,String guardiaNombre){
+        GuardiaMoveDialogFragment df = GuardiaMoveDialogFragment.newInstance(clienteRef,"supervisor",key,guardiaNombre);
+        df.show(fm,"fragment_guardia_move");
+    }
+
 
     @Override
     public int getItemCount() {
