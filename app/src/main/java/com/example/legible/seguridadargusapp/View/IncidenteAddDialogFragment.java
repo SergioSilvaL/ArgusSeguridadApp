@@ -11,6 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.legible.seguridadargusapp.Model.ObjectModel.DatePost;
+import com.example.legible.seguridadargusapp.Model.ObjectModel.Incidente;
+import com.example.legible.seguridadargusapp.Model.ObjectModel.Notificacion;
 import com.example.legible.seguridadargusapp.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,9 +33,16 @@ public class IncidenteAddDialogFragment extends DialogFragment {
 
     private EditText editTextIncidenteObservacion;
     private Spinner spinner;
+    private List<Incidente> incidenteList;
     //private Spinner spinnerIncidenteTipo;
     private DatabaseReference mrefIncidenteTipo =
             FirebaseDatabase.getInstance().getReference().child("Argus").child("IncidenteTipo");
+
+    private DatabaseReference mPushRef =
+            FirebaseDatabase.getInstance().getReference().child("Argus").child("Incidente");
+
+    private DatabaseReference mNotificationRef =
+            FirebaseDatabase.getInstance().getReference().child("Argus").child("Notificacion");
 
 
 
@@ -68,7 +78,11 @@ public class IncidenteAddDialogFragment extends DialogFragment {
 
                 for (DataSnapshot ds : dataSnapshot.getChildren()){
 
-                    //Get the object
+//                    //Get the object
+//                    Incidente currentInciente = ds.getValue(Incidente.class);
+//                    incidenteList.add(0,currentInciente);
+
+
                     String incidenteTipo = ds.child("incidenteTipo").getValue(String.class);
                     incidentes.add(incidenteTipo);
 
@@ -78,6 +92,7 @@ public class IncidenteAddDialogFragment extends DialogFragment {
                 ArrayAdapter<String> incidentesAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,incidentes);
                 incidentesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(incidentesAdapter);
+
 
                 //String value = spinnner.getSelectedItem().toString();
             }
@@ -111,7 +126,46 @@ public class IncidenteAddDialogFragment extends DialogFragment {
 
     public void pushData(){
 
-        String spinnerValue = spinner.getSelectedItem().toString();
+
+
+        String incidenteTipo = spinner.getSelectedItem().toString();
+        //Todo set incidenteTipo
+        String incidenteGravedad="";
+        // get the current incidente Gravedad
+
+//        for (int i =0; i< incidenteList.size(); i++){
+//
+//            if (incidenteTipo.equals(incidenteList.get(i).getIncidenteTipo())){
+//                incidenteGravedad = incidenteList.get(i).getIncidenteGravedad();
+//            }
+//        }
+
+        String incidenteCliente = getArguments().getString("clienteNombre");
+
+        DatePost datePost = new DatePost();
+        String incidenteFecha = datePost.getDatePost();
+
+        String incidenteObservacion = editTextIncidenteObservacion.getText().toString();
+
+        //Todo set incidenteUsuario
+        String incidenteUsuario = "supervisor";
+
+
+        //set the current onject
+
+        Incidente incidente = new Incidente(incidenteCliente,incidenteFecha,incidenteObservacion,incidenteTipo,incidenteUsuario,incidenteGravedad);
+
+        //push in a new Incidente
+        mPushRef.push().setValue(incidente);
+
+
+        //push to notifiacion
+        String descripcion="Hubo un "+ incidenteTipo + " en "+ incidenteCliente;
+        Notificacion notificacion = new Notificacion("Incidente",descripcion, incidenteFecha );
+        mNotificationRef.push().setValue(notificacion);
+
+
+
 
     }
 }

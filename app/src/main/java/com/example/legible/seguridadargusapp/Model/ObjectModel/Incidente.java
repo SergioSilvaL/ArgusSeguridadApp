@@ -10,14 +10,27 @@ public class Incidente {
     private String incidenteObservacion;
     private String incidenteTipo;
     private String incidenteUsuario;
+    private String incidenteGravedad;
+
+    public Incidente(){}
 
 
-    public Incidente(String incidenteCliente, String incidenteFecha, String incidenteObservacion, String incidenteTipo, String incidenteUsuario) {
+    public Incidente(String incidenteCliente, String incidenteFecha, String incidenteObservacion, String incidenteTipo, String incidenteUsuario,String incidenteGravedad) {
         this.incidenteCliente = incidenteCliente;
         this.incidenteFecha = incidenteFecha;
         this.incidenteObservacion = incidenteObservacion;
         this.incidenteTipo = incidenteTipo;
         this.incidenteUsuario = incidenteUsuario;
+        this.incidenteGravedad = incidenteGravedad;
+    }
+
+
+    public String getIncidenteGravedad() {
+        return incidenteGravedad;
+    }
+
+    public void setIncidenteGravedad(String incidenteGravedad) {
+        this.incidenteGravedad = incidenteGravedad;
     }
 
     public String getIncidenteCliente() {
