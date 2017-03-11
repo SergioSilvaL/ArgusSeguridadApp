@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.guardias;
 import com.example.legible.seguridadargusapp.R;
 import com.example.legible.seguridadargusapp.View.GuardiaInfoDialogFragment;
+import com.example.legible.seguridadargusapp.View.GuardiaListaActivity;
 import com.example.legible.seguridadargusapp.View.GuardiaMoveDialogFragment;
 import com.example.legible.seguridadargusapp.View.GuardiaSignatureActivity;
 import com.google.firebase.database.ChildEventListener;
@@ -118,6 +119,25 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
             }
         });
 
+        //Todo set OnClickListener to Open Signature Activity
+
+
+        holder.viewGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Send the Object through here
+
+
+                Intent intent = new Intent(mContext, GuardiaSignatureActivity.class);
+                intent.putExtra("guardiaKey",guardia.getKey());
+                intent.putExtra("guardiaTurno",guardia.getUsuarioTurno());
+                intent.putExtra("guardiaNombre",guardia.getUsuarioNombre());
+                mContext.startActivity(intent);
+
+
+            }
+        });
 
 
         holder.optionMenu.setOnClickListener(new View.OnClickListener() {
@@ -188,11 +208,13 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
 
         TextView nameTxt;
         ImageView optionMenu;
+        ViewGroup viewGroup;
 
         public ViewHolder(View itemView) {
             super(itemView);
             nameTxt = (TextView) itemView.findViewById(R.id.nameTxt);
             optionMenu = (ImageView) itemView.findViewById(R.id.imageViewOption);
+            viewGroup = (ViewGroup) itemView.findViewById(R.id.cardview_image);
 
         }
     }

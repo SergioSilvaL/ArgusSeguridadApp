@@ -13,6 +13,7 @@
     android:layout_marginBottom="5dp">
 
     <LinearLayout
+        android:id="@+id/cardview_image"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

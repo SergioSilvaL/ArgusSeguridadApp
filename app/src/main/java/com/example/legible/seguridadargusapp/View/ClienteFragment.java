@@ -1,6 +1,7 @@
 package com.example.legible.seguridadargusapp.View;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -38,7 +39,6 @@ public class ClienteFragment extends Fragment {
 
 
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    private String ZonaReference = "";
 
     //Get Firebase Reference
     private DatabaseReference mDatabaseReference =
@@ -84,6 +84,30 @@ public class ClienteFragment extends Fragment {
                 supervisores supervisor = data.getValue(supervisores.class);
 
                 if(user.getEmail().equals(supervisor.getUsuarioEmail())){
+
+
+
+                    //Todo set supervisorNombre through Bundle
+
+////                  //create an intent object
+//                    Intent intent = new Intent(getContext(),GuardiaListaActivity.class);
+//                    //add thet data to the Intent Object
+//                    intent.putExtra("supervisorNombre",supervisor.getUsuarioNombre());
+//                    //start the second activity
+//                    //startActivity(intent);
+
+
+                    //mContext, GuardiaListaActivity.class
+
+//                    Intent in = new Intent(getActivity(),GuardiaListaActivity.class);
+//                    in.putExtra("supervior")
+//
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("supervisorNombre",supervisor.getUsuarioNombre());
+//                    Intent intent = new Intent(getActivity(),GuardiaListaActivity.class);
+//                    intent.putExtra("xy", bundle);
+//                    startActivity(intent);
+
 
 
                     zonaSupervisorRef = supervisor.getUsuarioZona();

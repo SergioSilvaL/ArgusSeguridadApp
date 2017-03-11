@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.legible.seguridadargusapp.View.GuardiaListaActivity;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.Cliente;
 import com.example.legible.seguridadargusapp.R;
+import com.example.legible.seguridadargusapp.View.GuardiaSignatureActivity;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,6 +33,8 @@ public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecycler
     private RecyclerView mRecyclerView;
     private final List<Cliente> mClient;
     private Random mRandom;
+    public static String myCliente;
+    public static String myZona;
 
     //Firebase Reference
     private DatabaseReference mClientRef;
@@ -55,6 +58,11 @@ public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecycler
 
 
         mClientRef.addChildEventListener(new ClientChildEventListener());
+
+
+        //Todo
+        myZona = ZonaRef;
+
 
 
     }
@@ -112,6 +120,15 @@ public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecycler
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //Todo How to pass Intents
+
+                // Todo my Cliente Ref
+                Intent i = new Intent(mContext, GuardiaSignatureActivity.class);
+                i.putExtra("cliente",currentCliente.getClienteNombre());
+                myCliente = currentCliente.getClienteNombre();
+
+
                 Intent intent = new Intent(mContext, GuardiaListaActivity.class);
                 intent.putExtra("Cliente",currentCliente.getClienteNombre());
                 Log.v("OnClickCliente: ",currentCliente.getClienteNombre());

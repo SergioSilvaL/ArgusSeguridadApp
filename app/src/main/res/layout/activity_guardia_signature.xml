@@ -52,23 +52,26 @@ android:weightSum="1">
                             android:text="Asistió"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/radioButton"
+                            android:id="@+id/radioButtonAsistio"
                             android:buttonTint="@android:color/holo_green_light"
+                            android:onClick="onRadioButtonClicked"
                             android:layout_weight="1"/>
                         <RadioButton
                             android:text="No Asistió"
                             android:buttonTint="@android:color/holo_green_light"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/radioButton1"
+                            android:id="@+id/radioButtonNoAsistio"
+                            android:onClick="onRadioButtonClicked"
                             android:layout_weight="1" />
 
                         <RadioButton
                             android:text="Llego Tarde"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/radioButton2"
+                            android:id="@+id/radioButtonLlegoTarde"
                             android:layout_weight="1"
+                            android:onClick="onRadioButtonClicked"
                             android:buttonTint="@android:color/holo_green_light" />
 
                     </RadioGroup>
@@ -76,6 +79,15 @@ android:weightSum="1">
                 </LinearLayout>
 
             </LinearLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/editTextObservacion"
+                android:hint="Observacion"
+                android:background="@color/cardview_light_background" />
 
             <TextView
                 android:text='Firma'

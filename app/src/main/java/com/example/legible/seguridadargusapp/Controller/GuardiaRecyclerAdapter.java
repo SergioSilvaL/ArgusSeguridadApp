@@ -25,10 +25,12 @@ import java.util.List;
 public class GuardiaRecyclerAdapter extends RecyclerView.Adapter<GuardiaRecyclerAdapter.ViewHolder>{
 
     private Context mContext;
-    private final List<guardias> mGuardia;
+    private List<guardias> mGuardia;
 
     private DatabaseReference mGuardiasRef;
 
+
+    public static List<guardias> filterGuardias;
 
     public GuardiaRecyclerAdapter(Context context){
         mGuardia =  new ArrayList<>();
@@ -40,7 +42,14 @@ public class GuardiaRecyclerAdapter extends RecyclerView.Adapter<GuardiaRecycler
                 .child("guardias");
 
         mGuardiasRef.addChildEventListener(new GuardiaChildEventListener());
+        filterGuardias = mGuardia;
 
+    }
+
+    public void setFilter(ArrayList<guardias> newList){
+        mGuardia = new ArrayList<>();
+        mGuardia.addAll(newList);
+        notifyDataSetChanged();
     }
 
     class GuardiaChildEventListener implements ChildEventListener{

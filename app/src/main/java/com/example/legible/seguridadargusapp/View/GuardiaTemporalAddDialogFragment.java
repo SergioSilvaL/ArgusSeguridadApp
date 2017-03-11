@@ -114,17 +114,21 @@ public class GuardiaTemporalAddDialogFragment extends DialogFragment{
 
         //Get Current SuperVisior
         supervisorNombre = getArguments().getString("supervisorNombre");
+
+        //Set Descripcion
         String descripcion = supervisorNombre + " agrego a un nuevo guardia";
 
 
 
         // Get the current notificition
         Notificacion notificacion = new Notificacion(accion,descripcion,fecha);
+        //Set the Guardia data model
         guardias guardia = new guardias();
         guardia.setUsuarioNombre(usuarioNombre.getText().toString());
         guardia.setUsuarioDomicilio(usuarioDomicilio.getText().toString());
         String telefono = usuarioTelefono.getText().toString();
         guardia.setUsuarioTelefono(Long.valueOf(telefono));
+
         //Set the information for the Notification
         //Todo set notification with it's information
 

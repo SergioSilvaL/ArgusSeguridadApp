@@ -13,21 +13,24 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.legible.seguridadargusapp.Controller.GuardiaRecyclerAdapter;
+import com.example.legible.seguridadargusapp.Model.ObjectModel.guardias;
 import com.example.legible.seguridadargusapp.R;
 import com.example.legible.seguridadargusapp.Controller.Adapter_ViewPagerMain;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-
-
     private Adapter_ViewPagerMain mAdapter_viewPagerMain;
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
+    private GuardiaRecyclerAdapter mAdapter = new GuardiaRecyclerAdapter(this);
 
 
 
@@ -57,6 +60,34 @@ public class MainActivity extends AppCompatActivity {
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                newText = newText.toLowerCase();
+                ArrayList<guardias> newList = new ArrayList<>();
+
+                for (guardias guardia : GuardiaRecyclerAdapter.filterGuardias){
+                    String name = guardia.getUsuarioNombre().toLowerCase();
+
+                    if (name.contains(newText)){
+                        newList.add(guardia);
+                    }
+                }
+
+                mAdapter.setFilter(newList);
+
+
+
+                return false;
+            }
+        });
 
 
         return true;
