@@ -13,6 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.legible.seguridadargusapp.Model.ObjectModel.Cliente;
+import com.example.legible.seguridadargusapp.Model.ObjectModel.Incidente;
 import com.example.legible.seguridadargusapp.R;
 import com.example.legible.seguridadargusapp.Controller.GuardiaListaRecyclerAdapter;
 
@@ -94,6 +96,7 @@ public class GuardiaListaActivity extends AppCompatActivity {
 
             case R.id.action_add_incidente:
                 //Do something
+                addIncidente();
 
             return true;
 
@@ -116,5 +119,13 @@ public class GuardiaListaActivity extends AppCompatActivity {
         fm = getSupportFragmentManager();
         dialogFragment.show(fm,"fragment_guarida_temporal_add");
 
+    }
+
+    public void addIncidente(){
+
+        String supervisor="";
+        IncidenteAddDialogFragment df = IncidenteAddDialogFragment.newInstance(ClienteRef,supervisor);
+        fm = getSupportFragmentManager();
+        df.show(fm,"dialog_fragment_incidente_add");
     }
 }
