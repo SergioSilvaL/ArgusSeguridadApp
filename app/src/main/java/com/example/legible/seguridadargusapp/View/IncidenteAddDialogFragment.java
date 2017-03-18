@@ -161,7 +161,7 @@ public class IncidenteAddDialogFragment extends DialogFragment {
 
         //push to notifiacion
         String descripcion="Hubo un "+ incidenteTipo + " en "+ incidenteCliente;
-        Notificacion notificacion = new Notificacion("Incidente",descripcion, incidenteFecha );
+        Notificacion notificacion = new Notificacion("AI",descripcion, incidenteFecha );
         mNotificationRef.push().setValue(notificacion);
 
 
