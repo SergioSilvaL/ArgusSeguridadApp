@@ -1,17 +1,25 @@
 package com.example.legible.seguridadargusapp.View;
 
+
+
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.legible.seguridadargusapp.Controller.GuardiaRecyclerAdapter;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.guardias;
@@ -42,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Check to see if thier is an interntConnnection
+        checkInternetConnection();
+        
         //Create costume TabLayour for our main view.
         setTabLayoutMain();
 
@@ -49,6 +60,19 @@ public class MainActivity extends AppCompatActivity {
         setViewPagerMain();
 
         Log.d("DEBUG", "Terminamos onCreate");
+    }
+
+    private void checkInternetConnection() {
+
+
+        ConnectivityManager conMgr = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+
+        if(netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()){
+            InternetConnectionDialogFragment df = new InternetConnectionDialogFragment();
+            FragmentManager fm = getSupportFragmentManager();
+            df.show(fm,"dialog_fragment_incidente_add");
+        }
     }
 
 //    public String getInfo(){return ZonaSupervisorRef;}
@@ -74,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<guardias> newList = new ArrayList<>();
 
                 for (guardias guardia : GuardiaRecyclerAdapter.filterGuardias){
+                    //Get the current Guardia
                     String name = guardia.getUsuarioNombre().toLowerCase();
 
                     if (name.contains(newText)){

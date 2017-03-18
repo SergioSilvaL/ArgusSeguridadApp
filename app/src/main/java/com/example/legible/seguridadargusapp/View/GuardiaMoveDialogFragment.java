@@ -119,7 +119,7 @@ public class GuardiaMoveDialogFragment extends DialogFragment{
 
         //GetCurrent Supervisor
         //Todo set the correct SuperVisor
-        String supervisor = "supervisor";
+        String supervisor = getArguments().getString("supervisorNombre");
 
         //setDescription
         //Todo set the guardia that was moved
