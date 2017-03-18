@@ -1,6 +1,9 @@
 package com.example.legible.seguridadargusapp.View;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.nfc.Tag;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -16,11 +19,17 @@ import com.example.legible.seguridadargusapp.Model.ObjectModel.BitacoraGuardia;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.DatePost;
 import com.example.legible.seguridadargusapp.R;
 import com.github.gcacace.signaturepad.views.SignaturePad;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.net.URI;
 
 public class GuardiaSignatureActivity extends AppCompatActivity {
 
@@ -35,7 +44,9 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
     String turno;
     String guardiaNombre;
     String guardiaKey;
+    String guardiaFirma;
 
+    //set fecha in datekey
     DatabaseReference mRefBitacora =
             FirebaseDatabase.getInstance().getReference().child("Argus").child("Bitacora");
 
@@ -84,30 +95,63 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                //Todo Send Image to Database
-
-
-
                 observacion = editTextObservacion.getText().toString();
 
 
-                img = signaturePad.getSignatureSvg();
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+
+                // Create a storage reference from our app
+                StorageReference storageRef =  storage.getReference();
+
+                //GetCurrent dataSpecialFormat
+                String fecha = new DatePost().getDateKey();
+                // Create a child reference
+                // imagesRef now points to "images"
 
 
-                guardiaKey = getIntent().getStringExtra("guardiaKey");
+                StorageReference imagesRef = storageRef.child("Bitacora").child(fecha).child(getIntent().getStringExtra("guardiaKey")).child("image");
+
+                //Get the data from Signature Pad as bytes
+                signaturePad.setDrawingCacheEnabled(true);
+                signaturePad.buildDrawingCache();
+                Bitmap signaturePadDrawingCache = signaturePad.getDrawingCache();
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                signaturePadDrawingCache.compress(Bitmap.CompressFormat.JPEG,100,baos);
+                byte[] data = baos.toByteArray();
+
+                //Begin Upload Task
+                UploadTask uploadTask = imagesRef.putBytes(data);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //Handle unsuccesful uploads
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        //taskSnapshot.getMetadata() contains file metadata such as size, content -type, and download URL.
+
+                        Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                        Log.v("downloadUrl",downloadUrl.toString());
+
+                        //Push Data to Firebase if Image uploadad succesfull
+
+                        guardiaFirma = downloadUrl.toString();
+
+                        guardiaKey = getIntent().getStringExtra("guardiaKey");
+
+                        turno = "dia";
+                        guardiaNombre = getIntent().getStringExtra("guardiaNombre");
+
+                        pushData();
 
 
-//                if (getIntent().getStringExtra("guardiaTurno")==null){
-//                    turno = "";
-//                }else{
-                    //turno = getIntent().getStringExtra("guardiaTurno");
-     //           }
+                    }
+                });
 
-                turno = "dia";
-                guardiaNombre = getIntent().getStringExtra("guardiaNombre");
 
-                pushData();
-
+                // end of upload intent
 
                 //write code for saving the signature here
                 Toast.makeText(GuardiaSignatureActivity.this, "Signature Saved", Toast.LENGTH_SHORT).show();
@@ -137,11 +181,19 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
         String cliente = ClienteRecyclerAdapter.myCliente;
         String zona = ClienteRecyclerAdapter.myZona;
-        BitacoraGuardia bc = new BitacoraGuardia(status,img,observacion,cliente,zona,turno,guardiaNombre,currentDate);
+
+        BitacoraGuardia bc = new BitacoraGuardia(status,guardiaFirma,observacion,cliente,zona,turno,guardiaNombre,currentDate);
+
+
+        //Todo set datekey with fecha
+
+
+
+        //mRefBitacora.child(dateKey).child(guardiaKey).setValue(bc);
+        String fecha = "20170316";
 
         mRefBitacora.child(dateKey).child(guardiaKey).setValue(bc);
-
-
+        //mRefBitacora.child(dateKey).setValue(fecha);
 
     }
 
