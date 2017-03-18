@@ -53,12 +53,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/radioButtonAsistio"
-                            android:buttonTint="@android:color/holo_green_light"
                             android:onClick="onRadioButtonClicked"
                             android:layout_weight="1"/>
                         <RadioButton
                             android:text="No Asistió"
-                            android:buttonTint="@android:color/holo_green_light"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/radioButtonNoAsistio"
@@ -71,8 +69,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/radioButtonLlegoTarde"
                             android:layout_weight="1"
-                            android:onClick="onRadioButtonClicked"
-                            android:buttonTint="@android:color/holo_green_light" />
+                            android:onClick="onRadioButtonClicked" />
 
                     </RadioGroup>
 
