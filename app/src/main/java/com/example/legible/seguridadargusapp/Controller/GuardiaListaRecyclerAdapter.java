@@ -194,7 +194,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
     }
 
     public void showMoveGuardiaDialogFragment(String key,String guardiaNombre){
-        GuardiaMoveDialogFragment df = GuardiaMoveDialogFragment.newInstance(clienteRef,"supervisor",key,guardiaNombre);
+        GuardiaMoveDialogFragment df = GuardiaMoveDialogFragment.newInstance(clienteRef,ClienteRecyclerAdapter.mySupervisor,key,guardiaNombre);
         df.show(fm,"fragment_guardia_move");
     }
 

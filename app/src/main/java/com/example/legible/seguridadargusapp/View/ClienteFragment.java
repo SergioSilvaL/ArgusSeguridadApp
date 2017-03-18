@@ -32,6 +32,7 @@ public class ClienteFragment extends Fragment {
 
     private ClienteRecyclerAdapter mAdapter;
     private String zonaSupervisorRef;
+    private String supervisorNombreRef;
     private RecyclerView recyclerView;
 
     //Test it out on here
@@ -89,31 +90,13 @@ public class ClienteFragment extends Fragment {
 
                     //Todo set supervisorNombre through Bundle
 
-////                  //create an intent object
-//                    Intent intent = new Intent(getContext(),GuardiaListaActivity.class);
-//                    //add thet data to the Intent Object
-//                    intent.putExtra("supervisorNombre",supervisor.getUsuarioNombre());
-//                    //start the second activity
-//                    //startActivity(intent);
 
-
-                    //mContext, GuardiaListaActivity.class
-
-//                    Intent in = new Intent(getActivity(),GuardiaListaActivity.class);
-//                    in.putExtra("supervior")
-//
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString("supervisorNombre",supervisor.getUsuarioNombre());
-//                    Intent intent = new Intent(getActivity(),GuardiaListaActivity.class);
-//                    intent.putExtra("xy", bundle);
-//                    startActivity(intent);
-
-
+                    supervisorNombreRef = supervisor.getUsuarioNombre();
 
                     zonaSupervisorRef = supervisor.getUsuarioZona();
 
                     //Create the Adapter
-                    mAdapter = new ClienteRecyclerAdapter(ClienteFragment.this.getContext(), recyclerView, zonaSupervisorRef);
+                    mAdapter = new ClienteRecyclerAdapter(ClienteFragment.this.getContext(), recyclerView, zonaSupervisorRef,supervisorNombreRef);
 
 
                     //Binding

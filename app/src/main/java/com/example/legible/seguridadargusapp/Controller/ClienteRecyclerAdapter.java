@@ -35,12 +35,13 @@ public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecycler
     private Random mRandom;
     public static String myCliente;
     public static String myZona;
+    public static String mySupervisor;
 
     //Firebase Reference
     private DatabaseReference mClientRef;
     private String ZonaRef;
 
-    public ClienteRecyclerAdapter(Context context, RecyclerView recyclerView,String ZonaRef) {
+    public ClienteRecyclerAdapter(Context context, RecyclerView recyclerView,String ZonaRef,String supervisorRef) {
         mClient = new ArrayList<>();//mPasswords = new ArrayList<>();
         mContext = context;//mInflator = LayoutInflator.from(context);
         mRandom = new Random();
@@ -62,6 +63,9 @@ public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecycler
 
         //Todo
         myZona = ZonaRef;
+        mySupervisor = supervisorRef;
+
+
 
 
 
