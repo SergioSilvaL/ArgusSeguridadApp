@@ -9,6 +9,14 @@
     tools:context="com.example.legible.seguridadargusapp.View.SignInActivity"
     android:background="@color/colorPrimary">
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="20dp"
+        android:visibility="gone" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -37,7 +45,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:id="@+id/viewEmail">
                     <ImageView
                         android:layout_width="@dimen/ancho_ic_correo"
                         android:layout_height="@dimen/alto_ic_correo"
@@ -47,19 +56,21 @@
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:theme="@style/EditTextWhite">
+                        android:theme="@style/EditTextWhite"
+                        android:id="@+id/EmailInputLayout">
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/input_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/hint_username" />
+                            android:hint="@string/hint_email" />
                     </android.support.design.widget.TextInputLayout>
 
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
                     <ImageView
                         android:layout_width="@dimen/ancho_ic_correo"
                         android:layout_height="@dimen/alto_ic_correo"
@@ -71,6 +82,7 @@
                         android:layout_height="wrap_content"
                         android:theme="@style/EditTextWhite"
                         >
+
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/input_password"
                             android:layout_width="match_parent"
@@ -85,21 +97,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/text_button_login"
                     android:theme="@style/RaisedButtonDark"
-                    android:id="@+id/btn_login"/>
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center">
-                </RelativeLayout>
+                    android:id="@+id/btn_login"
+                    android:layout_marginTop="20dp" />
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center|bottom"
-        android:layout_marginBottom="20dp"
-        android:visibility="gone" />
 </android.support.design.widget.CoordinatorLayout>

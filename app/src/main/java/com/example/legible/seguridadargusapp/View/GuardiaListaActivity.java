@@ -15,10 +15,9 @@ import com.example.legible.seguridadargusapp.Controller.GuardiaListaRecyclerAdap
 
 public class GuardiaListaActivity extends AppCompatActivity {
 
-    private String clienteRef;
-    private String supervisorRef;
+    private String clienteRef = ClienteRecyclerAdapter.myCliente;
+    private String supervisorRef = ClienteRecyclerAdapter.mySupervisor;
     private android.support.v4.app.FragmentManager fm;
-
 
     private GuardiaListaRecyclerAdapter mAdapter;
 
@@ -27,46 +26,20 @@ public class GuardiaListaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guardia_lista);
 
-
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//
-//
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        ActionBar supportActionBar = getSupportActionBar();
-//        if (supportActionBar != null) {
-//            clienteRef = getIntent().getStringExtra("Cliente");
-//            supportActionBar.setTitle(clienteRef);
-//        }
-
-
         //Set our support actionBar
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_guardia_lista);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-        clienteRef = getIntent().getStringExtra("Cliente");
-        //Todo get Supervisor Ref
-        supervisorRef = ClienteRecyclerAdapter.mySupervisor;
-
         actionBar.setTitle(clienteRef);
-
-
-
-
-
 
         mAdapter =  new GuardiaListaRecyclerAdapter(this, clienteRef,getSupportFragmentManager());
 
-
         RecyclerView view = (RecyclerView) findViewById(R.id.recycler_view_guardia_lista);
         view.setLayoutManager(new GridLayoutManager(this,2));
-        //view.setLayoutManager(new LinearLayoutManager(this));
         view.setHasFixedSize(true);
         view.setAdapter(mAdapter);
-
-
 
     }
 
@@ -105,15 +78,7 @@ public class GuardiaListaActivity extends AppCompatActivity {
 
     public void addGuardiaTemporal(){
 
-
-        //Todo getStringExtra supervisorNombre from bundle
-
-//        Intent in = getIntent();
-//        Bundle bundle  = getIntent().getExtras();
-//        String supervisor = bundle.getString("SupervisorNombre");
-        String supervisor = "";
-
-        GuardiaTemporalAddDialogFragment dialogFragment = GuardiaTemporalAddDialogFragment.newInstance(clienteRef,ClienteRecyclerAdapter.mySupervisor);
+        GuardiaTemporalAddDialogFragment dialogFragment = GuardiaTemporalAddDialogFragment.newInstance(clienteRef,supervisorRef);
         fm = getSupportFragmentManager();
         dialogFragment.show(fm,"fragment_guarida_temporal_add");
 
@@ -121,8 +86,7 @@ public class GuardiaListaActivity extends AppCompatActivity {
 
     public void addIncidente(){
 
-        String supervisor="";
-        IncidenteAddDialogFragment df = IncidenteAddDialogFragment.newInstance(clienteRef,supervisor);
+        IncidenteAddDialogFragment df = IncidenteAddDialogFragment.newInstance(clienteRef,supervisorRef);
         fm = getSupportFragmentManager();
         df.show(fm,"dialog_fragment_incidente_add");
     }

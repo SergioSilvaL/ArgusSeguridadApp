@@ -14,6 +14,7 @@ public class guardias {
     private String usuarioTurno;
     //Really? Zona are you even using that bro...
     private String usuarioZona;
+    private String usuarioCliente;
     private String key;
 
     public guardias(){}
@@ -91,5 +92,13 @@ public class guardias {
 
     public void setUsuarioDisponible(boolean usuarioDisponible) {
         this.usuarioDisponible = usuarioDisponible;
+    }
+
+    public String getUsuarioCliente() {
+        return usuarioCliente;
+    }
+
+    public void setUsuarioCliente(String usuarioCliente) {
+        this.usuarioCliente = usuarioCliente;
     }
 }

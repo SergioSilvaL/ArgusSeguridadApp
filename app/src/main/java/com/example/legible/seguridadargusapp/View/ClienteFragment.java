@@ -55,6 +55,38 @@ public class ClienteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        DatabaseReference mDatabaseReference =
+                FirebaseDatabase.getInstance().getReference()
+                        .child("Argus")
+                        .child("supervisores");
+
+        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot data: dataSnapshot.getChildren()){
+
+                    supervisores supervisor = data.getValue(supervisores.class);
+
+                    if(user.getEmail().equals(supervisor.getUsuarioEmail())){
+
+                        //Todo set supervisorNombre through Bundle
+                        supervisorNombreRef = supervisor.getUsuarioNombre();
+
+                        zonaSupervisorRef = supervisor.getUsuarioZona();
+
+                        //Create the Adapter
+                        mAdapter = new ClienteRecyclerAdapter(ClienteFragment.this.getContext(), recyclerView, zonaSupervisorRef,supervisorNombreRef);
+                        return;
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         //Inflates the layout for this fragment
 
@@ -67,55 +99,53 @@ public class ClienteFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         recyclerView.setHasFixedSize(true);
 
-
-        mDatabaseReference.addListenerForSingleValueEvent(new ZonaReferenceEventListener());
-
+        recyclerView.setAdapter(mAdapter);
 
 
         return view;
     }
 
-    class ZonaReferenceEventListener implements ValueEventListener{
-
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-
-            for(DataSnapshot data: dataSnapshot.getChildren()){
-
-                supervisores supervisor = data.getValue(supervisores.class);
-
-                if(user.getEmail().equals(supervisor.getUsuarioEmail())){
-
-
-
-                    //Todo set supervisorNombre through Bundle
-
-
-                    supervisorNombreRef = supervisor.getUsuarioNombre();
-
-                    zonaSupervisorRef = supervisor.getUsuarioZona();
-
-                    //Create the Adapter
-                    mAdapter = new ClienteRecyclerAdapter(ClienteFragment.this.getContext(), recyclerView, zonaSupervisorRef,supervisorNombreRef);
-
-
-                    //Binding
-                    recyclerView.setAdapter(mAdapter);
-
-
-                    Log.v(TAG,zonaSupervisorRef);
-                    return;
-
-                }
-            }
-
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-
-        }
-    }
+//    class ZonaReferenceEventListener implements ValueEventListener{
+//
+//        @Override
+//        public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//            for(DataSnapshot data: dataSnapshot.getChildren()){
+//
+//                supervisores supervisor = data.getValue(supervisores.class);
+//
+//                if(user.getEmail().equals(supervisor.getUsuarioEmail())){
+//
+//
+//
+//                    //Todo set supervisorNombre through Bundle
+//
+//
+//                    supervisorNombreRef = supervisor.getUsuarioNombre();
+//
+//                    zonaSupervisorRef = supervisor.getUsuarioZona();
+//
+//                    //Create the Adapter
+//                    mAdapter = new ClienteRecyclerAdapter(ClienteFragment.this.getContext(), recyclerView, zonaSupervisorRef,supervisorNombreRef);
+//
+//
+//                    //Binding
+//                    recyclerView.setAdapter(mAdapter);
+//
+//
+//                    Log.v(TAG,zonaSupervisorRef);
+//                    return;
+//
+//                }
+//            }
+//
+//        }
+//
+//        @Override
+//        public void onCancelled(DatabaseError databaseError) {
+//
+//        }
+//    }
 
 
 

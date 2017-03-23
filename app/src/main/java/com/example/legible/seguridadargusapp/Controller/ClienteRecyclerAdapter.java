@@ -32,23 +32,19 @@ public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecycler
     private Context mContext;
     private RecyclerView mRecyclerView;
     private final List<Cliente> mClient;
-    private Random mRandom;
     public static String myCliente;
     public static String myZona;
     public static String mySupervisor;
 
     //Firebase Reference
     private DatabaseReference mClientRef;
-    private String ZonaRef;
+
 
     public ClienteRecyclerAdapter(Context context, RecyclerView recyclerView,String ZonaRef,String supervisorRef) {
         mClient = new ArrayList<>();//mPasswords = new ArrayList<>();
         mContext = context;//mInflator = LayoutInflator.from(context);
-        mRandom = new Random();
         mRecyclerView = recyclerView;
-        this.ZonaRef=ZonaRef;
 
-        //
 
         //get all the clients from the database reference
         mClientRef = FirebaseDatabase.getInstance().getReference()
@@ -64,9 +60,6 @@ public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecycler
         //Todo
         myZona = ZonaRef;
         mySupervisor = supervisorRef;
-
-
-
 
 
     }

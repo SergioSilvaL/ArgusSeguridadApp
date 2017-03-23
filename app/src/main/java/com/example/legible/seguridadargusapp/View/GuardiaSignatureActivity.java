@@ -21,8 +21,11 @@ import com.example.legible.seguridadargusapp.R;
 import com.github.gcacace.signaturepad.views.SignaturePad;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -38,7 +41,6 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
     Button saveButton, clearButton;
     EditText editTextObservacion;
     String status="Asisitio";
-    String img;
     String observacion;
     String cliente;
     String turno;
@@ -53,16 +55,14 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Set Views
         setContentView(R.layout.activity_guardia_signature);
-
-        //Costum Components
-
         editTextObservacion = (EditText) findViewById(R.id.editTextObservacion);
-
-
         signaturePad = (SignaturePad)findViewById(R.id.signaturePad);
         saveButton = (Button)findViewById(R.id.saveButton);
         clearButton = (Button)findViewById(R.id.clearButton);
+
 
         //disable both buttons at start
         saveButton.setEnabled(false);
@@ -141,10 +141,26 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
                         guardiaKey = getIntent().getStringExtra("guardiaKey");
 
-                        turno = "dia";
-                        guardiaNombre = getIntent().getStringExtra("guardiaNombre");
+                        //TODO Turno BUG
 
-                        pushData();
+                        //Todo UnDO this Bad Practice
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Argus").child("guardias").child(guardiaKey).child("usuarioTurno");
+                        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                turno = dataSnapshot.getValue(String.class);
+                                guardiaNombre = getIntent().getStringExtra("guardiaNombre");
+
+                                pushData();
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
 
 
                     }
@@ -205,11 +221,11 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.radioButtonAsistio:
                 if (checked)
-                    status = "Asistio";
+                    status = "Asistió";
                 break;
             case R.id.radioButtonNoAsistio:
                 if (checked)
-                    status = "No Asistio";
+                    status = "No Asistió";
                 break;
 
             case R.id.radioButtonLlegoTarde:

@@ -88,13 +88,22 @@
                 android:textColor="@android:color/black"
                 android:textStyle="normal" />
 
-            <com.github.gcacace.signaturepad.views.SignaturePad
+
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="325dp"
-                android:id="@+id/signaturePad"
-                android:background="@drawable/back"
-                android:layout_marginBottom="10sp"
-                android:layout_weight="0.95" />
+                android:layout_height="match_parent"
+                android:background="@color/colorAccent">
+
+                <com.github.gcacace.signaturepad.views.SignaturePad
+                    android:layout_width="match_parent"
+                    android:layout_height="325dp"
+                    android:id="@+id/signaturePad"
+
+                    android:layout_weight="0.95"
+                    android:background="@color/cardview_light_background"
+                    android:layout_margin="1sp" />
+            </FrameLayout>
+
 
             <EditText
                 android:layout_width="match_parent"

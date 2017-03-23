@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.legible.seguridadargusapp.Controller.ClienteRecyclerAdapter;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.DatePost;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.Notificacion;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.guardias;
@@ -128,6 +129,7 @@ public class GuardiaTemporalAddDialogFragment extends DialogFragment{
         guardia.setUsuarioDomicilio(usuarioDomicilio.getText().toString());
         String telefono = usuarioTelefono.getText().toString();
         guardia.setUsuarioTelefono(Long.valueOf(telefono));
+        guardia.setUsuarioCliente(ClienteRecyclerAdapter.myCliente);
 
         //Set the information for the Notification
         //Todo set notification with it's information

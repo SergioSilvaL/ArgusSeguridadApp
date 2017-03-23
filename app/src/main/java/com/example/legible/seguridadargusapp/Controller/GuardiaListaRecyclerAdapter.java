@@ -131,8 +131,9 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
 
                 Intent intent = new Intent(mContext, GuardiaSignatureActivity.class);
                 intent.putExtra("guardiaKey",guardia.getKey());
-                intent.putExtra("guardiaTurno",guardia.getUsuarioTurno());
+                //intent.putExtra("guardiaTurno",guardia.getUsuarioTurno());
                 intent.putExtra("guardiaNombre",guardia.getUsuarioNombre());
+
                 mContext.startActivity(intent);
 
 
@@ -144,11 +145,8 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
             @Override
             public void onClick(View v) {
 
+            showGuardiaOptionsMenu(guardia.getKey(),guardia.getUsuarioNombre());
 
-                showGuardiaOptionsMenu(guardia.getKey(),guardia.getUsuarioNombre());
-
-
-                //showDialogFragment(guardia.getKey());
 
             }
         });

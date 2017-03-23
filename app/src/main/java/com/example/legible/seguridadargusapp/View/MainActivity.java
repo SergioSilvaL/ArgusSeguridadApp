@@ -41,8 +41,6 @@ public class MainActivity extends AppCompatActivity {
     private GuardiaRecyclerAdapter mAdapter = new GuardiaRecyclerAdapter(this);
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    public String getInfo(){return ZonaSupervisorRef;}
+    //public static String ZonaSuperVisroRef;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
