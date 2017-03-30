@@ -1,8 +1,10 @@
 package com.example.legible.seguridadargusapp.View;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,10 +33,10 @@ import com.google.firebase.database.ValueEventListener;
 public class ClienteFragment extends Fragment {
 
     private ClienteRecyclerAdapter mAdapter;
-    private String zonaSupervisorRef;
-    private String supervisorNombreRef;
+    private String zonaSupervisorRef, zonaRef;
     private RecyclerView recyclerView;
-
+    private View view;
+    private Context context;
     //Test it out on here
     private static final String TAG = "ClientFragment";
 
@@ -55,97 +57,75 @@ public class ClienteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        DatabaseReference mDatabaseReference =
-                FirebaseDatabase.getInstance().getReference()
-                        .child("Argus")
-                        .child("supervisores");
-
-        mDatabaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot data: dataSnapshot.getChildren()){
-
-                    supervisores supervisor = data.getValue(supervisores.class);
-
-                    if(user.getEmail().equals(supervisor.getUsuarioEmail())){
-
-                        //Todo set supervisorNombre through Bundle
-                        supervisorNombreRef = supervisor.getUsuarioNombre();
-
-                        zonaSupervisorRef = supervisor.getUsuarioZona();
-
-                        //Create the Adapter
-                        mAdapter = new ClienteRecyclerAdapter(ClienteFragment.this.getContext(), recyclerView, zonaSupervisorRef,supervisorNombreRef);
-                        return;
-
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
         //Inflates the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_cliente, container, false);
+        view = inflater.inflate(R.layout.fragment_cliente, container, false);
 
-        //Capture the recyclerView
-
-        recyclerView = (RecyclerView)
-                view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        recyclerView.setHasFixedSize(true);
-
-        recyclerView.setAdapter(mAdapter);
+//        //Capture the recyclerView
+//
+//        recyclerView = (RecyclerView)
+//                view.findViewById(R.id.recyclerView);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+//        recyclerView.setHasFixedSize(true);
 
 
-        return view;
+        mDatabaseReference.addListenerForSingleValueEvent(new ZonaReferenceEventListener());
+
+
+        if (view !=  null){
+            return view;
+        }else{
+
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return view;
+        }
+
     }
 
-//    class ZonaReferenceEventListener implements ValueEventListener{
-//
-//        @Override
-//        public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//            for(DataSnapshot data: dataSnapshot.getChildren()){
-//
-//                supervisores supervisor = data.getValue(supervisores.class);
-//
-//                if(user.getEmail().equals(supervisor.getUsuarioEmail())){
-//
-//
-//
-//                    //Todo set supervisorNombre through Bundle
-//
-//
-//                    supervisorNombreRef = supervisor.getUsuarioNombre();
-//
-//                    zonaSupervisorRef = supervisor.getUsuarioZona();
-//
-//                    //Create the Adapter
-//                    mAdapter = new ClienteRecyclerAdapter(ClienteFragment.this.getContext(), recyclerView, zonaSupervisorRef,supervisorNombreRef);
-//
-//
-//                    //Binding
-//                    recyclerView.setAdapter(mAdapter);
-//
-//
-//                    Log.v(TAG,zonaSupervisorRef);
-//                    return;
-//
-//                }
-//            }
-//
-//        }
-//
-//        @Override
-//        public void onCancelled(DatabaseError databaseError) {
-//
-//        }
-//    }
+    class ZonaReferenceEventListener implements ValueEventListener{
+
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+
+            for(DataSnapshot data: dataSnapshot.getChildren()){
+
+                supervisores supervisor = data.getValue(supervisores.class);
+
+                if(user.getEmail().equals(supervisor.getUsuarioEmail())){
+
+                    zonaSupervisorRef = supervisor.getUsuarioNombre();
+                    zonaRef = supervisor.getUsuarioZona();
+
+                    //Create the Adapter
+                    mAdapter = new ClienteRecyclerAdapter(ClienteFragment.this.getContext(), recyclerView, zonaRef, zonaSupervisorRef);
+                    //Binding
+
+                    //Capture the recyclerView
+
+                    recyclerView = (RecyclerView)
+                            view.findViewById(R.id.recyclerView);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                    recyclerView.setHasFixedSize(true);
+
+                    recyclerView.setAdapter(mAdapter);
+
+                    return;
+
+                }
+            }
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    }
 
 
 

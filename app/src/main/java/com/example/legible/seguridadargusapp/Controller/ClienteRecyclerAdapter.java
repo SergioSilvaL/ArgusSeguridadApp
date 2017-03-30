@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.legible.seguridadargusapp.View.ClienteFragment;
 import com.example.legible.seguridadargusapp.View.GuardiaListaActivity;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.Cliente;
 import com.example.legible.seguridadargusapp.R;
@@ -20,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -32,6 +34,7 @@ public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecycler
     private Context mContext;
     private RecyclerView mRecyclerView;
     private final List<Cliente> mClient;
+    private Random mRandom;
     public static String myCliente;
     public static String myZona;
     public static String mySupervisor;
@@ -40,26 +43,26 @@ public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecycler
     private DatabaseReference mClientRef;
 
 
-    public ClienteRecyclerAdapter(Context context, RecyclerView recyclerView,String ZonaRef,String supervisorRef) {
+    public ClienteRecyclerAdapter(Context context, RecyclerView recyclerView,String Zona,String supervisor) {
         mClient = new ArrayList<>();//mPasswords = new ArrayList<>();
         mContext = context;//mInflator = LayoutInflator.from(context);
         mRecyclerView = recyclerView;
-
 
         //get all the clients from the database reference
         mClientRef = FirebaseDatabase.getInstance().getReference()
                 .child("Argus")
                 .child("Zonas")
-                .child(ZonaRef)
+                .child(Zona)
                 .child("zonaClientes");
 
 
         mClientRef.addChildEventListener(new ClientChildEventListener());
 
 
-        //Todo
-        myZona = ZonaRef;
-        mySupervisor = supervisorRef;
+        //Todo add Ref
+        myZona = Zona;
+        mySupervisor = supervisor;
+
 
 
     }
@@ -69,11 +72,38 @@ public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecycler
 
     class ClientChildEventListener implements ChildEventListener{
 
+
+
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
             Cliente cliente = dataSnapshot.getValue(Cliente.class);
-            Log.v("Cliente: ",cliente.getClienteNombre());
-            mClient.add(0,cliente);
+
+
+            boolean bandera = false;
+
+            if (mClient.size()>0) {
+
+                for (Cliente Cliente : mClient) {
+
+
+                    if (Cliente.getClienteNombre().equals(cliente.getClienteNombre()))
+                        bandera = true;
+
+
+                }
+            }
+
+
+
+            if (bandera==false){
+                mClient.add(0,cliente);
+            }
+
+
+
+            //TODO Order LIST
+
             notifyDataSetChanged();
         }
 
@@ -82,8 +112,26 @@ public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecycler
 
         }
 
+
+
         @Override
         public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            Cliente clientRemoved = dataSnapshot.getValue(Cliente.class);
+
+            int i = 0;
+
+            for (Cliente cliente : mClient){
+                if (mClient.get(i).getClienteNombre().equals(clientRemoved.getClienteNombre())){
+
+                    mClient.remove(i);
+                }
+                i++;
+            }
+
+            notifyItemRemoved(i);
+
+
 
         }
 
