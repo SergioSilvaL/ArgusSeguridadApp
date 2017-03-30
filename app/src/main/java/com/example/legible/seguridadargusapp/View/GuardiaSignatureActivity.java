@@ -1,5 +1,6 @@
 package com.example.legible.seguridadargusapp.View;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.nfc.Tag;
@@ -15,8 +16,10 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.legible.seguridadargusapp.Controller.ClienteRecyclerAdapter;
+import com.example.legible.seguridadargusapp.Controller.GuardiaListaRecyclerAdapter;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.BitacoraGuardia;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.DatePost;
+import com.example.legible.seguridadargusapp.Model.ObjectModel.guardias;
 import com.example.legible.seguridadargusapp.R;
 import com.github.gcacace.signaturepad.views.SignaturePad;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -33,6 +36,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.net.URI;
+import java.util.Date;
 
 public class GuardiaSignatureActivity extends AppCompatActivity {
 
@@ -132,6 +136,8 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         //taskSnapshot.getMetadata() contains file metadata such as size, content -type, and download URL.
 
+                        // uploadData();
+
                         Uri downloadUrl = taskSnapshot.getDownloadUrl();
                         Log.v("downloadUrl",downloadUrl.toString());
 
@@ -152,6 +158,22 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                                 guardiaNombre = getIntent().getStringExtra("guardiaNombre");
 
                                 pushData();
+
+                                //startActivity(new Intent(GuardiaSignatureActivity.this, GuardiaListaActivity.class));
+
+                                //Todo Intent Code
+                                Intent resultIntent = new Intent();
+                                resultIntent.putExtra(GuardiaListaActivity.EXTRA_ASISTENCIA, status);
+                                resultIntent.putExtra(GuardiaListaActivity.EXTRA_ASISTENCIA_GUARDIA_CAPTURADO, guardiaNombre);
+                                setResult(RESULT_OK, resultIntent);
+                                //Change to Intent
+                                //GuardiaListaRecyclerAdapter.myGuardiaCaptura = guardiaNombre;]
+
+                                //Update guardiasArrayAdapter;
+                                GuardiaListaRecyclerAdapter.updateGuardiaList();
+
+
+                                finish();
                             }
 
                             @Override
@@ -172,7 +194,8 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                 //write code for saving the signature here
                 Toast.makeText(GuardiaSignatureActivity.this, "Signature Saved", Toast.LENGTH_SHORT).show();
 
-                finish();
+                //startActivity(new Intent(GuardiaSignatureActivity.this, GuardiaListaActivity.class));
+
             }
         });
 
@@ -182,6 +205,9 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                 signaturePad.clear();
             }
         });
+
+
+
     }
 
     private void pushData(){
@@ -211,12 +237,17 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
         mRefBitacora.child(dateKey).child(guardiaKey).setValue(bc);
         //mRefBitacora.child(dateKey).setValue(fecha);
 
+
+        //Todo add the current date
+
+        DatabaseReference reference = GuardiaListaRecyclerAdapter.ClienteGuardiasRef;
+        reference.child(guardiaKey).setValue(new guardias(guardiaKey,guardiaNombre,status, new DatePost().getDate()));
+
     }
 
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
-
         // Check which radio button was clicked
         switch(view.getId()) {
             case R.id.radioButtonAsistio:
@@ -234,10 +265,4 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                 break;
         }
     }
-
-
-
-
-
-
 }

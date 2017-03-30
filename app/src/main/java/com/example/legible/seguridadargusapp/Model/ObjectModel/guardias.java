@@ -1,5 +1,7 @@
 package com.example.legible.seguridadargusapp.Model.ObjectModel;
 
+import java.util.Date;
+
 /**
  * Created by SERGIO on 25/02/2017.
  */
@@ -12,12 +14,36 @@ public class guardias {
     private long usuarioTelefono;
     private String usuarioTipo;
     private String usuarioTurno;
+    private String usuarioAsistenciaDelDia;
+
+    public String getUsuarioAsistenciaFecha() {
+        return usuarioAsistenciaFecha;
+    }
+
+    public void setUsuarioAsistenciaFecha(String usuarioAsistenciaFecha) {
+        this.usuarioAsistenciaFecha = usuarioAsistenciaFecha;
+    }
+
+
+
+    private String usuarioAsistenciaFecha;
+
+
     //Really? Zona are you even using that bro...
     private String usuarioZona;
     private String usuarioCliente;
     private String key;
 
+
     public guardias(){}
+
+    //Construct Guardia for clienteGuardias listview show
+    public guardias(String key, String name, String status, String date ){
+        this.key = key;
+        this.usuarioNombre = name;
+        this.usuarioAsistenciaDelDia = status;
+        this.usuarioAsistenciaFecha = date;
+    }
 
     public guardias(boolean usuarioDisponible,String usuarioDomicilio, String usuarioNombre, String usuarioTipo,long usuarioTelefono,String usuarioTurno, String usuarioZona) {
         this.usuarioDisponible = usuarioDisponible;
@@ -31,6 +57,14 @@ public class guardias {
     }
 
 
+    public String getUsuarioAsistenciaDelDia() {
+        return usuarioAsistenciaDelDia;
+    }
+
+    public void setUsuarioAsistenciaDelDia(String usuarioAsistenciaDelDia) {
+        this.usuarioAsistenciaDelDia = usuarioAsistenciaDelDia;
+    }
+
     public String getKey() {
         return key;
     }
@@ -38,6 +72,7 @@ public class guardias {
     public void setKey(String key) {
         this.key = key;
     }
+
     public String getUsuarioDomicilio() {
         return usuarioDomicilio;
     }

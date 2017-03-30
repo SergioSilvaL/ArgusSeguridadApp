@@ -1,5 +1,6 @@
 package com.example.legible.seguridadargusapp.View;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.legible.seguridadargusapp.Controller.ClienteRecyclerAdapter;
+import com.example.legible.seguridadargusapp.Controller.GuardiaRecyclerAdapter;
 import com.example.legible.seguridadargusapp.R;
 import com.example.legible.seguridadargusapp.Controller.GuardiaListaRecyclerAdapter;
 
@@ -18,6 +20,11 @@ public class GuardiaListaActivity extends AppCompatActivity {
     private String clienteRef = ClienteRecyclerAdapter.myCliente;
     private String supervisorRef = ClienteRecyclerAdapter.mySupervisor;
     private android.support.v4.app.FragmentManager fm;
+    private RecyclerView recyclerView;
+
+    public static int REQUEST_ASISTENCIA = 0;
+    public static String EXTRA_ASISTENCIA = "EXTRA_ASISTENCIA";
+    public static String EXTRA_ASISTENCIA_GUARDIA_CAPTURADO = "EXTRA_ASISTENCIA_GUARDIA_CAPTURADO";
 
     private GuardiaListaRecyclerAdapter mAdapter;
 
@@ -36,10 +43,10 @@ public class GuardiaListaActivity extends AppCompatActivity {
 
         mAdapter =  new GuardiaListaRecyclerAdapter(this, clienteRef,getSupportFragmentManager());
 
-        RecyclerView view = (RecyclerView) findViewById(R.id.recycler_view_guardia_lista);
-        view.setLayoutManager(new GridLayoutManager(this,2));
-        view.setHasFixedSize(true);
-        view.setAdapter(mAdapter);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_guardia_lista);
+        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(mAdapter);
 
     }
 
@@ -89,5 +96,17 @@ public class GuardiaListaActivity extends AppCompatActivity {
         IncidenteAddDialogFragment df = IncidenteAddDialogFragment.newInstance(clienteRef,supervisorRef);
         fm = getSupportFragmentManager();
         df.show(fm,"dialog_fragment_incidente_add");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_ASISTENCIA){
+            if (resultCode == RESULT_OK){
+                GuardiaListaRecyclerAdapter.myStatus = data.getStringExtra(EXTRA_ASISTENCIA);
+                GuardiaListaRecyclerAdapter.myGuardiaCaptura =  data.getStringExtra(EXTRA_ASISTENCIA_GUARDIA_CAPTURADO);
+                recyclerView.setAdapter(mAdapter);
+            }
+        }
     }
 }

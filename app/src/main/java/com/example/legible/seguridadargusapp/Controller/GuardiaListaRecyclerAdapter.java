@@ -1,5 +1,6 @@
 package com.example.legible.seguridadargusapp.Controller;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
@@ -17,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.legible.seguridadargusapp.Model.ObjectModel.Cliente;
+import com.example.legible.seguridadargusapp.Model.ObjectModel.DatePost;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.guardias;
 import com.example.legible.seguridadargusapp.R;
 import com.example.legible.seguridadargusapp.View.GuardiaInfoDialogFragment;
@@ -39,12 +42,18 @@ import java.util.List;
 
 public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaListaRecyclerAdapter.ViewHolder>{
 
-    private List<guardias> mGuardiasList;
+    //Quick Fix
+    public static DatabaseReference ClienteGuardiasRef;
+
+    //private List<guardias> mGuardiasList;
+    public static List<guardias> mGuardiasList;
     private Context mContext;
     private DatabaseReference guardiaListaRef;
     private String clienteRef;
-    private String guardiaNombreRef;
     private android.support.v4.app.FragmentManager fm;
+    public static String myStatus;
+    public static String myGuardiaCaptura;
+
 
     public GuardiaListaRecyclerAdapter(Context context, String clienteRef, android.support.v4.app.FragmentManager fm){
 
@@ -62,12 +71,18 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
                 .child(clienteRef)
                 .child("clienteGuardias");
 
+
+        //Todo Set guardias asisteniatext
+        ClienteGuardiasRef = guardiaListaRef;
+
         guardiaListaRef.addChildEventListener(new GuardiaListChildEventListener());
 
 
     }
 
     class GuardiaListChildEventListener implements ChildEventListener{
+
+
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
@@ -105,52 +120,130 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
         return new ViewHolder(view);
     }
 
+    public static void updateGuardiaList(){
+
+        mGuardiasList.clear();
+
+        ClienteGuardiasRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                guardias guardia = dataSnapshot.getValue(guardias.class);
+                guardia.setKey(dataSnapshot.getKey());
+                mGuardiasList.add(0,guardia);
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         final guardias guardia = mGuardiasList.get(position);
 
-        holder.nameTxt.setText(guardia.getUsuarioNombre());
-        //Todo Delete ASAP tested to see example of Signature
-        holder.nameTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mContext.startActivity(new Intent(mContext, GuardiaSignatureActivity.class));
-            }
-        });
+//        //TODO add diferential date
+//        if (guardia.getUsuarioAsistenciaFecha()!= (new DatePost().getDate())){
+//            guardia.setUsuarioAsistenciaFecha(0);
+//        }
 
-        //Todo set OnClickListener to Open Signature Activity
+        holder.nameTxt.setText(guardia.getUsuarioNombre());
+
+        //if (guardia.getUsuarioAsistenciaFecha() == (new DatePost().getDate()) || guardia.getUsuarioAsistenciaDelDia() == null){
+
+            if (guardia.getUsuarioNombre().equals(myGuardiaCaptura) || guardia.getUsuarioAsistenciaDelDia() != null) {
+
+                String asistencia;
+                int image = 0;
+
+                if (guardia.getUsuarioNombre().equals(myGuardiaCaptura)) {
+                    asistencia = GuardiaListaRecyclerAdapter.myStatus;
+                    //GuardiaListaRecyclerAdapter.myStatus = null;
+                    //GuardiaListaRecyclerAdapter.myGuardiaCaptura = null;
+                } else {
+                    asistencia = guardia.getUsuarioAsistenciaDelDia();
+                }
+
+                switch (asistencia) {
+                    case "Asistió":
+                    case "Asisitio":
+                        image = android.R.drawable.presence_online;
+                        break;
+                    case "Llego Tarde":
+                        image = android.R.drawable.presence_away;
+                        break;
+                    case "No Asistió":
+                    case "No Asistio":
+                        image = android.R.drawable.presence_busy;
+                        break;
+                }
+
+                if (guardia.getUsuarioAsistenciaFecha()!= null) {
+
+                    if (!guardia.getUsuarioAsistenciaFecha().equals(new DatePost().getDate())) {
+                        //guardia.setUsuarioAsistenciaFecha(0);
+                        image = 0;
+                    }
+                }
+
+                holder.asistenciaView.setBackgroundResource(image);
+
+            }
+        //}
 
 
         holder.viewGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //Send the Object through here
-
-
                 Intent intent = new Intent(mContext, GuardiaSignatureActivity.class);
                 intent.putExtra("guardiaKey",guardia.getKey());
                 //intent.putExtra("guardiaTurno",guardia.getUsuarioTurno());
                 intent.putExtra("guardiaNombre",guardia.getUsuarioNombre());
-
-                mContext.startActivity(intent);
-
+                intent.putExtra("guardiaAsistenciaStatus",false);
+                ((Activity) mContext).startActivityForResult(intent,GuardiaListaActivity.REQUEST_ASISTENCIA);
 
             }
         });
-
 
         holder.optionMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
             showGuardiaOptionsMenu(guardia.getKey(),guardia.getUsuarioNombre());
-
-
             }
         });
+    }
 
+
+
+    private String getAsistencia(String myGuardiaCaptura, String usuarioAsistenciaDelDia) {
+
+        if (usuarioAsistenciaDelDia!= null){
+            return usuarioAsistenciaDelDia;
+        }else if (myGuardiaCaptura != null){
+            return myGuardiaCaptura;
+        }else {
+            return null;
+        }
 
     }
 
@@ -196,7 +289,6 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
         df.show(fm,"fragment_guardia_move");
     }
 
-
     @Override
     public int getItemCount() {
         return mGuardiasList.size();
@@ -205,7 +297,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView nameTxt;
-        ImageView optionMenu;
+        ImageView optionMenu, asistenciaView;
         ViewGroup viewGroup;
 
         public ViewHolder(View itemView) {
@@ -213,7 +305,10 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
             nameTxt = (TextView) itemView.findViewById(R.id.nameTxt);
             optionMenu = (ImageView) itemView.findViewById(R.id.imageViewOption);
             viewGroup = (ViewGroup) itemView.findViewById(R.id.cardview_image);
+            asistenciaView = (ImageView) itemView.findViewById(R.id.asistenciaView);
 
         }
     }
+
+
 }
