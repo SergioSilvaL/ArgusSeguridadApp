@@ -86,10 +86,32 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
+            //TODO Change reference from GuardiaName to Guardia Key;
+
+
             guardias guardia = dataSnapshot.getValue(guardias.class);
             guardia.setKey(dataSnapshot.getKey());
-            mGuardiasList.add(0,guardia);
+
+
+            boolean bandera = false;
+
+            if (mGuardiasList.size()>0){
+
+                for (guardias currentGuardia : mGuardiasList){
+
+                    if (currentGuardia.getUsuarioNombre().equals(guardia.getUsuarioNombre())){
+                        bandera = true;
+                    }
+                }
+            }
+
+            if (bandera == false){
+                mGuardiasList.add(0,guardia);
+            }
+
             notifyDataSetChanged();
+
+
         }
 
         @Override
@@ -99,6 +121,20 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
 
         @Override
         public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//            guardias guardiaRemoved = dataSnapshot.getValue(guardias.class);
+//
+//            int i = 0;
+//
+//            for (guardias currentGuardia : mGuardiasList){
+//                if (mGuardiasList.get(i).getUsuarioNombre().equals(guardiaRemoved.getUsuarioNombre())){
+//                    mGuardiasList.remove(i);
+//                }
+//                i++;
+//            }
+//
+//            notifyItemRemoved(i);
+
 
         }
 
