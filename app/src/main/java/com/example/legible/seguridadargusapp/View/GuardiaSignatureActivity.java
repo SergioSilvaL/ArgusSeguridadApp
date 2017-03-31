@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.legible.seguridadargusapp.Controller.ClienteRecyclerAdapter;
@@ -44,6 +45,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
     SignaturePad signaturePad;
     Button saveButton, clearButton;
     EditText editTextObservacion;
+    TextView textViewCurrentGuardiaName;
     String status="Asisitio";
     String observacion;
     String cliente;
@@ -63,6 +65,8 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
         //Set Views
         setContentView(R.layout.activity_guardia_signature);
         editTextObservacion = (EditText) findViewById(R.id.editTextObservacion);
+        textViewCurrentGuardiaName = (TextView) findViewById(R.id.TextViewSignatureCurrentGuardiaName);
+        textViewCurrentGuardiaName.setText(getIntent().getStringExtra("guardiaNombre"));
         signaturePad = (SignaturePad)findViewById(R.id.signaturePad);
         saveButton = (Button)findViewById(R.id.saveButton);
         clearButton = (Button)findViewById(R.id.clearButton);
