@@ -43,7 +43,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
 
     SignaturePad signaturePad;
-    Button saveButton, clearButton;
+    Button saveButton, clearButton, cancelButton;
     EditText editTextObservacion;
     TextView textViewCurrentGuardiaName;
     String status="Asisitio";
@@ -70,6 +70,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
         signaturePad = (SignaturePad)findViewById(R.id.signaturePad);
         saveButton = (Button)findViewById(R.id.saveButton);
         clearButton = (Button)findViewById(R.id.clearButton);
+        cancelButton = (Button) findViewById(R.id.CancelButton);
 
 
         //disable both buttons at start
@@ -209,6 +210,14 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                 signaturePad.clear();
             }
         });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
 
 
 
