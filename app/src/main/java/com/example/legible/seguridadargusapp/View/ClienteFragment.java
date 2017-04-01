@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.legible.seguridadargusapp.Model.ObjectModel.supervisores;
 import com.example.legible.seguridadargusapp.R;
@@ -98,12 +99,15 @@ public class ClienteFragment extends Fragment {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
 
+            boolean isSupervisor = false;
+
             for(DataSnapshot data: dataSnapshot.getChildren()){
 
                 supervisores supervisor = data.getValue(supervisores.class);
 
                 if(user.getEmail().equals(supervisor.getUsuarioEmail())){
 
+                    isSupervisor = true;
                     zonaSupervisorRef = supervisor.getUsuarioNombre();
                     zonaRef = supervisor.getUsuarioZona();
 
@@ -125,12 +129,31 @@ public class ClienteFragment extends Fragment {
                 }
             }
 
+            if (!isSupervisor){
+                signOut();
+            }
+
+
         }
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
 
         }
+    }
+
+    public void signOut () {
+        FirebaseAuth.getInstance().signOut();
+
+
+        Intent intent = new Intent(getActivity(),SignInActivity.class);
+        //Todo change to String recource
+        Toast.makeText(getContext(),"Error, Solo los Supervisores tiene acceso al Sistema Movil",Toast.LENGTH_LONG).show();
+        startActivity(intent);
+        getActivity().finish();
+
+
+        getActivity().finish();
     }
 
 
