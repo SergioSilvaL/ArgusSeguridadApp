@@ -44,7 +44,8 @@ public class IncidenteAddDialogFragment extends DialogFragment {
     private DatabaseReference mNotificationRef =
             FirebaseDatabase.getInstance().getReference().child("Argus").child("Notificacion");
 
-
+    private DatabaseReference mNotificationTmpRef =
+            FirebaseDatabase.getInstance().getReference().child("Argus").child("NotificacionTmp");
 
     public static IncidenteAddDialogFragment newInstance(String cliente, String supervisor){
 
@@ -151,18 +152,29 @@ public class IncidenteAddDialogFragment extends DialogFragment {
         String incidenteUsuario = "supervisor";
 
 
+        String key = mPushRef.push().getKey();
+
         //set the current onject
 
         Incidente incidente = new Incidente(incidenteCliente,incidenteFecha,incidenteObservacion,incidenteTipo,incidenteUsuario,incidenteGravedad);
 
         //push in a new Incidente
-        mPushRef.push().setValue(incidente);
+        mPushRef.child(key).setValue(incidente);
+
 
 
         //push to notifiacion
         String descripcion="Hubo un "+ incidenteTipo + " en "+ incidenteCliente;
-        Notificacion notificacion = new Notificacion("AI",descripcion, incidenteFecha );
+        Notificacion notificacion = new Notificacion("AI",descripcion, incidenteFecha , key );
+
+
+
+
         mNotificationRef.push().setValue(notificacion);
+
+        // Push to Notification Tmp
+
+        mNotificationTmpRef.push().setValue(notificacion);
 
 
 

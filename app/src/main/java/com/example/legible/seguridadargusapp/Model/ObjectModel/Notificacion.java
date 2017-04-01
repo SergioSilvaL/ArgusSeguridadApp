@@ -9,6 +9,14 @@ public class Notificacion {
     public String accion="";
     public String descripcion;
     public String fecha;
+    public String referenceKey;
+
+    public Notificacion(String accion, String descripcion, String fecha, String referenceKey) {
+        this.accion = accion;
+        this.descripcion = descripcion;
+        this.fecha = fecha;
+        this.referenceKey = referenceKey;
+    }
 
     public Notificacion(String accion, String descripcion, String fecha) {
         this.accion = accion;
@@ -40,6 +48,13 @@ public class Notificacion {
         this.fecha = fecha;
     }
 
+    public String getReferenceKey() {
+        return referenceKey;
+    }
+
+    public void setReferenceKey(String referenceKey) {
+        this.referenceKey = referenceKey;
+    }
 
 
 }
