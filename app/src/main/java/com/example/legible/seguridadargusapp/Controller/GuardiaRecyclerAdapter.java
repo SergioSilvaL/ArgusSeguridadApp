@@ -56,8 +56,22 @@ public class GuardiaRecyclerAdapter extends RecyclerView.Adapter<GuardiaRecycler
     class GuardiaChildEventListener implements ChildEventListener{
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
             guardias currentGuardia =  dataSnapshot.getValue(guardias.class);
-            mGuardia.add(0,currentGuardia);
+
+            boolean bandera = false;
+
+            if (mGuardia.size()>0){
+                for (guardias guardia : mGuardia){
+                    if (guardia.getUsuarioNombre().equals(currentGuardia.getUsuarioNombre()))
+                        bandera = true;
+                }
+            }
+
+            if (bandera == false){
+                mGuardia.add(0, currentGuardia);
+            }
+
             notifyDataSetChanged();
         }
 
