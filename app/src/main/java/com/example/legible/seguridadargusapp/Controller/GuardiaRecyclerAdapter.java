@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.legible.seguridadargusapp.Model.ObjectModel.guardias;
@@ -113,16 +114,22 @@ public class GuardiaRecyclerAdapter extends RecyclerView.Adapter<GuardiaRecycler
 
 
         private TextView mTextView;
+        private ImageView mImageViewDisponible;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             mTextView = (TextView) itemView.findViewById(R.id.nameTxtGuardia);
+            mImageViewDisponible = (ImageView) itemView.findViewById(R.id.imageViewDisponibleStatus);
+
 
         }
 
         public void bindToView(guardias currentGuardia) {
             mTextView.setText(currentGuardia.getUsuarioNombre());
+            if (currentGuardia.isUsuarioDisponible()){
+                mImageViewDisponible.setBackgroundResource(R.drawable.disponible);
+            }
         }
     }
 }
