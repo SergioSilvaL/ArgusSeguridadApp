@@ -24,7 +24,7 @@ public class DatePost{
 
         c.setTime(new Date());
 
-        int dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
+        String dayOfMonth = getDayFormat(c.get(Calendar.DAY_OF_MONTH));
         String numberOfMonth = getMonthFormat(c.get(Calendar.MONTH));
         int numberOfYear = c.get(Calendar.YEAR);
         //Todo fix correct date format
@@ -84,7 +84,8 @@ public class DatePost{
 
         c.setTime(new Date());
 
-        int dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
+        //int dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
+        String dayOfMonth = getDayFormat(c.get(Calendar.DAY_OF_MONTH));
         String numberOfMonth = getMonthFormat(c.get(Calendar.MONTH));
         int numberOfYear = c.get(Calendar.YEAR);
 
@@ -103,6 +104,15 @@ public class DatePost{
         month = month.substring(month.length() - 2);
 
         return month;
+    }
+
+    public String getDayFormat (int numberOfDay){
+
+        String day = ((Integer) numberOfDay).toString();
+        day = "0" + day;
+        day = day.substring(day.length()-2);
+        return day;
+
     }
 }
 
