@@ -60,7 +60,7 @@ public class Adapter_ViewPagerMain extends FragmentPagerAdapter {
         switch (position) {
 
             case 0: // The first tab will always initialize at 0.
-                return "Cliente";//mContext.getString(R.string.Cliente);
+                return "Servicios";//mContext.getString(R.string.Cliente);
             case 1:
                 return "Guardias";//mContext.getString(R.string.guardias);
 
