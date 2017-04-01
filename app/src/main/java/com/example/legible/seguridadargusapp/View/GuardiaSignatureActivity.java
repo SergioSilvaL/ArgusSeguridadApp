@@ -197,7 +197,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                 // end of upload intent
 
                 //write code for saving the signature here
-                Toast.makeText(GuardiaSignatureActivity.this, "Signature Saved", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GuardiaSignatureActivity.this, "Captura fue Enviado con Exito", Toast.LENGTH_SHORT).show();
 
                 //startActivity(new Intent(GuardiaSignatureActivity.this, GuardiaListaActivity.class));
 

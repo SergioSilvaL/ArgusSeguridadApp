@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Argus App</string>
     <!-- Menu -->
-    <string name="action_sign_out">Sign Out</string>
+    <string name="action_sign_out">Cerrar Sesión</string>
     <string name="action_add_guardia">Agregar Guardia</string>
     <string name="action_add_incidente">Agregar Incidente</string>
 
