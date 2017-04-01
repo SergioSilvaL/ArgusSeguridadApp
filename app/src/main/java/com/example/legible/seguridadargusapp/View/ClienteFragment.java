@@ -73,17 +73,23 @@ public class ClienteFragment extends Fragment {
         mDatabaseReference.addListenerForSingleValueEvent(new ZonaReferenceEventListener());
 
 
-        if (view !=  null){
-            return view;
-        }else{
+        //IF CLIENTES RECYCLERVIEW IS NOT LOADING
+        //REPLACE WITH THIS CODE
 
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return view;
-        }
+//        if (view !=  null){
+//            return view;
+//        }else{
+//
+//            try {
+//                Thread.sleep(2000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            return view;
+//        }
+
+
+        return view;
 
     }
 
