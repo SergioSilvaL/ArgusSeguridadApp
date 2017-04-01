@@ -1,7 +1,11 @@
 package com.example.legible.seguridadargusapp.View;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.legible.seguridadargusapp.FirebaseExceptionConstants;
 import com.example.legible.seguridadargusapp.R;
@@ -27,6 +32,8 @@ public class SignInActivity extends AppCompatActivity{
     private Button buttonLogin;
     private ProgressBar progressBar;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
+
+    private String mError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,9 +88,11 @@ public class SignInActivity extends AppCompatActivity{
 
         if (!isValidEmailFormat(email)){
             //inputEmail.setError(getString(R.string.invalid_format_email));
+            mError = getString(R.string.invalid_format_email);
         }
         if (TextUtils.isEmpty(email)) {
             //inputEmail.setError(getString(R.string.empty_email));
+            mError = getString(R.string.empty_email);
         }
 
         return  !TextUtils.isEmpty(email) && isValidEmailFormat(email);
@@ -92,10 +101,13 @@ public class SignInActivity extends AppCompatActivity{
 
         if (TextUtils.isEmpty(password)) {
             //inputEmail.setError(getString(R.string.empty_email));
+            mError = getString(R.string.empty_password);
+
         }
 
         if (!isValidPasswordLength(password)){
             //inputPassword.setError(getString(R.string.invalid_format_password));
+            mError = getString(R.string.invalid_format_password);
         }
         return !TextUtils.isEmpty(password) && isValidPasswordLength(password);
     }
@@ -142,20 +154,37 @@ public class SignInActivity extends AppCompatActivity{
                     public void onFailure(@NonNull Exception e) {
                         progressBar.setVisibility(View.GONE);
 
-                        String exception = FirebaseExceptionConstants.getFirebaseExceptionConstants(
-                                (((FirebaseAuthException) e).getErrorCode()));
+                        //Todo Check Internet Connection before
+                        if (!isConnectedToInternet()){
+                            Toast.makeText(SignInActivity.this,
+                                    getString(R.string.No_Connection_To_Internet),
+                                    Toast.LENGTH_LONG).show();
+                        }else
 
-                        String inputErrorField = FirebaseExceptionConstants.getFirebaseExceptionConstantsErrorInputField(
-                                (((FirebaseAuthException) e).getErrorCode()));
+                        if (e instanceof  FirebaseAuthException){
 
-                        if (inputErrorField.equals("EmailField")){
-                            inputEmail.setError(exception);
-                            return;
+                            Toast.makeText(SignInActivity.this,
+                                    FirebaseExceptionConstants.getFirebaseExceptionConstants(
+                                            ((FirebaseAuthException) e).getErrorCode())
+                                    ,Toast.LENGTH_LONG).show();
+
                         }
-                        if (inputErrorField.equals("PasswordField")){
-                            inputPassword.setError(exception);
-                            return;
-                        }
+
+
+
+//                        String inputErrorField = FirebaseExceptionConstants.getFirebaseExceptionConstantsErrorInputField(
+//                                (((FirebaseAuthException) e).getErrorCode()));
+//
+//
+//
+//                        if (inputErrorField.equals("EmailField")){
+//                            inputEmail.setError(exception);
+//                            return;
+//                        }
+//                        if (inputErrorField.equals("PasswordField")){
+//                            inputPassword.setError(exception);
+//                            return;
+//                        }
 
                     }
                 });
@@ -170,6 +199,21 @@ public class SignInActivity extends AppCompatActivity{
 
         if(isValidEmail(email) && isValidPassword(password)){
             authenticateUser(email,password);
+        }else{
+            Toast.makeText(SignInActivity.this, mError , Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private boolean isConnectedToInternet() {
+
+
+        ConnectivityManager conMgr = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+
+        if(netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()){
+            return false;
+        }else {
+            return true;
         }
     }
 

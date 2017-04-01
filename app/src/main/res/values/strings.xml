@@ -13,15 +13,16 @@
     <string name="hint_email">Correo Electronico</string>
     <string name="hint_password">Contraseña</string>
     <string name="btn_login">LOGIN</string>
-    <string name="auth_failed">Authentication failed, check your email and password or sign up</string>
+    <string name="auth_failed">Error de Autenticación</string>
     <string name="text_button_login">Ingresar</string>
     <string name="lose_password">Olvidaste tu contraseña?</string>
     <string name="title_activity_add_guardia">AddGuardiaActivity</string>
 
-    <string name="empty_password">Campo Vacillo</string>
-    <string name="empty_email">Campo Vacillo</string>
-    <string name="invalid_format_email">formato de email invalido</string>
-    <string name="invalid_format_password">formato de contrasena invalido</string>
+    <string name="empty_password">Campo de Contraseña Vacillo</string>
+    <string name="empty_email">Campo de Correo Electronico Vacillo</string>
+    <string name="invalid_format_email">Formato de Correo Electronico  Invalido</string>
+    <string name="invalid_format_password">Contraseña Demasiado Corta</string>
 
 
+    <string name="No_Connection_To_Internet">Conexión Inestable a Internet</string>
 </resources>

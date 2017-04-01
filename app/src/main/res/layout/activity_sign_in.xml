@@ -57,12 +57,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:theme="@style/EditTextWhite"
-                        android:id="@+id/EmailInputLayout">
+                        >
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/input_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/hint_email" />
+                            android:hint="@string/hint_email"
+                            android:inputType="textEmailAddress"/>
                     </android.support.design.widget.TextInputLayout>
 
                 </LinearLayout>
