@@ -33,7 +33,7 @@ public class IncidenteAddDialogFragment extends DialogFragment {
 
     private EditText editTextIncidenteObservacion;
     private Spinner spinner;
-    private List<Incidente> incidenteList;
+    private List<Incidente> incidenteList = new ArrayList<>();
     //private Spinner spinnerIncidenteTipo;
     private DatabaseReference mrefIncidenteTipo =
             FirebaseDatabase.getInstance().getReference().child("Argus").child("IncidenteTipo");
@@ -79,9 +79,9 @@ public class IncidenteAddDialogFragment extends DialogFragment {
 
                 for (DataSnapshot ds : dataSnapshot.getChildren()){
 
-//                    //Get the object
-//                    Incidente currentInciente = ds.getValue(Incidente.class);
-//                    incidenteList.add(0,currentInciente);
+                    //Get the object
+                    Incidente incidenteGravedad = ds.getValue(Incidente.class);
+                    incidenteList.add(0,incidenteGravedad);
 
 
                     String incidenteTipo = ds.child("incidenteTipo").getValue(String.class);
@@ -134,12 +134,12 @@ public class IncidenteAddDialogFragment extends DialogFragment {
         String incidenteGravedad="";
         // get the current incidente Gravedad
 
-//        for (int i =0; i< incidenteList.size(); i++){
-//
-//            if (incidenteTipo.equals(incidenteList.get(i).getIncidenteTipo())){
-//                incidenteGravedad = incidenteList.get(i).getIncidenteGravedad();
-//            }
-//        }
+        for (int i =0; i< incidenteList.size(); i++){
+
+            if (incidenteTipo.equals(incidenteList.get(i).getIncidenteTipo())){
+                incidenteGravedad = incidenteList.get(i).getIncidenteGravedad();
+            }
+        }
 
         String incidenteCliente = getArguments().getString("clienteNombre");
 
