@@ -122,18 +122,26 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
         @Override
         public void onChildRemoved(DataSnapshot dataSnapshot) {
 //
-//            guardias guardiaRemoved = dataSnapshot.getValue(guardias.class);
-//
-//            int i = 0;
-//
-//            for (guardias currentGuardia : mGuardiasList){
-//                if (mGuardiasList.get(i).getUsuarioNombre().equals(guardiaRemoved.getUsuarioNombre())){
-//                    mGuardiasList.remove(i);
-//                }
-//                i++;
-//            }
-//
-//            notifyItemRemoved(i);
+            guardias guardiaRemoved = dataSnapshot.getValue(guardias.class);
+
+            int i = 0;
+            int position = 0;
+            final List<guardias> mGuardiasRemovalList = mGuardiasList;
+
+
+            for (guardias currentGuardia : mGuardiasRemovalList){
+                if (mGuardiasRemovalList.get(i).getUsuarioNombre().equals(guardiaRemoved.getUsuarioNombre())){
+                    position = i;
+                }
+                i++;
+            }
+
+            mGuardiasList.remove(position);
+
+            notifyItemRemoved(position);
+
+
+
 
 
         }
