@@ -72,6 +72,7 @@ public class GuardiaMoveDialogFragment extends DialogFragment{
                     String Cliente = ds.child("clienteNombre").getValue(String.class);
                     if (!Cliente.equals(ClienteRecyclerAdapter.myCliente))
                     clientes.add(Cliente);
+
                 }
 
                 spinner = (Spinner) view.findViewById(R.id.spinnerCliente);
