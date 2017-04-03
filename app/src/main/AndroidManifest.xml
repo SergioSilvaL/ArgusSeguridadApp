@@ -28,7 +28,8 @@
         </activity>
         <activity
             android:name=".View.GuardiaListaActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".View.MainActivity"/>
         <activity android:name=".View.GuardiaSignatureActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

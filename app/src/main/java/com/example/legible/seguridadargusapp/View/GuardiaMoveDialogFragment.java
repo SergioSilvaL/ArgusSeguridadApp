@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.legible.seguridadargusapp.Controller.ClienteRecyclerAdapter;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.DatePost;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.GuardiaMoveBasicInfo;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.Notificacion;
@@ -69,6 +70,7 @@ public class GuardiaMoveDialogFragment extends DialogFragment{
 
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
                     String Cliente = ds.child("clienteNombre").getValue(String.class);
+                    if (!Cliente.equals(ClienteRecyclerAdapter.myCliente))
                     clientes.add(Cliente);
                 }
 
