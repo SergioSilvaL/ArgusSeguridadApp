@@ -80,37 +80,37 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-
-                newText = newText.toLowerCase();
-                ArrayList<guardias> newList = new ArrayList<>();
-
-                for (guardias guardia : GuardiaRecyclerAdapter.filterGuardias){
-                    //Get the current Guardia
-                    String name = guardia.getUsuarioNombre().toLowerCase();
-
-                    if (name.contains(newText)){
-                        newList.add(guardia);
-                    }
-                }
-
-                mAdapter.setFilter(newList);
-
-
-
-                return false;
-            }
-        });
+//        MenuItem searchItem = menu.findItem(R.id.action_search);
+//        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+//
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//
+//                newText = newText.toLowerCase();
+//                ArrayList<guardias> newList = new ArrayList<>();
+//
+//                for (guardias guardia : GuardiaRecyclerAdapter.filterGuardias){
+//                    //Get the current Guardia
+//                    String name = guardia.getUsuarioNombre().toLowerCase();
+//
+//                    if (name.contains(newText)){
+//                        newList.add(guardia);
+//                    }
+//                }
+//
+//                mAdapter.setFilter(newList);
+//
+//
+//
+//                return false;
+//            }
+//        });
 
 
         return true;

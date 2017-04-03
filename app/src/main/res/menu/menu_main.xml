@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.legible.seguridadargusapp.View.MainActivity">
 
-    <item
-        android:id="@+id/action_search"
-        android:icon="@android:drawable/ic_menu_search"
-        app:actionViewClass="android.support.v7.widget.SearchView"
-        app:showAsAction="ifRoom|collapseActionView"
-        android:title="Search"/>
+    <!--<item-->
+        <!--android:id="@+id/action_search"-->
+        <!--android:icon="@android:drawable/ic_menu_search"-->
+        <!--app:actionViewClass="android.support.v7.widget.SearchView"-->
+        <!--app:showAsAction="ifRoom|collapseActionView"-->
+        <!--android:title="Search"/>-->
 
     <item
         android:id="@+id/action_sign_out"
