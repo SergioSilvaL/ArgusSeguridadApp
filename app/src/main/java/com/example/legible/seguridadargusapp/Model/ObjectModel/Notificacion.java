@@ -10,11 +10,28 @@ public class Notificacion {
     public String descripcion;
     public String fecha;
     public String referenceKey;
+    public String fechaCodigo;
+
+    public String getFechaCodigo() {
+        return fechaCodigo;
+    }
+
+    public void setFechaCodigo(String fechaCodigo) {
+        this.fechaCodigo = fechaCodigo;
+    }
 
     public Notificacion(String accion, String descripcion, String fecha, String referenceKey) {
         this.accion = accion;
         this.descripcion = descripcion;
         this.fecha = fecha;
+        this.referenceKey = referenceKey;
+    }
+
+    public Notificacion(String accion, String descripcion, String fecha,String fechaCodigo,String referenceKey){
+        this.accion = accion;
+        this.descripcion = descripcion;
+        this.fecha = fecha;
+        this.fechaCodigo = fechaCodigo;
         this.referenceKey = referenceKey;
     }
 

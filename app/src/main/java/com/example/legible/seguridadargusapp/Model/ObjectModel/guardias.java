@@ -16,6 +16,17 @@ public class guardias {
     private String usuarioTurno;
     private String usuarioAsistenciaDelDia;
 
+    public String getUsuarioAsistenciaExtraDelDia() {
+        return usuarioAsistenciaExtraDelDia;
+    }
+
+    public void setUsuarioAsistenciaExtraDelDia(String usuarioAsistenciaExtraDelDia) {
+        this.usuarioAsistenciaExtraDelDia = usuarioAsistenciaExtraDelDia;
+    }
+
+    private String usuarioAsistenciaExtraDelDia = "";
+
+
     public String getUsuarioAsistenciaFecha() {
         return usuarioAsistenciaFecha;
     }
@@ -38,10 +49,11 @@ public class guardias {
     public guardias(){}
 
     //Construct Guardia for clienteGuardias listview show
-    public guardias(String key, String name, String status, String date ){
+    public guardias(String key, String name, String status,String statusExtra, String date ){
         this.key = key;
         this.usuarioNombre = name;
         this.usuarioAsistenciaDelDia = status;
+        this.usuarioAsistenciaExtraDelDia = statusExtra;
         this.usuarioAsistenciaFecha = date;
     }
 

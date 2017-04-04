@@ -15,6 +15,43 @@ public class BitacoraGuardia  {
     private String turno;
     private String guardiaNombre;
 
+    public boolean isAsisitio() {
+        return asisitio;
+    }
+
+    public void setAsisitio(boolean asisitio) {
+        this.asisitio = asisitio;
+    }
+
+    public boolean isDobleTurno() {
+        return dobleTurno;
+    }
+
+    public void setDobleTurno(boolean dobleTurno) {
+        this.dobleTurno = dobleTurno;
+    }
+
+    public boolean isCubreDescanso() {
+        return cubreDescanso;
+    }
+
+    public void setCubreDescanso(boolean cubreDescanso) {
+        this.cubreDescanso = cubreDescanso;
+    }
+
+    public String getFirmaExtra() {
+        return firmaExtra;
+    }
+
+    public void setFirmaExtra(String firmaExtra) {
+        this.firmaExtra = firmaExtra;
+    }
+
+    private boolean asisitio = false;
+    private boolean dobleTurno = false;
+    private boolean cubreDescanso = false;
+    private String firmaExtra;
+
 
     public String getFecha() {
         return fecha;
@@ -37,8 +74,10 @@ public class BitacoraGuardia  {
 
     public BitacoraGuardia(){}
 
-    public BitacoraGuardia(String status, String firma, String observacion, String cliente, String zona,String turno, String guardiaNombre,String fecha) {
-        this.status = status;
+    public BitacoraGuardia(boolean asisitio, boolean dobleTurno, boolean cubreDescanso, String firmaExtra,String firma, String observacion, String cliente, String zona,String turno, String guardiaNombre,String fecha) {
+        this.asisitio = asisitio;
+        this.dobleTurno = dobleTurno;
+        this.cubreDescanso = cubreDescanso;
         this.firma = firma;
         Observacion = observacion;
         this.cliente = cliente;

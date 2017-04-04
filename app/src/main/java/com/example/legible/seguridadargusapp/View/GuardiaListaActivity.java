@@ -9,6 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.legible.seguridadargusapp.Controller.ClienteRecyclerAdapter;
 import com.example.legible.seguridadargusapp.Controller.GuardiaRecyclerAdapter;
@@ -21,17 +24,68 @@ public class GuardiaListaActivity extends AppCompatActivity {
     private String supervisorRef = ClienteRecyclerAdapter.mySupervisor;
     private android.support.v4.app.FragmentManager fm;
     private RecyclerView recyclerView;
+    private GuardiaListaRecyclerAdapter mAdapter;
 
     public static int REQUEST_ASISTENCIA = 0;
     public static String EXTRA_ASISTENCIA = "EXTRA_ASISTENCIA";
     public static String EXTRA_ASISTENCIA_GUARDIA_CAPTURADO = "EXTRA_ASISTENCIA_GUARDIA_CAPTURADO";
+    public static String EXTRA_DOBLE_ASISTENCIA = "EXTRA_DOBLE_ASISTENCIA";
 
-    private GuardiaListaRecyclerAdapter mAdapter;
+    //Simulacro
+    public static String fechaSimulacion;
+
+    private Button buttonRestarDiaFecha, buttonSumarDiaFecha;
+    private TextView textViewFecha;
+    private int fecha;
+
+
+
+
+
+
+    public void setTimeSimulation(){
+
+        buttonRestarDiaFecha = (Button) findViewById(R.id.buttonRestarFecha);
+        buttonSumarDiaFecha = (Button) findViewById(R.id.buttonSumarFecha);
+        textViewFecha = (TextView) findViewById(R.id.textViewFechaSim);
+
+        final String fechaString = textViewFecha.getText().toString();
+        fecha = Integer.parseInt(fechaString);
+
+        buttonSumarDiaFecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fecha++;
+                textViewFecha.setText(Integer.toString(fecha));
+                fechaSimulacion = Integer.toString(fecha);
+                recyclerView.setAdapter(mAdapter);
+            }
+        });
+
+        buttonRestarDiaFecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fecha--;
+                textViewFecha.setText(Integer.toString(fecha));
+                fechaSimulacion = Integer.toString(fecha);
+                recyclerView.getAdapter().notifyDataSetChanged();
+            }
+        });
+
+
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guardia_lista);
+
+        /**
+         * Fecha
+         * */
+        setTimeSimulation();
+
 
         //Set our support actionBar
 
@@ -70,13 +124,13 @@ public class GuardiaListaActivity extends AppCompatActivity {
 
             case R.id.action_add_guardia:
                 addGuardiaTemporal();
-            return true;
+                return true;
 
             case R.id.action_add_incidente:
                 //Do something
                 addIncidente();
 
-            return true;
+                return true;
 
         }
 
@@ -105,6 +159,8 @@ public class GuardiaListaActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK){
                 GuardiaListaRecyclerAdapter.myStatus = data.getStringExtra(EXTRA_ASISTENCIA);
                 GuardiaListaRecyclerAdapter.myGuardiaCaptura =  data.getStringExtra(EXTRA_ASISTENCIA_GUARDIA_CAPTURADO);
+                GuardiaListaRecyclerAdapter.myStatusExtra = data.getStringExtra(EXTRA_DOBLE_ASISTENCIA);
+
                 recyclerView.setAdapter(mAdapter);
             }
         }

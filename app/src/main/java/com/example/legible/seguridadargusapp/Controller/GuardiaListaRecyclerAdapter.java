@@ -53,6 +53,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
     private android.support.v4.app.FragmentManager fm;
     public static String myStatus;
     public static String myGuardiaCaptura;
+    public static String myStatusExtra;
 
 
     public GuardiaListaRecyclerAdapter(Context context, String clienteRef, android.support.v4.app.FragmentManager fm){
@@ -121,7 +122,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
 
         @Override
         public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
+
             guardias guardiaRemoved = dataSnapshot.getValue(guardias.class);
 
             int i = 0;
@@ -251,6 +252,35 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
 
                 holder.asistenciaView.setBackgroundResource(image);
 
+                int imageDoble = 0;
+
+                if (guardia.getUsuarioNombre().equals(myGuardiaCaptura) && GuardiaListaRecyclerAdapter.myStatusExtra!="") {
+                    asistencia = GuardiaListaRecyclerAdapter.myStatusExtra;
+                    //GuardiaListaRecyclerAdapter.myStatus = null;
+                    //GuardiaListaRecyclerAdapter.myGuardiaCaptura = null;
+                } else {
+                    asistencia = guardia.getUsuarioAsistenciaExtraDelDia();
+                }
+
+                switch (asistencia) {
+                    case "Cubre Descanso":
+                    case "Doble Turno":
+                        imageDoble = android.R.drawable.presence_online;
+                        break;
+                }
+
+                if (guardia.getUsuarioAsistenciaFecha()!= null) {
+
+                    if (!guardia.getUsuarioAsistenciaFecha().equals(new DatePost().getDate())) {
+                        //guardia.setUsuarioAsistenciaFecha(0);
+                        imageDoble = 0;
+                    }
+                }
+
+                holder.asistenciaDobleView.setBackgroundResource(imageDoble);
+
+
+
             }
         //}
 
@@ -279,18 +309,18 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
 
 
 
-    private String getAsistencia(String myGuardiaCaptura, String usuarioAsistenciaDelDia) {
-
-        if (usuarioAsistenciaDelDia!= null){
-            return usuarioAsistenciaDelDia;
-        }else if (myGuardiaCaptura != null){
-            return myGuardiaCaptura;
-        }else {
-            return null;
-        }
-
-    }
-
+//    private String getAsistencia(String myGuardiaCaptura, String usuarioAsistenciaDelDia) {
+//
+//        if (usuarioAsistenciaDelDia!= null){
+//            return usuarioAsistenciaDelDia;
+//        }else if (myGuardiaCaptura != null){
+//            return myGuardiaCaptura;
+//        }else {
+//            return null;
+//        }
+//
+//    }
+//
 
     public void showGuardiaOptionsMenu(final String key,final String guardiaNombre){
 
@@ -341,7 +371,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView nameTxt;
-        ImageView optionMenu, asistenciaView;
+        ImageView optionMenu, asistenciaView, asistenciaDobleView;
         ViewGroup viewGroup;
 
         public ViewHolder(View itemView) {
@@ -350,6 +380,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
             optionMenu = (ImageView) itemView.findViewById(R.id.imageViewOption);
             viewGroup = (ViewGroup) itemView.findViewById(R.id.cardview_image);
             asistenciaView = (ImageView) itemView.findViewById(R.id.asistenciaView);
+            asistenciaDobleView = (ImageView) itemView.findViewById(R.id.asistenciaDobleView);
 
         }
     }

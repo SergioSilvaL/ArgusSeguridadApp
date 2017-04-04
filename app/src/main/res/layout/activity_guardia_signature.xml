@@ -44,7 +44,7 @@
 
                     <RadioGroup
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_weight="1"
                         android:checkedButton="@+id/radioButtonAsistio">
@@ -65,12 +65,21 @@
                             android:layout_weight="1" />
 
                         <RadioButton
-                            android:text="Llego Tarde"
+                            android:text="Doble Turno"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/radioButtonLlegoTarde"
+                            android:id="@+id/radioButtonDobleTurno"
                             android:layout_weight="1"
                             android:onClick="onRadioButtonClicked" />
+
+                        <RadioButton
+                            android:text="Cubre Descanso"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/radioButtonCubreDescanso"
+                            android:layout_weight="1"
+                            android:onClick="onRadioButtonClicked" />
+
 
                     </RadioGroup>
 
@@ -117,14 +126,28 @@
             </FrameLayout>
 
 
-            <EditText
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
-                android:lines="1"
-                android:scrollbars="vertical"
-                android:hint="Observaciones"
-                android:id="@+id/editTextObservacion"/>
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:lines="1"
+                    android:scrollbars="vertical"
+                    android:hint="Observaciones"
+                    android:id="@+id/editTextObservacion"
+                    android:layout_weight="1" />
+
+                <CheckBox
+                    android:text="Enviar Solicitud de Asistencia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/checkBox"
+                    android:layout_weight="1" />
+            </LinearLayout>
 
             <LinearLayout
                 android:orientation="vertical"
