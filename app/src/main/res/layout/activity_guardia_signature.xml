@@ -113,7 +113,8 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorAccent">
+                android:background="@color/colorAccent"
+                android:id="@+id/viewSignaturePad">
 
                 <com.github.gcacace.signaturepad.views.SignaturePad
                     android:layout_width="match_parent"
@@ -127,26 +128,36 @@
 
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:id="@+id/viewNoAsistioInput"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <EditText
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_red_dark">
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
-                    android:lines="1"
-                    android:scrollbars="vertical"
-                    android:hint="Observaciones"
-                    android:id="@+id/editTextObservacion"
-                    android:layout_weight="1" />
+                    android:layout_height="match_parent"
+                    >
 
-                <CheckBox
-                    android:text="Enviar Solicitud de Asistencia"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/checkBox"
-                    android:layout_weight="1" />
+                    <EditText
+                        android:gravity="top|left"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:inputType="text"
+                        android:hint="Observaciones"
+                        android:id="@+id/editTextObservacion"
+                        android:layout_weight="0.95"
+                        android:layout_margin="1sp"
+                        android:background="@color/cardview_light_background" />
+
+                    <CheckBox
+                        android:text="Enviar Solicitud de Asistencia"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/checkBoxConfirmarAsistencia"
+                        android:onClick="onCheckboxClicked"
+                        android:layout_weight="1"
+                        android:background="@color/cardview_light_background" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout

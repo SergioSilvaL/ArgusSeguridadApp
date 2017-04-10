@@ -2,7 +2,6 @@ package com.example.legible.seguridadargusapp.View;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.renderscript.Sampler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +38,8 @@ import java.io.ByteArrayOutputStream;
 
 public class GuardiaSignatureActivity extends AppCompatActivity {
 
+    FrameLayout viewSignaturePad;
+    LinearLayout viewNoAsistioInput;
     SignaturePad signaturePad;
     Button saveButton, clearButton, cancelButton;
     EditText editTextObservacion;
@@ -56,8 +59,6 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
     DatabaseReference mRefBitacora =
             FirebaseDatabase.getInstance().getReference().child("Argus").child("Bitacora");
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +72,12 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
         saveButton = (Button)findViewById(R.id.saveButton);
         clearButton = (Button)findViewById(R.id.clearButton);
         cancelButton = (Button) findViewById(R.id.CancelButton);
+        viewSignaturePad = (FrameLayout) findViewById(R.id.viewSignaturePad);
+        viewNoAsistioInput = (LinearLayout) findViewById(R.id.viewNoAsistioInput);
+
+        //Enable the default Views
+        viewSignaturePad.setVisibility(View.VISIBLE);
+        viewNoAsistioInput.setVisibility(View.GONE);
 
 
         //disable both buttons at start
@@ -134,8 +141,6 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
         guardiaBitacora.addValueEventListener(new otherBitaCoraEventListener());
 
     }
-
-
 
     private void uploadContent(){
 
@@ -206,7 +211,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
         if (mOtherBitacoraGuardia != null){
 
-            if (mOtherBitacoraGuardia.isAsisitio()){
+            if (mOtherBitacoraGuardia.isAsistio()){
                 guardiaFirma = mOtherBitacoraGuardia.getFirma();
             }
 
@@ -286,12 +291,18 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                 if (checked)
                     status = "Asistió";
                     asistio = true;
+                    viewSignaturePad.setVisibility(View.VISIBLE);
+                    viewNoAsistioInput.setVisibility(View.GONE);
+                    saveButton.setEnabled(false);
 
                 break;
             case R.id.radioButtonNoAsistio:
                 if (checked)
                     status = "No Asistió";
                     asistio= false;
+                    viewNoAsistioInput.setVisibility(View.VISIBLE);
+                    viewSignaturePad.setVisibility(View.GONE);
+                    saveButton.setEnabled(true);
                 break;
 
             case R.id.radioButtonCubreDescanso:
@@ -300,6 +311,11 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     status = "Cubre Descanso";
                     cubreDescanso = true;
                     dobleTurno = false;
+                    viewSignaturePad.setVisibility(View.VISIBLE);
+                    viewNoAsistioInput.setVisibility(View.GONE);
+                    saveButton.setEnabled(false);
+
+
                 break;
 
             case R.id.radioButtonDobleTurno:
@@ -308,6 +324,9 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     status = "Doble Turno";
                     dobleTurno = true;
                     cubreDescanso = false;
+                    viewSignaturePad.setVisibility(View.VISIBLE);
+                    viewNoAsistioInput.setVisibility(View.GONE);
+                    saveButton.setEnabled(false);
 
         }
     }
