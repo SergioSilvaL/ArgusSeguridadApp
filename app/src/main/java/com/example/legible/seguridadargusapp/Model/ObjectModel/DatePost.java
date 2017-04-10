@@ -41,8 +41,8 @@ public class DatePost{
         int numberOfMonth = c.get(Calendar.MONTH);
         String month ="";
         int numberOfYear = c.get(Calendar.YEAR);
-        int hour = c.get(Calendar.HOUR_OF_DAY);
-        int minute = c.get(Calendar.MINUTE);
+        String hour = getTimeFormat(c.get(Calendar.HOUR_OF_DAY));
+        String minute = getTimeFormat(c.get(Calendar.MINUTE));
 
         switch (numberOfMonth){
             case 0 :month = "enero";
@@ -113,6 +113,13 @@ public class DatePost{
         day = day.substring(day.length()-2);
         return day;
 
+    }
+
+    public String getTimeFormat (int numberOfHour){
+        String n = ((Integer) numberOfHour).toString();
+        n = "0" + n;
+        n = n.substring(n.length()-2);
+        return n;
     }
 }
 
