@@ -78,6 +78,7 @@ public class BitacoraGuardia  {
         this.asisitio = asisitio;
         this.dobleTurno = dobleTurno;
         this.cubreDescanso = cubreDescanso;
+        this.firmaExtra = firmaExtra;
         this.firma = firma;
         Observacion = observacion;
         this.cliente = cliente;

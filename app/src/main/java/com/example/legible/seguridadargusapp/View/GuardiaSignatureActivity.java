@@ -2,12 +2,10 @@ package com.example.legible.seguridadargusapp.View;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.nfc.Tag;
+import android.renderscript.Sampler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -35,32 +33,30 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.net.URI;
-import java.util.Date;
 
 public class GuardiaSignatureActivity extends AppCompatActivity {
-
 
     SignaturePad signaturePad;
     Button saveButton, clearButton, cancelButton;
     EditText editTextObservacion;
     TextView textViewCurrentGuardiaName;
-    String status="Asisitio";
+    String status="Asistio";
     String statusExtra = "";
-    String turno;
-    String guardiaNombre;
-    String guardiaKey;
-    String guardiaFirma;
-
-    String firmaExtra;
+    String turno, guardiaNombre,guardiaKey,guardiaFirma;
+    String observacion, dateKey, currentDate,cliente,zona ;
+    String guardiaFirmaExtra;
     Boolean dobleTurno = false, cubreDescanso = false, asistio = true;
 
+    private guardias mGuardia;
+    private BitacoraGuardia mOtherBitacoraGuardia;
 
-    //set fecha in datekey
+    // Database References
+
     DatabaseReference mRefBitacora =
             FirebaseDatabase.getInstance().getReference().child("Argus").child("Bitacora");
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +80,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
         //change screen orientation to landscape mode
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
+        // Controlers
         signaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
             @Override
             public void onStartSigning() {
@@ -106,79 +103,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //Begin Upload Task
-                UploadTask uploadTask = getImageRef().putBytes(getDataFromSignaturePadAsBytes());
-                uploadTask.addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        //Handle unsuccesful uploads
-                    }
-                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        //taskSnapshot.getMetadata() contains file metadata such as size, content -type, and download URL.
-
-                        //uploadData();
-
-                        //Push Data to Firebase if Image uploadad succesfull
-
-                        guardiaKey = getIntent().getStringExtra("guardiaKey");
-
-                        //Todo
-                        if (status =="Asistió"){
-                            guardiaFirma = taskSnapshot.getDownloadUrl().toString();
-                        }
-                        else if (status == "Cubre Descanso" || status == "Doble Turno"){
-                            firmaExtra = taskSnapshot.getDownloadUrl().toString();
-                        }
-
-
-
-                        //Todo UnDO this Bad Practice
-                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Argus").child("guardias").child(guardiaKey).child("usuarioTurno");
-                        reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                turno = dataSnapshot.getValue(String.class);
-                                guardiaNombre = getIntent().getStringExtra("guardiaNombre");
-
-                                pushData();
-
-                                Intent resultIntent = new Intent();
-
-//                                String statusExtra = "";
-//                                if (status != "Asistió" || status != "No Asistió"){
-//                                    statusExtra = status;
-//                                }
-
-                                resultIntent.putExtra(GuardiaListaActivity.EXTRA_ASISTENCIA, status);
-                                resultIntent.putExtra(GuardiaListaActivity.EXTRA_ASISTENCIA_GUARDIA_CAPTURADO, guardiaNombre);
-                                resultIntent.putExtra(GuardiaListaActivity.EXTRA_DOBLE_ASISTENCIA, statusExtra);
-
-                                setResult(RESULT_OK, resultIntent);
-
-                                //Update guardiasArrayAdapter;
-                                GuardiaListaRecyclerAdapter.updateGuardiaList();
-
-
-                                finish();
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-                    }
-                });
-
-
-                // end of upload intent
-
-                Toast.makeText(GuardiaSignatureActivity.this, "Captura fue Enviado con Exito", Toast.LENGTH_SHORT).show();
-
-
+               uploadContent();
             }
         });
 
@@ -197,22 +122,113 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
         });
 
 
+        // Fetch Other Data from Firebase
+        DatabaseReference mRefGuardia =
+                FirebaseDatabase.getInstance().getReference().child("Argus").child("guardias").child(getIntent().getStringExtra("guardiaKey"));
+
+        mRefGuardia.addValueEventListener(new GuardiaReferenceEventListener());
+
+        DatabaseReference guardiaBitacora =
+                FirebaseDatabase.getInstance().getReference().child("Argus").child("Bitacora").child(new DatePost().getDateKey()).child(getIntent().getStringExtra("guardiaKey"));
+
+        guardiaBitacora.addValueEventListener(new otherBitaCoraEventListener());
+
+    }
+
+
+
+    private void uploadContent(){
+
+        //Begin Upload Task
+        UploadTask uploadTask = getImageRef().putBytes(getDataFromSignaturePadAsBytes());
+
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                //Handle unsuccesful uploads
+                Log.v("GuadriaSignature","OnFailure" );
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                //taskSnapshot.getMetadata() contains file metadata such as size, content -type, and download URL.
+
+
+                //Push Data to Firebase if Image uploadad succesfull
+                // sets the downloadUrl and asigns it to the current status on whether it's an assitance or extra assistance signature
+                setDownLoadUrlOnGuardiaFirmaOrGuardiaFirmaExtra(taskSnapshot);
+
+                pushData();
+
+                Intent resultIntent = new Intent();
+
+                resultIntent.putExtra(GuardiaListaActivity.EXTRA_ASISTENCIA, status);
+                resultIntent.putExtra(GuardiaListaActivity.EXTRA_ASISTENCIA_GUARDIA_CAPTURADO, guardiaNombre);
+                resultIntent.putExtra(GuardiaListaActivity.EXTRA_DOBLE_ASISTENCIA, statusExtra);
+
+                setResult(RESULT_OK, resultIntent);
+
+                //Update guardiasArrayAdapter;
+                GuardiaListaRecyclerAdapter.updateGuardiaList();
+
+                finish();
+
+                Toast.makeText(GuardiaSignatureActivity.this, "Captura fue Enviado con Exito", Toast.LENGTH_SHORT).show();
+
+
+
+            }
+        });
+
 
 
     }
 
     private void pushData(){
 
-        //Push Data
-        String observacion = editTextObservacion.getText().toString();
+        turno = mGuardia.getUsuarioTurno();
 
-        String dateKey = new DatePost().getDateKey();
+        guardiaKey = getIntent().getStringExtra("guardiaKey");
 
-        String currentDate = new DatePost().getDatePost();
+        guardiaNombre = getIntent().getStringExtra("guardiaNombre");
 
-        String cliente = ClienteRecyclerAdapter.myCliente;
+        observacion = editTextObservacion.getText().toString();
 
-        String zona = ClienteRecyclerAdapter.myZona;
+        dateKey = new DatePost().getDateKey();
+
+        currentDate = new DatePost().getDatePost();
+
+        cliente = ClienteRecyclerAdapter.myCliente;
+
+        zona = ClienteRecyclerAdapter.myZona;
+
+
+
+        if (mOtherBitacoraGuardia != null){
+
+            if (mOtherBitacoraGuardia.isAsisitio()){
+                guardiaFirma = mOtherBitacoraGuardia.getFirma();
+            }
+
+            currentDate = new DatePost().getDatePost();
+
+            cubreDescanso = mOtherBitacoraGuardia.isCubreDescanso();
+            dobleTurno = mOtherBitacoraGuardia.isDobleTurno();
+
+            if (status.equals("Cubre Descanso")){
+                cubreDescanso = true;
+                dobleTurno = false;
+            } else if (status.equals("Doble Turno")){
+                dobleTurno = true;
+                cubreDescanso = false;
+                }
+
+        }
+
+        if (asistio){
+            status = "asistio";
+        }
+
 
 
 
@@ -220,7 +236,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                 asistio,
                 dobleTurno,
                 cubreDescanso,
-                firmaExtra,
+                guardiaFirmaExtra,
                 guardiaFirma,
                 observacion,
                 cliente,
@@ -230,50 +246,35 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                 currentDate);
 
 
-
-        //Todo set datekey with fecha
-
-        //mRefBitacora.child(dateKey).child(guardiaKey).setValue(bc);
-        String fecha = "20170316";
-
         if (status!= "No Asistió") {
 
             mRefBitacora.child(dateKey).child(guardiaKey).setValue(bc);
             //mRefBitacora.child(dateKey).setValue(fecha);
 
-
-            //Todo add the current date
-
             DatabaseReference reference = GuardiaListaRecyclerAdapter.ClienteGuardiasRef;
             reference.child(guardiaKey).setValue(new guardias(guardiaKey, guardiaNombre, status,statusExtra, new DatePost().getDate()));
 
         }else {
+
             //Send Aproval Notification
-
-
             Notificacion notificacion = new Notificacion("CF", observacion, new DatePost().getDate(), new DatePost().getDateKey(),guardiaKey);
 
             DatabaseReference referenceNot =  FirebaseDatabase.getInstance().getReference()
                     .child("Argus");
 
             referenceNot.child("NotificacionTmp").push().setValue(notificacion);
-            referenceNot.child("Notifiacion").push().setValue(notificacion);
+            referenceNot.child("Notificacion").push().setValue(notificacion);
 
-            mRefBitacora.child(dateKey).child(guardiaKey).setValue(bc);
+            // Todo Vertify if it should delete everything
+            mRefBitacora.child(dateKey).child(guardiaKey).setValue(new BitacoraGuardia());//.setValue(bc);
             //mRefBitacora.child(dateKey).setValue(fecha);
 
-
-            //Todo add the current date
 
             DatabaseReference reference = GuardiaListaRecyclerAdapter.ClienteGuardiasRef;
             reference.child(guardiaKey).setValue(new guardias(guardiaKey, guardiaNombre, status,statusExtra, new DatePost().getDate()));
 
 
-
         }
-
-
-
     }
 
     public void onRadioButtonClicked(View view) {
@@ -296,7 +297,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
             case R.id.radioButtonCubreDescanso:
                 if (checked)
                     statusExtra = "Cubre Descanso";
-
+                    status = "Cubre Descanso";
                     cubreDescanso = true;
                     dobleTurno = false;
                 break;
@@ -304,18 +305,19 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
             case R.id.radioButtonDobleTurno:
                 if (checked)
                     statusExtra = "Doble Turno";
+                    status = "Doble Turno";
                     dobleTurno = true;
                     cubreDescanso = false;
 
         }
     }
 
-
     private byte[] getDataFromSignaturePadAsBytes(){
 
         //Get the data from Signature Pad as bytes
         signaturePad.setDrawingCacheEnabled(true);
         signaturePad.buildDrawingCache();
+
         Bitmap signaturePadDrawingCache = signaturePad.getDrawingCache();
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -326,34 +328,68 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
     private StorageReference getImageRef() {
 
-        //GetCurrent dataSpecialFormat for Image child reference
-        String fecha = new DatePost().getDateKey();
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-
         // Create a storage reference from our app
-        StorageReference storageRef =  storage.getReference();
+        StorageReference storageRef =  FirebaseStorage.getInstance().getReference();
 
+        // Defualt Image if only an asssistance was taken
         String image = "image";
 
-        // Get Image Path
-        if (status =="Asistió"){
-            image = "image";
-        }
-        else if (status == "Cubre Descanso" || status == "Doble Turno"){
+        // If it's taken as a extra asistance a new image is created with the signature taken
+        if (status.equals("Cubre Descanso") || status.equals("Doble Turno")){
             image = "imageFirmaExtra";
         }
-
 
         // Create a child reference
         // imagesRef now points to "image"
         StorageReference imagesRef = storageRef
                 .child("Bitacora")
-                .child(fecha)
+                .child(new DatePost().getDateKey())// Takes the de
                 .child(getIntent().getStringExtra("guardiaKey"))
                 .child(image);
 
 
         return  imagesRef;
     }
+
+    private void setDownLoadUrlOnGuardiaFirmaOrGuardiaFirmaExtra(UploadTask.TaskSnapshot taskSnapshot) {
+
+        // Download Url for Signature Image
+        String downLoadUrl = taskSnapshot.getDownloadUrl().toString();
+
+        if (status.equals("Asistio")) {
+            guardiaFirma = downLoadUrl;
+        } else if (status.equals("Cubre Descanso") || status.equals("Doble Turno")) {
+            guardiaFirmaExtra = downLoadUrl;
+        }
+
+
+    }
+
+    class GuardiaReferenceEventListener implements ValueEventListener{
+
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            mGuardia = dataSnapshot.getValue(guardias.class);
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    }
+
+    class otherBitaCoraEventListener implements ValueEventListener{
+
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            mOtherBitacoraGuardia = dataSnapshot.getValue(BitacoraGuardia.class);
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+
+    }
+
 }
