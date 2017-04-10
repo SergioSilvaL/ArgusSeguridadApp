@@ -141,10 +141,6 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
 
             notifyItemRemoved(position);
 
-
-
-
-
         }
 
         @Override
@@ -230,7 +226,8 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
 
                 switch (asistencia) {
                     case "Asistió":
-                    case "Asisitio":
+                    case "Asistio":
+                    case "asistio":
                         image = android.R.drawable.presence_online;
                         break;
                     case "Llego Tarde":
@@ -291,9 +288,9 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
 
                 Intent intent = new Intent(mContext, GuardiaSignatureActivity.class);
                 intent.putExtra("guardiaKey",guardia.getKey());
-                //intent.putExtra("guardiaTurno",guardia.getUsuarioTurno());
                 intent.putExtra("guardiaNombre",guardia.getUsuarioNombre());
                 intent.putExtra("guardiaAsistenciaStatus",false);
+
                 ((Activity) mContext).startActivityForResult(intent,GuardiaListaActivity.REQUEST_ASISTENCIA);
 
             }
@@ -302,25 +299,12 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
         holder.optionMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            showGuardiaOptionsMenu(guardia.getKey(),guardia.getUsuarioNombre());
+                showGuardiaOptionsMenu(guardia.getKey(),guardia.getUsuarioNombre());
             }
         });
     }
 
 
-
-//    private String getAsistencia(String myGuardiaCaptura, String usuarioAsistenciaDelDia) {
-//
-//        if (usuarioAsistenciaDelDia!= null){
-//            return usuarioAsistenciaDelDia;
-//        }else if (myGuardiaCaptura != null){
-//            return myGuardiaCaptura;
-//        }else {
-//            return null;
-//        }
-//
-//    }
-//
 
     public void showGuardiaOptionsMenu(final String key,final String guardiaNombre){
 
