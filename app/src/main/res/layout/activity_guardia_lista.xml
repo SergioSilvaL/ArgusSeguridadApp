@@ -19,42 +19,6 @@
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/LinearLayout_Cambio_de_fecha"
-        android:layout_margin="35dp">
-
-        <Button
-            android:text="-"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/buttonRestarFecha"
-            android:layout_weight="1"
-            android:textSize="36sp"
-            android:textStyle="normal|bold"
-            android:gravity="center"/>
-
-        <TextView
-            android:text="20170302"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textViewFechaSim"
-            android:layout_weight="1"
-            android:textSize="36sp"
-            android:textStyle="normal|bold"
-            android:gravity="center" />
-
-        <Button
-            android:text="+"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/buttonSumarFecha"
-            android:layout_weight="1"
-            android:textSize="36sp" />
-    </LinearLayout>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_guardia_lista"
         android:layout_width="match_parent"
