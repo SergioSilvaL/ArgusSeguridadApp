@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -40,6 +41,8 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
     FrameLayout viewSignaturePad;
     LinearLayout viewNoAsistioInput;
+    CheckBox checkBoxCF;
+    boolean isConfirmarInasistencia = false;
     SignaturePad signaturePad;
     Button saveButton, clearButton, cancelButton;
     EditText editTextObservacion;
@@ -72,6 +75,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
         saveButton = (Button)findViewById(R.id.saveButton);
         clearButton = (Button)findViewById(R.id.clearButton);
         cancelButton = (Button) findViewById(R.id.CancelButton);
+        checkBoxCF = (CheckBox) findViewById(R.id.checkBoxConfirmarAsistencia);
         viewSignaturePad = (FrameLayout) findViewById(R.id.viewSignaturePad);
         viewNoAsistioInput = (LinearLayout) findViewById(R.id.viewNoAsistioInput);
 
@@ -226,7 +230,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
             } else if (status.equals("Doble Turno")){
                 dobleTurno = true;
                 cubreDescanso = false;
-                }
+            }
 
         }
 
@@ -261,6 +265,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
         }else {
 
+            if (isConfirmarInasistencia) {
             //Send Aproval Notification
             Notificacion notificacion = new Notificacion("CF", observacion, new DatePost().getDate(), new DatePost().getDateKey(),guardiaKey);
 
@@ -270,6 +275,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
             referenceNot.child("NotificacionTmp").push().setValue(notificacion);
             referenceNot.child("Notificacion").push().setValue(notificacion);
 
+            }
             // Todo Vertify if it should delete everything
             mRefBitacora.child(dateKey).child(guardiaKey).setValue(new BitacoraGuardia());//.setValue(bc);
             //mRefBitacora.child(dateKey).setValue(fecha);
@@ -294,6 +300,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     viewSignaturePad.setVisibility(View.VISIBLE);
                     viewNoAsistioInput.setVisibility(View.GONE);
                     saveButton.setEnabled(false);
+                    clearButton.setVisibility(View.VISIBLE);
 
                 break;
             case R.id.radioButtonNoAsistio:
@@ -303,6 +310,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     viewNoAsistioInput.setVisibility(View.VISIBLE);
                     viewSignaturePad.setVisibility(View.GONE);
                     saveButton.setEnabled(true);
+                    clearButton.setVisibility(View.GONE);
                 break;
 
             case R.id.radioButtonCubreDescanso:
@@ -314,6 +322,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     viewSignaturePad.setVisibility(View.VISIBLE);
                     viewNoAsistioInput.setVisibility(View.GONE);
                     saveButton.setEnabled(false);
+                    clearButton.setVisibility(View.VISIBLE);
 
 
                 break;
@@ -327,7 +336,27 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     viewSignaturePad.setVisibility(View.VISIBLE);
                     viewNoAsistioInput.setVisibility(View.GONE);
                     saveButton.setEnabled(false);
+                    clearButton.setVisibility(View.VISIBLE);
 
+        }
+    }
+
+    public void onCheckboxClicked(View view){
+
+
+        // Is the view now check?
+        boolean checked = ((CheckBox) view).isChecked();
+
+        switch (view.getId()){
+
+            case R.id.checkBoxConfirmarAsistencia:
+                if (checked)
+                    //
+                    isConfirmarInasistencia = true;
+                else
+                    isConfirmarInasistencia = false;
+
+                break;
         }
     }
 
