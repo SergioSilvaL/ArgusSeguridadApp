@@ -52,33 +52,38 @@
                         <RadioButton
                             android:text="Asistió"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:id="@+id/radioButtonAsistio"
                             android:onClick="onRadioButtonClicked"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1"
+                            android:textSize="14sp" />
+
                         <RadioButton
                             android:text="No Asistió"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:id="@+id/radioButtonNoAsistio"
                             android:onClick="onRadioButtonClicked"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                            android:textSize="14sp" />
 
                         <RadioButton
                             android:text="Doble Turno"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:id="@+id/radioButtonDobleTurno"
                             android:layout_weight="1"
-                            android:onClick="onRadioButtonClicked" />
+                            android:onClick="onRadioButtonClicked"
+                            android:textSize="14sp" />
 
                         <RadioButton
                             android:text="Cubre Descanso"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:id="@+id/radioButtonCubreDescanso"
                             android:layout_weight="1"
-                            android:onClick="onRadioButtonClicked" />
+                            android:onClick="onRadioButtonClicked"
+                            android:textSize="14sp" />
 
 
                     </RadioGroup>
@@ -143,7 +148,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:inputType="text"
-                        android:hint="Observaciones"
+                        android:hint="observación"
                         android:id="@+id/editTextObservacion"
                         android:layout_weight="0.95"
                         android:layout_margin="1sp"
@@ -155,6 +160,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/checkBoxConfirmarAsistencia"
                         android:onClick="onCheckboxClicked"
+                        android:layout_margin="1sp"
                         android:layout_weight="1"
                         android:background="@color/cardview_light_background" />
                 </LinearLayout>
