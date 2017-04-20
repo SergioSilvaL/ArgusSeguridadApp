@@ -12,6 +12,16 @@ public class Notificacion {
     public String referenceKey;
     public String fechaCodigo;
 
+    public String getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
+    }
+
+    private String cliente;
+
     public String getFechaCodigo() {
         return fechaCodigo;
     }
@@ -27,12 +37,13 @@ public class Notificacion {
         this.referenceKey = referenceKey;
     }
 
-    public Notificacion(String accion, String descripcion, String fecha,String fechaCodigo,String referenceKey){
+    public Notificacion(String accion, String descripcion, String fecha,String fechaCodigo,String referenceKey, String cliente){
         this.accion = accion;
         this.descripcion = descripcion;
         this.fecha = fecha;
         this.fechaCodigo = fechaCodigo;
         this.referenceKey = referenceKey;
+        this.cliente = cliente;
     }
 
     public Notificacion(String accion, String descripcion, String fecha) {

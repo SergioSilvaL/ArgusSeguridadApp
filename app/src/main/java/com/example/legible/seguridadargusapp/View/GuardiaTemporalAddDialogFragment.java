@@ -131,7 +131,7 @@ public class GuardiaTemporalAddDialogFragment extends DialogFragment{
         guardia.setUsuarioDomicilio(usuarioDomicilio.getText().toString());
         String telefono = usuarioTelefono.getText().toString();
         guardia.setUsuarioTelefono(Long.valueOf(telefono));
-        guardia.setUsuarioCliente(ClienteRecyclerAdapter.myCliente);
+        guardia.setUsuarioClienteAsignado(ClienteRecyclerAdapter.myCliente);
 
         //Set the information for the Notification
         //Todo set notification with it's information
