@@ -77,13 +77,23 @@
                             android:textSize="14sp" />
 
                         <RadioButton
-                            android:text="Cubre Descanso"
+                            android:text="Descanso Laborado"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:id="@+id/radioButtonCubreDescanso"
                             android:layout_weight="1"
                             android:onClick="onRadioButtonClicked"
                             android:textSize="14sp" />
+
+
+                        <RadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/radioButtonHorasExtra"
+                            android:text="Horas Extra"
+                            android:onClick="onRadioButtonClicked"
+                            android:textSize="14sp"
+                            android:layout_weight="1"/>
 
 
                     </RadioGroup>
