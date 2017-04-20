@@ -1,7 +1,5 @@
 package com.example.legible.seguridadargusapp.Model.ObjectModel;
 
-import java.util.Date;
-
 /**
  * Created by SERGIO on 25/02/2017.
  */
@@ -42,15 +40,24 @@ public class guardias {
 
     //Really? Zona are you even using that bro...
     private String usuarioZona;
-    private String usuarioCliente;
-    private String key;
+
+    public String getUsuarioClienteAsignado() {
+        return usuarioClienteAsignado;
+    }
+
+    public void setUsuarioClienteAsignado(String usuarioClienteAsignado) {
+        this.usuarioClienteAsignado = usuarioClienteAsignado;
+    }
+
+    private String usuarioClienteAsignado;
+    private String usuarioKey;
 
 
     public guardias(){}
 
     //Construct Guardia for clienteGuardias listview show
-    public guardias(String key, String name, String status,String statusExtra, String date ){
-        this.key = key;
+    public guardias(String usuarioKey, String name, String status, String statusExtra, String date ){
+        this.usuarioKey = usuarioKey;
         this.usuarioNombre = name;
         this.usuarioAsistenciaDelDia = status;
         this.usuarioAsistenciaExtraDelDia = statusExtra;
@@ -65,7 +72,7 @@ public class guardias {
         this.usuarioTipo = usuarioTipo;
         this.usuarioTurno = usuarioTurno;
         this.usuarioZona = usuarioZona;
-        this.key=key;
+        this.usuarioKey = usuarioKey;
     }
 
 
@@ -77,12 +84,12 @@ public class guardias {
         this.usuarioAsistenciaDelDia = usuarioAsistenciaDelDia;
     }
 
-    public String getKey() {
-        return key;
+    public String getUsuarioKey() {
+        return usuarioKey;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setUsuarioKey(String usuarioKey) {
+        this.usuarioKey = usuarioKey;
     }
 
     public String getUsuarioDomicilio() {
@@ -141,11 +148,11 @@ public class guardias {
         this.usuarioDisponible = usuarioDisponible;
     }
 
-    public String getUsuarioCliente() {
-        return usuarioCliente;
-    }
-
-    public void setUsuarioCliente(String usuarioCliente) {
-        this.usuarioCliente = usuarioCliente;
-    }
+//    public String getUsuarioCliente() {
+//        return usuarioCliente;
+//    }
+//
+//    public void setUsuarioCliente(String usuarioCliente) {
+//        this.usuarioCliente = usuarioCliente;
+//    }
 }
