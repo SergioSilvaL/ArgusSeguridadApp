@@ -265,9 +265,13 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
         }else {
 
+             //Todo modify it's vallues so only the un assistance does not show
+
+
+
             if (isConfirmarInasistencia) {
             //Send Aproval Notification
-            Notificacion notificacion = new Notificacion("CF", observacion, new DatePost().getDate(), new DatePost().getDateKey(),guardiaKey);
+            Notificacion notificacion = new Notificacion("CF", guardiaNombre+" " + observacion, new DatePost().getDatePost(), new DatePost().getDateKey(),guardiaKey, cliente);
 
             DatabaseReference referenceNot =  FirebaseDatabase.getInstance().getReference()
                     .child("Argus");
@@ -276,8 +280,10 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
             referenceNot.child("Notificacion").push().setValue(notificacion);
 
             }
-            // Todo Vertify if it should delete everything
-            mRefBitacora.child(dateKey).child(guardiaKey).setValue(new BitacoraGuardia());//.setValue(bc);
+
+            BitacoraGuardia bitacoraNoAsistio = new BitacoraGuardia(false,false,false,null,null," ",cliente,zona,turno,guardiaNombre,currentDate);
+
+            mRefBitacora.child(dateKey).child(guardiaKey).setValue(bitacoraNoAsistio);//.setValue(bc);
             //mRefBitacora.child(dateKey).setValue(fecha);
 
 
@@ -318,6 +324,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     statusExtra = "Cubre Descanso";
                     status = "Cubre Descanso";
                     cubreDescanso = true;
+                    asistio =false;
                     dobleTurno = false;
                     viewSignaturePad.setVisibility(View.VISIBLE);
                     viewNoAsistioInput.setVisibility(View.GONE);
