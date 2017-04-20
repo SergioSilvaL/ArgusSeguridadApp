@@ -41,6 +41,10 @@ public class GuardiaMoveDialogFragment extends DialogFragment{
     private DatabaseReference mRefNotification =
             FirebaseDatabase.getInstance().getReference().child("Argus").child("Notificacion");
 
+
+    private DatabaseReference mRefTmpNofication =
+            FirebaseDatabase.getInstance().getReference().child("Argus").child("NotificacionTmp");
+
     public static GuardiaMoveDialogFragment newInstance(String cliente,String supervisor,String guardiaKey,String guardiaNombre){
         GuardiaMoveDialogFragment fragment = new GuardiaMoveDialogFragment();
 
@@ -136,6 +140,10 @@ public class GuardiaMoveDialogFragment extends DialogFragment{
 
         mRefNotification.child(key).setValue(notificacion);
         mRefNotification.child(key).child("informacion").setValue(guardia);
+
+        mRefTmpNofication.child(key).setValue(notificacion);
+        mRefTmpNofication.child(key).child("informacion").setValue(guardia);
+
 
         Toast.makeText(getContext(), "Su solicitud se ha enviado con exito",Toast.LENGTH_LONG).show();
 
