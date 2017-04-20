@@ -118,6 +118,16 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
         @Override
         public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
+
+            guardias guardia = dataSnapshot.getValue(guardias.class);
+
+            if (guardia.getUsuarioAsistenciaDelDia().equals("No Asistió")&& guardia.equals("")){
+                if (guardia.getUsuarioNombre().equals(myGuardiaCaptura)){
+                    myStatusExtra="";
+                    myStatus="";
+                }
+            }
+
         }
 
         @Override
@@ -202,14 +212,10 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
 
         final guardias guardia = mGuardiasList.get(position);
 
-//        //TODO add diferential date
-//        if (guardia.getUsuarioAsistenciaFecha()!= (new DatePost().getDate())){
-//            guardia.setUsuarioAsistenciaFecha(0);
-//        }
+
 
         holder.nameTxt.setText(guardia.getUsuarioNombre());
 
-        //if (guardia.getUsuarioAsistenciaFecha() == (new DatePost().getDate()) || guardia.getUsuarioAsistenciaDelDia() == null){
 
             if (guardia.getUsuarioNombre().equals(myGuardiaCaptura) || guardia.getUsuarioAsistenciaDelDia() != null) {
 
@@ -218,7 +224,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
 
                 if (guardia.getUsuarioNombre().equals(myGuardiaCaptura)) {
                     asistencia = GuardiaListaRecyclerAdapter.myStatus;
-                    //GuardiaListaRecyclerAdapter.myStatus = null;
+                    //GuardiaListaRecyclerAdapter.myStatus = "";
                     //GuardiaListaRecyclerAdapter.myGuardiaCaptura = null;
                 } else {
                     asistencia = guardia.getUsuarioAsistenciaDelDia();
@@ -242,7 +248,6 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
                 if (guardia.getUsuarioAsistenciaFecha()!= null) {
 
                     if (!guardia.getUsuarioAsistenciaFecha().equals(new DatePost().getDate())) {
-                        //guardia.setUsuarioAsistenciaFecha(0);
                         image = 0;
                     }
                 }
@@ -253,7 +258,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
 
                 if (guardia.getUsuarioNombre().equals(myGuardiaCaptura) && GuardiaListaRecyclerAdapter.myStatusExtra!="") {
                     asistencia = GuardiaListaRecyclerAdapter.myStatusExtra;
-                    //GuardiaListaRecyclerAdapter.myStatus = null;
+                    //GuardiaListaRecyclerAdapter.myStatus = "";
                     //GuardiaListaRecyclerAdapter.myGuardiaCaptura = null;
                 } else {
                     asistencia = guardia.getUsuarioAsistenciaExtraDelDia();
@@ -279,7 +284,6 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
 
 
             }
-        //}
 
 
         holder.viewGroup.setOnClickListener(new View.OnClickListener() {
