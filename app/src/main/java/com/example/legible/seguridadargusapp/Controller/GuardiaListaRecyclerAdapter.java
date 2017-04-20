@@ -2,23 +2,16 @@ package com.example.legible.seguridadargusapp.Controller;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.nfc.Tag;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.legible.seguridadargusapp.Model.ObjectModel.Cliente;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.DatePost;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.guardias;
 import com.example.legible.seguridadargusapp.R;
@@ -32,7 +25,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.security.Guard;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,7 +83,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
 
 
             guardias guardia = dataSnapshot.getValue(guardias.class);
-            guardia.setKey(dataSnapshot.getKey());
+            guardia.setUsuarioKey(dataSnapshot.getKey());
 
 
             boolean bandera = false;
@@ -179,7 +171,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 guardias guardia = dataSnapshot.getValue(guardias.class);
-                guardia.setKey(dataSnapshot.getKey());
+                guardia.setUsuarioKey(dataSnapshot.getKey());
                 mGuardiasList.add(0,guardia);
 
             }
@@ -291,7 +283,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
             public void onClick(View v) {
 
                 Intent intent = new Intent(mContext, GuardiaSignatureActivity.class);
-                intent.putExtra("guardiaKey",guardia.getKey());
+                intent.putExtra("guardiaKey",guardia.getUsuarioKey());
                 intent.putExtra("guardiaNombre",guardia.getUsuarioNombre());
                 intent.putExtra("guardiaAsistenciaStatus",false);
 
@@ -303,7 +295,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
         holder.optionMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showGuardiaOptionsMenu(guardia.getKey(),guardia.getUsuarioNombre());
+                showGuardiaOptionsMenu(guardia.getUsuarioKey(),guardia.getUsuarioNombre());
             }
         });
     }
