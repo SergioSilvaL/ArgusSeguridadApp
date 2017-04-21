@@ -24,7 +24,8 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/viewStatusState">
 
                 <TextView
                     android:text='Estado'
@@ -34,13 +35,15 @@
                     android:gravity="center"
                     android:layout_margin="5dp"
                     android:textColor="@android:color/black"
-                    android:textStyle="normal" />
+                    android:textStyle="normal"
+                    android:id="@+id/TextViewState" />
 
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:id="@+id/viewRadioGroup">
 
                     <RadioGroup
                         android:layout_width="match_parent"
@@ -50,7 +53,7 @@
                         android:checkedButton="@+id/radioButtonAsistio">
 
                         <RadioButton
-                            android:text="Asistió"
+                            android:text="AS"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:id="@+id/radioButtonAsistio"
@@ -59,7 +62,7 @@
                             android:textSize="14sp" />
 
                         <RadioButton
-                            android:text="No Asistió"
+                            android:text="N.A"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:id="@+id/radioButtonNoAsistio"
@@ -68,7 +71,7 @@
                             android:textSize="14sp" />
 
                         <RadioButton
-                            android:text="Doble Turno"
+                            android:text="D.T"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:id="@+id/radioButtonDobleTurno"
@@ -77,7 +80,7 @@
                             android:textSize="14sp" />
 
                         <RadioButton
-                            android:text="Descanso Laborado"
+                            android:text="D.L"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:id="@+id/radioButtonCubreDescanso"
@@ -90,7 +93,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:id="@+id/radioButtonHorasExtra"
-                            android:text="Horas Extra"
+                            android:text="H.E"
                             android:onClick="onRadioButtonClicked"
                             android:textSize="14sp"
                             android:layout_weight="1"/>
@@ -103,26 +106,92 @@
             </LinearLayout>
 
 
-            <TextView
-            android:text='Firma'
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:gravity="center"
-            android:layout_margin="5dp"
-            android:textColor="@android:color/black"
-            android:textStyle="normal" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/viewHourController"
+                android:layout_margin="5dp">
 
-            <TextView
-                android:text="Carlos Francisco Alatorre Parra"
+                <TextView
+                    android:text="Total de Horas"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/textViewHourControllerPrompt"
+                    android:layout_margin="10dp"
+                    android:gravity="center" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <Button
+                        android:background="@color/colorAccent"
+                        android:text="Restar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/buttonHourControllerRestar"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:textColor="@android:color/background_light"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        android:text="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/textViewHourControllerIndicator"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <Button
+                        android:background="@color/colorAccent"
+                        android:text="Sumar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/buttonHourControllerSumar"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:textColor="@android:color/background_light"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/viewSignaturePrompt">
+
+                <TextView
+                android:text='Firma'
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="24sp"
                 android:gravity="center"
                 android:layout_margin="5dp"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="@android:color/black"
                 android:textStyle="normal"
-                android:id="@+id/TextViewSignatureCurrentGuardiaName" />
+                    android:id="@+id/textViewSignaturePrompt" />
+
+                <TextView
+                    android:text="Carlos Francisco Alatorre Parra"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:textColor="@android:color/darker_gray"
+                    android:textStyle="normal"
+                    android:id="@+id/TextViewSignatureCurrentGuardiaName" />
+            </LinearLayout>
 
 
             <FrameLayout
@@ -179,7 +248,8 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:id="@+id/viewSignatureControllerButton">
 
                 <LinearLayout
                     android:layout_width="match_parent"

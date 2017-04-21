@@ -40,20 +40,21 @@ import java.io.ByteArrayOutputStream;
 public class GuardiaSignatureActivity extends AppCompatActivity {
 
     FrameLayout viewSignaturePad;
-    LinearLayout viewNoAsistioInput;
+    LinearLayout viewNoAsistioInput, viewHourController;
     CheckBox checkBoxCF;
     boolean isConfirmarInasistencia = false;
     SignaturePad signaturePad;
-    Button saveButton, clearButton, cancelButton;
+    Button saveButton, clearButton, cancelButton, restarHoraButtonController, sumarHoraButtonController;
     EditText editTextObservacion;
-    TextView textViewCurrentGuardiaName;
+    TextView textViewCurrentGuardiaName, textViewCurrentHour;
     String status="Asistio";
     String statusExtra = "";
     String turno, guardiaNombre,guardiaKey,guardiaFirma;
     String observacion, dateKey, currentDate,cliente,zona ;
     String guardiaFirmaExtra;
     Boolean dobleTurno = false, cubreDescanso = false, asistio = true;
-
+    private long hourStatus = 1;
+    private final static String TAG = GuardiaListaActivity.class.getSimpleName();
     private guardias mGuardia;
     private BitacoraGuardia mOtherBitacoraGuardia;
 
@@ -66,30 +67,61 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Set Views
-        setContentView(R.layout.activity_guardia_signature);
-        editTextObservacion = (EditText) findViewById(R.id.editTextObservacion);
-        textViewCurrentGuardiaName = (TextView) findViewById(R.id.TextViewSignatureCurrentGuardiaName);
-        textViewCurrentGuardiaName.setText(getIntent().getStringExtra("guardiaNombre"));
-        signaturePad = (SignaturePad)findViewById(R.id.signaturePad);
-        saveButton = (Button)findViewById(R.id.saveButton);
-        clearButton = (Button)findViewById(R.id.clearButton);
-        cancelButton = (Button) findViewById(R.id.CancelButton);
-        checkBoxCF = (CheckBox) findViewById(R.id.checkBoxConfirmarAsistencia);
-        viewSignaturePad = (FrameLayout) findViewById(R.id.viewSignaturePad);
-        viewNoAsistioInput = (LinearLayout) findViewById(R.id.viewNoAsistioInput);
-
-        //Enable the default Views
-        viewSignaturePad.setVisibility(View.VISIBLE);
-        viewNoAsistioInput.setVisibility(View.GONE);
-
-
-        //disable both buttons at start
-        saveButton.setEnabled(false);
-        clearButton.setEnabled(false);
+        setXmlViews();
 
         //change screen orientation to landscape mode
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        sumarHoraButtonController.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (hourStatus<12){
+
+                    /**
+                     * Update TextView
+                     * */
+                    // Set TextView to long
+                    String hour = textViewCurrentHour.getText().toString();
+                    //add Value to long
+                    hourStatus = Long.parseLong(hour);
+                    hourStatus ++;
+                    //convert long to String -> textView
+                    textViewCurrentHour.setText(String.valueOf(hourStatus));
+
+                }else{
+                    //Todo Add String reference
+                    Toast.makeText(GuardiaSignatureActivity.this,"Solo se podran agreggar 11 como max",Toast.LENGTH_SHORT).show();
+                }
+                Log.v(TAG, Long.toString(hourStatus));
+            }
+        });
+
+        restarHoraButtonController.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (hourStatus>1){
+
+                    /**
+                     * Update TextView
+                     * */
+                    // Set TextView to long
+                    String hour = textViewCurrentHour.getText().toString();
+                    //add Value to long
+                    hourStatus = Long.parseLong(hour);
+                    hourStatus --;
+                    //convert long to String -> textView
+                    textViewCurrentHour.setText(String.valueOf(hourStatus));
+
+                }else{
+                    //Todo Add String reference
+                    Toast.makeText(GuardiaSignatureActivity.this,"Solo se podran agreggar 1 como min",Toast.LENGTH_SHORT).show();
+                }
+
+                Log.v(TAG, Long.toString(hourStatus));
+            }
+        });
 
         // Controlers
         signaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
@@ -143,6 +175,38 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                 FirebaseDatabase.getInstance().getReference().child("Argus").child("Bitacora").child(new DatePost().getDateKey()).child(getIntent().getStringExtra("guardiaKey"));
 
         guardiaBitacora.addValueEventListener(new otherBitaCoraEventListener());
+
+    }
+
+    private void setXmlViews() {
+
+        //Set Views
+        setContentView(R.layout.activity_guardia_signature);
+        editTextObservacion = (EditText) findViewById(R.id.editTextObservacion);
+        textViewCurrentGuardiaName = (TextView) findViewById(R.id.TextViewSignatureCurrentGuardiaName);
+        textViewCurrentGuardiaName.setText(getIntent().getStringExtra("guardiaNombre"));
+        signaturePad = (SignaturePad)findViewById(R.id.signaturePad);
+        saveButton = (Button)findViewById(R.id.saveButton);
+        clearButton = (Button)findViewById(R.id.clearButton);
+        cancelButton = (Button) findViewById(R.id.CancelButton);
+        checkBoxCF = (CheckBox) findViewById(R.id.checkBoxConfirmarAsistencia);
+        viewSignaturePad = (FrameLayout) findViewById(R.id.viewSignaturePad);
+        viewNoAsistioInput = (LinearLayout) findViewById(R.id.viewNoAsistioInput);
+        viewHourController = (LinearLayout) findViewById(R.id.viewHourController);
+        restarHoraButtonController = (Button) findViewById(R.id.buttonHourControllerRestar);
+        sumarHoraButtonController = (Button) findViewById(R.id.buttonHourControllerSumar);
+        textViewCurrentHour = (TextView) findViewById(R.id.textViewHourControllerIndicator);
+
+        //Enable the default Views
+        viewSignaturePad.setVisibility(View.VISIBLE);
+        viewNoAsistioInput.setVisibility(View.GONE);
+        viewHourController.setVisibility(View.GONE);
+
+
+        //disable both buttons at start
+        saveButton.setEnabled(false);
+        clearButton.setEnabled(false);
+
 
     }
 
@@ -305,6 +369,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     asistio = true;
                     viewSignaturePad.setVisibility(View.VISIBLE);
                     viewNoAsistioInput.setVisibility(View.GONE);
+                    viewHourController.setVisibility(View.GONE);
                     saveButton.setEnabled(false);
                     clearButton.setVisibility(View.VISIBLE);
 
@@ -315,6 +380,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     asistio= false;
                     viewNoAsistioInput.setVisibility(View.VISIBLE);
                     viewSignaturePad.setVisibility(View.GONE);
+                    viewHourController.setVisibility(View.GONE);
                     saveButton.setEnabled(true);
                     clearButton.setVisibility(View.GONE);
                 break;
@@ -328,6 +394,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     dobleTurno = false;
                     viewSignaturePad.setVisibility(View.VISIBLE);
                     viewNoAsistioInput.setVisibility(View.GONE);
+                    viewHourController.setVisibility(View.GONE);
                     saveButton.setEnabled(false);
                     clearButton.setVisibility(View.VISIBLE);
 
@@ -342,8 +409,25 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     cubreDescanso = false;
                     viewSignaturePad.setVisibility(View.VISIBLE);
                     viewNoAsistioInput.setVisibility(View.GONE);
+                    viewHourController.setVisibility(View.GONE);
                     saveButton.setEnabled(false);
                     clearButton.setVisibility(View.VISIBLE);
+
+                break;
+
+            case R.id.radioButtonHorasExtra:
+                if (checked)
+                    statusExtra = "Horas Extra";
+                    status = "Horas Extra";
+                    dobleTurno = false;
+                    cubreDescanso = false;
+                    viewSignaturePad.setVisibility(View.VISIBLE);
+                    viewNoAsistioInput.setVisibility(View.GONE);
+                    viewHourController.setVisibility(View.VISIBLE);
+                    saveButton.setEnabled(false);
+                    clearButton.setVisibility(View.VISIBLE);
+
+
 
         }
     }
