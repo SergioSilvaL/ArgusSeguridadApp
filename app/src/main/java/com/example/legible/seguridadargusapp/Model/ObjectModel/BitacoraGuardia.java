@@ -14,6 +14,7 @@ public class BitacoraGuardia  {
     private String zona;
     private String turno;
     private String guardiaNombre;
+    private long horasExtra;
 
     public boolean isAsistio() {
         return asistio;
@@ -74,10 +75,11 @@ public class BitacoraGuardia  {
 
     public BitacoraGuardia(){}
 
-    public BitacoraGuardia(boolean asisitio, boolean dobleTurno, boolean cubreDescanso, String firmaExtra,String firma, String observacion, String cliente, String zona,String turno, String guardiaNombre,String fecha) {
+    public BitacoraGuardia(boolean asisitio, boolean dobleTurno, boolean cubreDescanso, long horasExtra,String firmaExtra,String firma, String observacion, String cliente, String zona,String turno, String guardiaNombre,String fecha) {
         this.asistio = asisitio;
         this.dobleTurno = dobleTurno;
         this.cubreDescanso = cubreDescanso;
+        this.horasExtra = horasExtra;
         this.firmaExtra = firmaExtra;
         this.firma = firma;
         Observacion = observacion;
@@ -143,5 +145,13 @@ public class BitacoraGuardia  {
 
     public void setGuardiaNombre(String guardiaNombre) {
         this.guardiaNombre = guardiaNombre;
+    }
+
+    public long getHorasExtra() {
+        return horasExtra;
+    }
+
+    public void setHorasExtra(long horasExtra) {
+        this.horasExtra = horasExtra;
     }
 }

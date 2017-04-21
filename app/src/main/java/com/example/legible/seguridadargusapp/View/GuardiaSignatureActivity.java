@@ -47,14 +47,21 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
     Button saveButton, clearButton, cancelButton, restarHoraButtonController, sumarHoraButtonController;
     EditText editTextObservacion;
     TextView textViewCurrentGuardiaName, textViewCurrentHour;
+
+    //Reference for Bitacora
+    Boolean dobleTurno = false, cubreDescanso = false, asistio = true;
+    private long hourStatus = 0;
+
+    //Reference for status signs
     String status="Asistio";
     String statusExtra = "";
+
     String turno, guardiaNombre,guardiaKey,guardiaFirma;
     String observacion, dateKey, currentDate,cliente,zona ;
     String guardiaFirmaExtra;
-    Boolean dobleTurno = false, cubreDescanso = false, asistio = true;
-    private long hourStatus = 1;
-    private final static String TAG = GuardiaListaActivity.class.getSimpleName();
+
+
+    private final static String TAG = GuardiaSignatureActivity.class.getSimpleName();
     private guardias mGuardia;
     private BitacoraGuardia mOtherBitacoraGuardia;
 
@@ -309,6 +316,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                 asistio,
                 dobleTurno,
                 cubreDescanso,
+                hourStatus,
                 guardiaFirmaExtra,
                 guardiaFirma,
                 observacion,
@@ -333,29 +341,30 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
 
 
-            if (isConfirmarInasistencia) {
-            //Send Aproval Notification
-            Notificacion notificacion = new Notificacion("CF", guardiaNombre+" " + observacion, new DatePost().getDatePost(), new DatePost().getDateKey(),guardiaKey, cliente);
+                if (isConfirmarInasistencia) {
 
-            DatabaseReference referenceNot =  FirebaseDatabase.getInstance().getReference()
-                    .child("Argus");
+                //Send Aproval Notification
+                Notificacion notificacion = new Notificacion("CF", guardiaNombre+" " + observacion, new DatePost().getDatePost(), new DatePost().getDateKey(),guardiaKey, cliente);
 
-            referenceNot.child("NotificacionTmp").push().setValue(notificacion);
-            referenceNot.child("Notificacion").push().setValue(notificacion);
+                DatabaseReference referenceNot =  FirebaseDatabase.getInstance().getReference()
+                        .child("Argus");
+
+                referenceNot.child("NotificacionTmp").push().setValue(notificacion);
+                referenceNot.child("Notificacion").push().setValue(notificacion);
+
+                }
+
+                BitacoraGuardia bitacoraNoAsistio = new BitacoraGuardia(false,false,false,0,null,null," ",cliente,zona,turno,guardiaNombre,currentDate);
+
+                mRefBitacora.child(dateKey).child(guardiaKey).setValue(bitacoraNoAsistio);//.setValue(bc);
+                //mRefBitacora.child(dateKey).setValue(fecha);
+
+
+                DatabaseReference reference = GuardiaListaRecyclerAdapter.ClienteGuardiasRef;
+                reference.child(guardiaKey).setValue(new guardias(guardiaKey, guardiaNombre, status,statusExtra, new DatePost().getDate()));
+
 
             }
-
-            BitacoraGuardia bitacoraNoAsistio = new BitacoraGuardia(false,false,false,null,null," ",cliente,zona,turno,guardiaNombre,currentDate);
-
-            mRefBitacora.child(dateKey).child(guardiaKey).setValue(bitacoraNoAsistio);//.setValue(bc);
-            //mRefBitacora.child(dateKey).setValue(fecha);
-
-
-            DatabaseReference reference = GuardiaListaRecyclerAdapter.ClienteGuardiasRef;
-            reference.child(guardiaKey).setValue(new guardias(guardiaKey, guardiaNombre, status,statusExtra, new DatePost().getDate()));
-
-
-        }
     }
 
     public void onRadioButtonClicked(View view) {
