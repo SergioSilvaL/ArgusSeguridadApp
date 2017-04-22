@@ -51,8 +51,9 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
     public static String isMyStatusAsistio;
     public static String isMyStatusCubreDescanso;
     public static String isMyStatusDobleTurno;
-
+    public static String myHorasExtra;
     boolean asistio, cubreDescanso, dobleTurno;
+    long horasExtra;
 
 
 
@@ -214,6 +215,13 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
         cubreDescanso = Boolean.valueOf(isMyStatusCubreDescanso);
         dobleTurno = Boolean.valueOf(isMyStatusDobleTurno);
 
+        if (myHorasExtra==null){
+            horasExtra = 0;
+        }else {
+            horasExtra = Long.valueOf(myHorasExtra);
+        }
+
+
         final guardias guardia = mGuardiasList.get(position);
 
 
@@ -269,6 +277,29 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
                 }
 
                 holder.asistenciaDobleTurno.setBackgroundResource(imageDoble);
+
+                /**
+                 *
+                 * Horas Extra
+                 *
+                 * */
+
+                imageDoble = 0;
+
+                if ((guardia.getUsuarioNombre().equals(myGuardiaCaptura) && (horasExtra>0))|| guardia.getUsuarioHorasExtra()>0){
+                    imageDoble = android.R.drawable.presence_online;
+                }
+
+                if (guardia.getUsuarioAsistenciaFecha()!= null) {
+
+                    if (!guardia.getUsuarioAsistenciaFecha().equals(new DatePost().getDate())) {
+                        imageDoble = 0;
+                    }
+                }
+
+                //Todo Bind Hour View
+
+                holder.asistenciaHorasExtra.setBackgroundResource(imageDoble);
 
 
                 /**
@@ -377,7 +408,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView nameTxt;
-        ImageView optionMenu, asistenciaView, asistenciaCubreDescansoView,asistenciaDobleTurno;
+        ImageView optionMenu, asistenciaView, asistenciaCubreDescansoView,asistenciaDobleTurno,asistenciaHorasExtra;
         ViewGroup viewGroup;
 
         public ViewHolder(View itemView) {
@@ -388,6 +419,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
             asistenciaView = (ImageView) itemView.findViewById(R.id.asistenciaView);
             asistenciaDobleTurno = (ImageView) itemView.findViewById(R.id.asistenciaDobleTurno);
             asistenciaCubreDescansoView = (ImageView) itemView.findViewById(R.id.asistenciaCubreDescansoView);
+            asistenciaHorasExtra = (ImageView) itemView.findViewById(R.id.asistenciaHorasExtra);
 
         }
     }

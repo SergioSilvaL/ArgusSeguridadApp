@@ -49,8 +49,11 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
     TextView textViewCurrentGuardiaName, textViewCurrentHour;
 
     //Reference for Bitacora
-    Boolean dobleTurno = false, cubreDescanso = false, asistio = true;
-    private long hourStatus = 0;
+    Boolean dobleTurno = false;
+    Boolean cubreDescanso = false;
+    Boolean asistio = true;
+    Boolean horasExtra = false;
+    private long hourTotalStatus = 0;
 
 
 
@@ -82,7 +85,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (hourStatus<12){
+                if (hourTotalStatus <12){
 
                     /**
                      * Update TextView
@@ -90,16 +93,16 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     // Set TextView to long
                     String hour = textViewCurrentHour.getText().toString();
                     //add Value to long
-                    hourStatus = Long.parseLong(hour);
-                    hourStatus ++;
+                    hourTotalStatus = Long.parseLong(hour);
+                    hourTotalStatus++;
                     //convert long to String -> textView
-                    textViewCurrentHour.setText(String.valueOf(hourStatus));
+                    textViewCurrentHour.setText(String.valueOf(hourTotalStatus));
 
                 }else{
                     //Todo Add String reference
                     Toast.makeText(GuardiaSignatureActivity.this,"Solo se podran agreggar 11 como max",Toast.LENGTH_SHORT).show();
                 }
-                Log.v(TAG, Long.toString(hourStatus));
+                Log.v(TAG, Long.toString(hourTotalStatus));
             }
         });
 
@@ -107,7 +110,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (hourStatus>1){
+                if (hourTotalStatus >1){
 
                     /**
                      * Update TextView
@@ -115,17 +118,17 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     // Set TextView to long
                     String hour = textViewCurrentHour.getText().toString();
                     //add Value to long
-                    hourStatus = Long.parseLong(hour);
-                    hourStatus --;
+                    hourTotalStatus = Long.parseLong(hour);
+                    hourTotalStatus--;
                     //convert long to String -> textView
-                    textViewCurrentHour.setText(String.valueOf(hourStatus));
+                    textViewCurrentHour.setText(String.valueOf(hourTotalStatus));
 
                 }else{
                     //Todo Add String reference
                     Toast.makeText(GuardiaSignatureActivity.this,"Solo se podran agreggar 1 como min",Toast.LENGTH_SHORT).show();
                 }
 
-                Log.v(TAG, Long.toString(hourStatus));
+                Log.v(TAG, Long.toString(hourTotalStatus));
             }
         });
 
@@ -249,7 +252,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                 resultIntent.putExtra(GuardiaListaActivity.EXTRA_DOBLE_TURNO,String.valueOf(dobleTurno));
                 resultIntent.putExtra(GuardiaListaActivity.EXTRA_CUBRE_DESCANSO,String.valueOf(cubreDescanso));
 
-
+                resultIntent.putExtra(GuardiaListaActivity.EXTRA_CUBRE_DESCANSO,String.valueOf(hourTotalStatus));
 
                 setResult(RESULT_OK, resultIntent);
 
@@ -288,7 +291,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
         zona = ClienteRecyclerAdapter.myZona;
 
 
-        if (asistio || dobleTurno || cubreDescanso) {
+        if (asistio || dobleTurno || cubreDescanso || horasExtra) {
             if (mOtherBitacoraGuardia != null) {
 
                 if (mOtherBitacoraGuardia.isAsistio()) {
@@ -296,16 +299,25 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     asistio = mOtherBitacoraGuardia.isAsistio();
                 }
 
+                //Get Current Hours
+
                 currentDate = new DatePost().getDatePost();
 
 
                 if (cubreDescanso) {
                     dobleTurno = mOtherBitacoraGuardia.isDobleTurno();
+                    hourTotalStatus = mOtherBitacoraGuardia.getHorasExtra();
                 } else if (dobleTurno) {
                     cubreDescanso = mOtherBitacoraGuardia.isCubreDescanso();
-                } else {
+                    hourTotalStatus = mOtherBitacoraGuardia.getHorasExtra();
+                } else if (hourTotalStatus>0){
                     cubreDescanso = mOtherBitacoraGuardia.isCubreDescanso();
                     dobleTurno = mOtherBitacoraGuardia.isDobleTurno();
+                }
+                else {
+                    cubreDescanso = mOtherBitacoraGuardia.isCubreDescanso();
+                    dobleTurno = mOtherBitacoraGuardia.isDobleTurno();
+                    hourTotalStatus = mOtherBitacoraGuardia.getHorasExtra();
                 }
 
             }
@@ -315,7 +327,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     asistio,
                     dobleTurno,
                     cubreDescanso,
-                    hourStatus,
+                    hourTotalStatus,
                     guardiaFirmaExtra,
                     guardiaFirma,
                     observacion,
@@ -329,7 +341,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
             //mRefBitacora.child(dateKey).setValue(fecha);
 
             DatabaseReference reference = GuardiaListaRecyclerAdapter.ClienteGuardiasRef;
-            reference.child(guardiaKey).setValue(new guardias(guardiaKey,guardiaNombre, asistio, cubreDescanso, dobleTurno, new DatePost().getDate()));
+            reference.child(guardiaKey).setValue(new guardias(guardiaKey,guardiaNombre, asistio, cubreDescanso, dobleTurno, hourTotalStatus,new DatePost().getDate()));
 
 
 
@@ -356,7 +368,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
             DatabaseReference reference =
                     GuardiaListaRecyclerAdapter.ClienteGuardiasRef;
-            reference.child(guardiaKey).setValue(new guardias(guardiaKey,guardiaNombre, asistio, cubreDescanso, dobleTurno, new DatePost().getDate()));
+            reference.child(guardiaKey).setValue(new guardias(guardiaKey,guardiaNombre, asistio, cubreDescanso, dobleTurno, hourTotalStatus,new DatePost().getDate()));
 
         }
     }
@@ -374,6 +386,9 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
                     asistio = true;
 
+                    cubreDescanso = false;
+                    dobleTurno = false;
+                    horasExtra = false;
                     //View(s)
                     viewSignaturePad.setVisibility(View.VISIBLE);
                     viewNoAsistioInput.setVisibility(View.GONE);
@@ -402,7 +417,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     cubreDescanso = true;
                     asistio =false;
                     dobleTurno = false;
-
+                    horasExtra = false;
 
                     viewSignaturePad.setVisibility(View.VISIBLE);
                     viewNoAsistioInput.setVisibility(View.GONE);
@@ -420,6 +435,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     dobleTurno = true;
                     cubreDescanso = false;
                     asistio = false;
+                    horasExtra = false;
 
 
                     viewSignaturePad.setVisibility(View.VISIBLE);
@@ -434,8 +450,8 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                 if (checked)
 
 
-
-                    asistio = true;
+                    horasExtra = true;
+                    asistio = false;
                     dobleTurno = false;
                     cubreDescanso = false;
 
@@ -492,7 +508,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
         // If it's taken as a extra asistance a new image is created with the signature taken
 
 
-        if (cubreDescanso||dobleTurno){
+        if (cubreDescanso||dobleTurno || horasExtra){
             image = "imageFirmaExtra";
         }
 
@@ -513,7 +529,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
         if (asistio){
             guardiaFirma = downLoadUrl;
-        }else if (cubreDescanso || dobleTurno){
+        }else if (cubreDescanso || dobleTurno || horasExtra){
             guardiaFirmaExtra = downLoadUrl;
         }
 

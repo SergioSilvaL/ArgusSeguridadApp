@@ -42,6 +42,16 @@ public class guardias {
     private boolean usuarioDobleTurno = false;
     private boolean usuarioCubreTurno = false;
 
+    public long getUsuarioHorasExtra() {
+        return usuarioHorasExtra;
+    }
+
+    public void setUsuarioHorasExtra(long usuarioHorasExtra) {
+        this.usuarioHorasExtra = usuarioHorasExtra;
+    }
+
+    private long usuarioHorasExtra = 0;
+
     public String getUsuarioAsistenciaExtraDelDia() {
         return usuarioAsistenciaExtraDelDia;
     }
@@ -93,12 +103,13 @@ public class guardias {
 //    }
 
 
-    public guardias(String usuarioKey, String name, boolean asistio, boolean cubreDescanso,boolean dobleTurno, String date ){
+    public guardias(String usuarioKey, String name, boolean asistio, boolean cubreDescanso,boolean dobleTurno, long horas,String date ){
         this.usuarioKey = usuarioKey;
         this.usuarioNombre = name;
         this.usuarioAsistio = asistio;
         this.usuarioCubreTurno = cubreDescanso;
         this.usuarioDobleTurno = dobleTurno;
+        this.usuarioHorasExtra = horas;
         this.usuarioAsistenciaFecha = date;
     }
 

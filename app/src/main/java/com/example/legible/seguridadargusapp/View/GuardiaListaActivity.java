@@ -29,7 +29,7 @@ public class GuardiaListaActivity extends AppCompatActivity {
     public static String EXTRA_ASISTIO = "EXTRA_ASISTIO";
     public static String EXTRA_CUBRE_DESCANSO = "EXTRA_CUBRE_DESCANSO";
     public static String  EXTRA_DOBLE_TURNO= "EXTRA_DOBLE_TURNO";
-
+    public static String  EXTRA_HORAS_EXTRA= "EXTRA_HORAS_EXTRA";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +113,7 @@ public class GuardiaListaActivity extends AppCompatActivity {
                 GuardiaListaRecyclerAdapter.isMyStatusAsistio = data.getStringExtra(EXTRA_ASISTIO);
                 GuardiaListaRecyclerAdapter.isMyStatusCubreDescanso = data.getStringExtra(EXTRA_CUBRE_DESCANSO);
                 GuardiaListaRecyclerAdapter.isMyStatusDobleTurno = data.getStringExtra(EXTRA_DOBLE_TURNO);
+                GuardiaListaRecyclerAdapter.myHorasExtra = data.getStringExtra(EXTRA_HORAS_EXTRA);
 
                 recyclerView.setAdapter(mAdapter);
             }
