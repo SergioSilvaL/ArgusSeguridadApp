@@ -264,7 +264,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
     }
 
-    private void pushData(){
+    private void pushData() {
 
         turno = mGuardia.getUsuarioTurno();
 
@@ -283,89 +283,79 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
         zona = ClienteRecyclerAdapter.myZona;
 
 
+        if (asistio || dobleTurno || cubreDescanso) {
+            if (mOtherBitacoraGuardia != null) {
 
-        if (mOtherBitacoraGuardia != null){
+                if (mOtherBitacoraGuardia.isAsistio()) {
+                    guardiaFirma = mOtherBitacoraGuardia.getFirma();
+                    asistio = mOtherBitacoraGuardia.isAsistio();
+                }
 
-            if (mOtherBitacoraGuardia.isAsistio()){
-                guardiaFirma = mOtherBitacoraGuardia.getFirma();
+                currentDate = new DatePost().getDatePost();
+
+
+                if (cubreDescanso) {
+                    dobleTurno = mOtherBitacoraGuardia.isDobleTurno();
+                } else if (dobleTurno) {
+                    cubreDescanso = mOtherBitacoraGuardia.isCubreDescanso();
+                } else {
+                    cubreDescanso = mOtherBitacoraGuardia.isCubreDescanso();
+                    dobleTurno = mOtherBitacoraGuardia.isDobleTurno();
+                }
+
             }
 
-            currentDate = new DatePost().getDatePost();
 
-            cubreDescanso = mOtherBitacoraGuardia.isCubreDescanso();
-            dobleTurno = mOtherBitacoraGuardia.isDobleTurno();
-
-            if (status.equals("Cubre Descanso")){
-                cubreDescanso = true;
-                dobleTurno = false;
-            } else if (status.equals("Doble Turno")){
-                dobleTurno = true;
-                cubreDescanso = false;
-            }
-
-        }
-
-        if (asistio){
-            status = "asistio";
-        }
-
-
-
-
-        BitacoraGuardia bc = new BitacoraGuardia(
-                asistio,
-                dobleTurno,
-                cubreDescanso,
-                hourStatus,
-                guardiaFirmaExtra,
-                guardiaFirma,
-                observacion,
-                cliente,
-                zona,
-                turno,
-                guardiaNombre,
-                currentDate);
-
-
-        if (status!= "No Asistió") {
+            BitacoraGuardia bc = new BitacoraGuardia(
+                    asistio,
+                    dobleTurno,
+                    cubreDescanso,
+                    hourStatus,
+                    guardiaFirmaExtra,
+                    guardiaFirma,
+                    observacion,
+                    cliente,
+                    zona,
+                    turno,
+                    guardiaNombre,
+                    currentDate);
 
             mRefBitacora.child(dateKey).child(guardiaKey).setValue(bc);
             //mRefBitacora.child(dateKey).setValue(fecha);
 
             DatabaseReference reference = GuardiaListaRecyclerAdapter.ClienteGuardiasRef;
-            reference.child(guardiaKey).setValue(new guardias(guardiaKey, guardiaNombre, status,statusExtra, new DatePost().getDate()));
-
-        }else {
-
-             //Todo modify it's vallues so only the un assistance does not show
+            reference.child(guardiaKey).setValue(new guardias(guardiaKey, guardiaNombre, status, statusExtra, new DatePost().getDate()));
 
 
+        } else{
 
-                if (isConfirmarInasistencia) {
+            if (isConfirmarInasistencia) {
 
                 //Send Aproval Notification
-                Notificacion notificacion = new Notificacion("CF", guardiaNombre+" " + observacion, new DatePost().getDatePost(), new DatePost().getDateKey(),guardiaKey, cliente);
+                Notificacion notificacion =
+                        new Notificacion("CF", guardiaNombre + " " + observacion, new DatePost().getDatePost(), new DatePost().getDateKey(), guardiaKey, cliente);
 
-                DatabaseReference referenceNot =  FirebaseDatabase.getInstance().getReference()
-                        .child("Argus");
+                DatabaseReference referenceNot =
+                        FirebaseDatabase.getInstance().getReference().child("Argus");
 
                 referenceNot.child("NotificacionTmp").push().setValue(notificacion);
                 referenceNot.child("Notificacion").push().setValue(notificacion);
 
-                }
-
-                BitacoraGuardia bitacoraNoAsistio = new BitacoraGuardia(false,false,false,0,null,null," ",cliente,zona,turno,guardiaNombre,currentDate);
-
-                mRefBitacora.child(dateKey).child(guardiaKey).setValue(bitacoraNoAsistio);//.setValue(bc);
-                //mRefBitacora.child(dateKey).setValue(fecha);
-
-
-                DatabaseReference reference = GuardiaListaRecyclerAdapter.ClienteGuardiasRef;
-                reference.child(guardiaKey).setValue(new guardias(guardiaKey, guardiaNombre, status,statusExtra, new DatePost().getDate()));
-
-
             }
+
+            BitacoraGuardia bitacoraNoAsistio =
+                    new BitacoraGuardia(false, false, false, 0, null, null, " ", cliente, zona, turno, guardiaNombre, currentDate);
+
+            mRefBitacora.child(dateKey).child(guardiaKey).setValue(bitacoraNoAsistio);
+
+            DatabaseReference reference =
+                    GuardiaListaRecyclerAdapter.ClienteGuardiasRef;
+            reference.child(guardiaKey).setValue(new guardias(guardiaKey, guardiaNombre, status, statusExtra, new DatePost().getDate()));
+
+        }
     }
+
+
 
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
@@ -374,8 +364,11 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.radioButtonAsistio:
                 if (checked)
+
                     status = "Asistió";
                     asistio = true;
+
+                    //View(s)
                     viewSignaturePad.setVisibility(View.VISIBLE);
                     viewNoAsistioInput.setVisibility(View.GONE);
                     viewHourController.setVisibility(View.GONE);
@@ -385,8 +378,10 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                 break;
             case R.id.radioButtonNoAsistio:
                 if (checked)
+
                     status = "No Asistió";
                     asistio= false;
+
                     viewNoAsistioInput.setVisibility(View.VISIBLE);
                     viewSignaturePad.setVisibility(View.GONE);
                     viewHourController.setVisibility(View.GONE);
@@ -396,11 +391,14 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
             case R.id.radioButtonCubreDescanso:
                 if (checked)
+
                     statusExtra = "Cubre Descanso";
                     status = "Cubre Descanso";
                     cubreDescanso = true;
                     asistio =false;
                     dobleTurno = false;
+
+
                     viewSignaturePad.setVisibility(View.VISIBLE);
                     viewNoAsistioInput.setVisibility(View.GONE);
                     viewHourController.setVisibility(View.GONE);
@@ -412,10 +410,14 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
             case R.id.radioButtonDobleTurno:
                 if (checked)
+
                     statusExtra = "Doble Turno";
                     status = "Doble Turno";
                     dobleTurno = true;
                     cubreDescanso = false;
+                    asistio = false;
+
+
                     viewSignaturePad.setVisibility(View.VISIBLE);
                     viewNoAsistioInput.setVisibility(View.GONE);
                     viewHourController.setVisibility(View.GONE);
@@ -426,10 +428,15 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
             case R.id.radioButtonHorasExtra:
                 if (checked)
+
+
                     statusExtra = "Horas Extra";
                     status = "Horas Extra";
+                    asistio = true;
                     dobleTurno = false;
                     cubreDescanso = false;
+
+
                     viewSignaturePad.setVisibility(View.VISIBLE);
                     viewNoAsistioInput.setVisibility(View.GONE);
                     viewHourController.setVisibility(View.VISIBLE);
@@ -450,11 +457,8 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
         switch (view.getId()){
 
             case R.id.checkBoxConfirmarAsistencia:
-                if (checked)
-                    //
-                    isConfirmarInasistencia = true;
-                else
-                    isConfirmarInasistencia = false;
+                //
+                isConfirmarInasistencia = checked;
 
                 break;
         }
@@ -483,20 +487,20 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
         String image = "image";
 
         // If it's taken as a extra asistance a new image is created with the signature taken
-        if (status.equals("Cubre Descanso") || status.equals("Doble Turno")){
+
+
+        if (cubreDescanso||dobleTurno){
             image = "imageFirmaExtra";
         }
 
         // Create a child reference
         // imagesRef now points to "image"
-        StorageReference imagesRef = storageRef
+        return  storageRef
                 .child("Bitacora")
                 .child(new DatePost().getDateKey())// Takes the de
                 .child(getIntent().getStringExtra("guardiaKey"))
                 .child(image);
 
-
-        return  imagesRef;
     }
 
     private void setDownLoadUrlOnGuardiaFirmaOrGuardiaFirmaExtra(UploadTask.TaskSnapshot taskSnapshot) {
@@ -504,9 +508,9 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
         // Download Url for Signature Image
         String downLoadUrl = taskSnapshot.getDownloadUrl().toString();
 
-        if (status.equals("Asistio")) {
+        if (asistio){
             guardiaFirma = downLoadUrl;
-        } else if (status.equals("Cubre Descanso") || status.equals("Doble Turno")) {
+        }else if (cubreDescanso || dobleTurno){
             guardiaFirmaExtra = downLoadUrl;
         }
 
