@@ -100,7 +100,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
                 }else{
                     //Todo Add String reference
-                    Toast.makeText(GuardiaSignatureActivity.this,"Solo se podran agreggar 11 como max",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GuardiaSignatureActivity.this,"Solo se pueden agregar 12 como max",Toast.LENGTH_SHORT).show();
                 }
                 Log.v(TAG, Long.toString(hourTotalStatus));
             }
@@ -125,7 +125,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
                 }else{
                     //Todo Add String reference
-                    Toast.makeText(GuardiaSignatureActivity.this,"Solo se podran agreggar 1 como min",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GuardiaSignatureActivity.this,"Solo se puede agregar 1 como min",Toast.LENGTH_SHORT).show();
                 }
 
                 Log.v(TAG, Long.toString(hourTotalStatus));
@@ -382,13 +382,11 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.radioButtonAsistio:
                 if (checked)
-
-
                     asistio = true;
-
                     cubreDescanso = false;
                     dobleTurno = false;
                     horasExtra = false;
+                    Toast.makeText(GuardiaSignatureActivity.this,"Asistencia",Toast.LENGTH_SHORT).show();
                     //View(s)
                     viewSignaturePad.setVisibility(View.VISIBLE);
                     viewNoAsistioInput.setVisibility(View.GONE);
@@ -399,10 +397,8 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                 break;
             case R.id.radioButtonNoAsistio:
                 if (checked)
-
-
                     asistio= false;
-
+                    Toast.makeText(GuardiaSignatureActivity.this,"Inasistencia",Toast.LENGTH_SHORT).show();
                     viewNoAsistioInput.setVisibility(View.VISIBLE);
                     viewSignaturePad.setVisibility(View.GONE);
                     viewHourController.setVisibility(View.GONE);
@@ -412,13 +408,11 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
             case R.id.radioButtonCubreDescanso:
                 if (checked)
-
-
                     cubreDescanso = true;
                     asistio =false;
                     dobleTurno = false;
                     horasExtra = false;
-
+                    Toast.makeText(GuardiaSignatureActivity.this,"Descanzo Laborado",Toast.LENGTH_SHORT).show();
                     viewSignaturePad.setVisibility(View.VISIBLE);
                     viewNoAsistioInput.setVisibility(View.GONE);
                     viewHourController.setVisibility(View.GONE);
@@ -430,14 +424,11 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
             case R.id.radioButtonDobleTurno:
                 if (checked)
-
-
                     dobleTurno = true;
                     cubreDescanso = false;
                     asistio = false;
                     horasExtra = false;
-
-
+                    Toast.makeText(GuardiaSignatureActivity.this,"Doble Turno",Toast.LENGTH_SHORT).show();
                     viewSignaturePad.setVisibility(View.VISIBLE);
                     viewNoAsistioInput.setVisibility(View.GONE);
                     viewHourController.setVisibility(View.GONE);
@@ -448,14 +439,12 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
             case R.id.radioButtonHorasExtra:
                 if (checked)
-
-
                     horasExtra = true;
                     asistio = false;
                     dobleTurno = false;
                     cubreDescanso = false;
-
-
+                    textViewCurrentHour.setText(String.valueOf("1"));
+                    Toast.makeText(GuardiaSignatureActivity.this,"Horas Extra",Toast.LENGTH_SHORT).show();
                     viewSignaturePad.setVisibility(View.VISIBLE);
                     viewNoAsistioInput.setVisibility(View.GONE);
                     viewHourController.setVisibility(View.VISIBLE);
