@@ -46,8 +46,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
 
     public static String myGuardiaCaptura;
 
-    public static String myStatus;
-    public static String myStatusExtra;
+
 
     public static String isMyStatusAsistio;
     public static String isMyStatusCubreDescanso;
@@ -222,75 +221,84 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
         holder.nameTxt.setText(guardia.getUsuarioNombre());
 
 
-            if (guardia.getUsuarioNombre().equals(myGuardiaCaptura) || guardia.getUsuarioAsistenciaDelDia() != null) {
+            if (guardia.getUsuarioNombre().equals(myGuardiaCaptura) || (guardia.isUsuarioAsistio()||guardia.isUsuarioDobleTurno()||guardia.isUsuarioCubreTurno())) {
 
-
-
-                String asistencia;
-                int image = 0;
-
-
-
-
-                if (guardia.getUsuarioNombre().equals(myGuardiaCaptura)) {
-                    asistencia = GuardiaListaRecyclerAdapter.myStatus;
-                    //GuardiaListaRecyclerAdapter.myStatus = "";
-                    //GuardiaListaRecyclerAdapter.myGuardiaCaptura = null;
-                } else {
-                    asistencia = guardia.getUsuarioAsistenciaDelDia();
-                }
-
-                switch (asistencia) {
-                    case "Asistió":
-                    case "Asistio":
-                    case "asistio":
-                        image = android.R.drawable.presence_online;
-                        break;
-                    case "Llego Tarde":
-                        image = android.R.drawable.presence_away;
-                        break;
-                    case "No Asistió":
-                    case "No Asistio":
-                        image = android.R.drawable.presence_busy;
-                        break;
-                }
-
-                if (guardia.getUsuarioAsistenciaFecha()!= null) {
-
-                    if (!guardia.getUsuarioAsistenciaFecha().equals(new DatePost().getDate())) {
-                        image = 0;
-                    }
-                }
-
-                holder.asistenciaView.setBackgroundResource(image);
 
                 int imageDoble = 0;
 
-                if (guardia.getUsuarioNombre().equals(myGuardiaCaptura) && GuardiaListaRecyclerAdapter.myStatusExtra!="") {
-                    asistencia = GuardiaListaRecyclerAdapter.myStatusExtra;
-                    //GuardiaListaRecyclerAdapter.myStatus = "";
-                    //GuardiaListaRecyclerAdapter.myGuardiaCaptura = null;
-                } else {
-                    asistencia = guardia.getUsuarioAsistenciaExtraDelDia();
-                }
 
-                switch (asistencia) {
-                    case "Cubre Descanso":
-                    case "Doble Turno":
-                        imageDoble = android.R.drawable.presence_online;
-                        break;
+                /**
+                 *
+                 * CUBRE DESCANSO
+                 *
+                 * */
+
+                imageDoble = 0;
+
+                if ((guardia.getUsuarioNombre().equals(myGuardiaCaptura) && cubreDescanso)|| guardia.isUsuarioCubreTurno()){
+                    imageDoble = android.R.drawable.presence_online;
                 }
 
                 if (guardia.getUsuarioAsistenciaFecha()!= null) {
 
                     if (!guardia.getUsuarioAsistenciaFecha().equals(new DatePost().getDate())) {
-                        //guardia.setUsuarioAsistenciaFecha(0);
                         imageDoble = 0;
                     }
                 }
 
-                holder.asistenciaDobleView.setBackgroundResource(imageDoble);
+                holder.asistenciaCubreDescansoView.setBackgroundResource(imageDoble);
 
+
+                /**
+                 *
+                 * DOBLE TURNO
+                 *
+                 * */
+
+                imageDoble = 0;
+
+                if ((guardia.getUsuarioNombre().equals(myGuardiaCaptura) && dobleTurno)|| guardia.isUsuarioDobleTurno()){
+                    imageDoble = android.R.drawable.presence_online;
+                }
+
+                if (guardia.getUsuarioAsistenciaFecha()!= null) {
+
+                    if (!guardia.getUsuarioAsistenciaFecha().equals(new DatePost().getDate())) {
+                        imageDoble = 0;
+                    }
+                }
+
+                holder.asistenciaDobleTurno.setBackgroundResource(imageDoble);
+
+
+                /**
+                 *
+                 * ASISTIO
+                 *
+                 * */
+
+                imageDoble = 0;
+
+                if ((guardia.getUsuarioNombre().equals(myGuardiaCaptura) && asistio)|| guardia.isUsuarioAsistio()){
+                    imageDoble = android.R.drawable.presence_online;
+                }
+
+                if (guardia.getUsuarioAsistenciaFecha()!= null) {
+
+                    if (!guardia.getUsuarioAsistenciaFecha().equals(new DatePost().getDate())) {
+                        imageDoble = 0;
+                    }
+                }
+
+                if ((guardia.getUsuarioNombre().equals(myGuardiaCaptura) && !asistio)|| !guardia.isUsuarioAsistio()){
+                    imageDoble = android.R.drawable.presence_busy;
+
+                    // set the rest of the views to empty
+                    holder.asistenciaDobleTurno.setBackgroundResource(0);
+                    holder.asistenciaCubreDescansoView.setBackgroundResource(0);
+                }
+
+                holder.asistenciaView.setBackgroundResource(imageDoble);
 
 
             }
@@ -369,7 +377,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView nameTxt;
-        ImageView optionMenu, asistenciaView, asistenciaDobleView;
+        ImageView optionMenu, asistenciaView, asistenciaCubreDescansoView,asistenciaDobleTurno;
         ViewGroup viewGroup;
 
         public ViewHolder(View itemView) {
@@ -378,7 +386,8 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
             optionMenu = (ImageView) itemView.findViewById(R.id.imageViewOption);
             viewGroup = (ViewGroup) itemView.findViewById(R.id.cardview_image);
             asistenciaView = (ImageView) itemView.findViewById(R.id.asistenciaView);
-            asistenciaDobleView = (ImageView) itemView.findViewById(R.id.asistenciaDobleView);
+            asistenciaDobleTurno = (ImageView) itemView.findViewById(R.id.asistenciaDobleTurno);
+            asistenciaCubreDescansoView = (ImageView) itemView.findViewById(R.id.asistenciaCubreDescansoView);
 
         }
     }

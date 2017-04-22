@@ -52,9 +52,8 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
     Boolean dobleTurno = false, cubreDescanso = false, asistio = true;
     private long hourStatus = 0;
 
-    //Reference for status signs
-    String status="Asistio";
-    String statusExtra = "";
+
+
 
     String turno, guardiaNombre,guardiaKey,guardiaFirma;
     String observacion, dateKey, currentDate,cliente,zona ;
@@ -244,8 +243,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
                 resultIntent.putExtra(GuardiaListaActivity.EXTRA_ASISTENCIA_GUARDIA_CAPTURADO, guardiaNombre);
 
-                resultIntent.putExtra(GuardiaListaActivity.EXTRA_ASISTENCIA, status);
-                resultIntent.putExtra(GuardiaListaActivity.EXTRA_DOBLE_ASISTENCIA, statusExtra);
+
 
                 resultIntent.putExtra(GuardiaListaActivity.EXTRA_ASISTIO,String.valueOf(asistio));
                 resultIntent.putExtra(GuardiaListaActivity.EXTRA_DOBLE_TURNO,String.valueOf(dobleTurno));
@@ -373,7 +371,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
             case R.id.radioButtonAsistio:
                 if (checked)
 
-                    status = "Asistió";
+
                     asistio = true;
 
                     //View(s)
@@ -387,7 +385,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
             case R.id.radioButtonNoAsistio:
                 if (checked)
 
-                    status = "No Asistió";
+
                     asistio= false;
 
                     viewNoAsistioInput.setVisibility(View.VISIBLE);
@@ -400,8 +398,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
             case R.id.radioButtonCubreDescanso:
                 if (checked)
 
-                    statusExtra = "Cubre Descanso";
-                    status = "Cubre Descanso";
+
                     cubreDescanso = true;
                     asistio =false;
                     dobleTurno = false;
@@ -419,8 +416,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
             case R.id.radioButtonDobleTurno:
                 if (checked)
 
-                    statusExtra = "Doble Turno";
-                    status = "Doble Turno";
+
                     dobleTurno = true;
                     cubreDescanso = false;
                     asistio = false;
@@ -438,8 +434,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                 if (checked)
 
 
-                    statusExtra = "Horas Extra";
-                    status = "Horas Extra";
+
                     asistio = true;
                     dobleTurno = false;
                     cubreDescanso = false;
