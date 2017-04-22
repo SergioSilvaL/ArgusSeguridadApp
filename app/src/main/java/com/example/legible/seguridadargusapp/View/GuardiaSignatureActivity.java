@@ -242,9 +242,16 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
                 Intent resultIntent = new Intent();
 
-                resultIntent.putExtra(GuardiaListaActivity.EXTRA_ASISTENCIA, status);
                 resultIntent.putExtra(GuardiaListaActivity.EXTRA_ASISTENCIA_GUARDIA_CAPTURADO, guardiaNombre);
+
+                resultIntent.putExtra(GuardiaListaActivity.EXTRA_ASISTENCIA, status);
                 resultIntent.putExtra(GuardiaListaActivity.EXTRA_DOBLE_ASISTENCIA, statusExtra);
+
+                resultIntent.putExtra(GuardiaListaActivity.EXTRA_ASISTIO,String.valueOf(asistio));
+                resultIntent.putExtra(GuardiaListaActivity.EXTRA_DOBLE_TURNO,String.valueOf(dobleTurno));
+                resultIntent.putExtra(GuardiaListaActivity.EXTRA_CUBRE_DESCANSO,String.valueOf(cubreDescanso));
+
+
 
                 setResult(RESULT_OK, resultIntent);
 
@@ -324,7 +331,8 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
             //mRefBitacora.child(dateKey).setValue(fecha);
 
             DatabaseReference reference = GuardiaListaRecyclerAdapter.ClienteGuardiasRef;
-            reference.child(guardiaKey).setValue(new guardias(guardiaKey, guardiaNombre, status, statusExtra, new DatePost().getDate()));
+            reference.child(guardiaKey).setValue(new guardias(guardiaKey,guardiaNombre, asistio, cubreDescanso, dobleTurno, new DatePost().getDate()));
+
 
 
         } else{
@@ -350,7 +358,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
             DatabaseReference reference =
                     GuardiaListaRecyclerAdapter.ClienteGuardiasRef;
-            reference.child(guardiaKey).setValue(new guardias(guardiaKey, guardiaNombre, status, statusExtra, new DatePost().getDate()));
+            reference.child(guardiaKey).setValue(new guardias(guardiaKey,guardiaNombre, asistio, cubreDescanso, dobleTurno, new DatePost().getDate()));
 
         }
     }

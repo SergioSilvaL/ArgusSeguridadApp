@@ -43,9 +43,18 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
     private DatabaseReference guardiaListaRef;
     private String clienteRef;
     private android.support.v4.app.FragmentManager fm;
-    public static String myStatus;
+
     public static String myGuardiaCaptura;
+
+    public static String myStatus;
     public static String myStatusExtra;
+
+    public static String isMyStatusAsistio;
+    public static String isMyStatusCubreDescanso;
+    public static String isMyStatusDobleTurno;
+
+    boolean asistio, cubreDescanso, dobleTurno;
+
 
 
     public GuardiaListaRecyclerAdapter(Context context, String clienteRef, android.support.v4.app.FragmentManager fm){
@@ -65,7 +74,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
                 .child("clienteGuardias");
 
 
-        //Todo Set guardias asisteniatext
+
         ClienteGuardiasRef = guardiaListaRef;
 
         guardiaListaRef.addChildEventListener(new GuardiaListChildEventListener());
@@ -111,14 +120,14 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
         public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
 
-            guardias guardia = dataSnapshot.getValue(guardias.class);
-
-            if (guardia.getUsuarioAsistenciaDelDia().equals("No Asistió")&& guardia.equals("")){
-                if (guardia.getUsuarioNombre().equals(myGuardiaCaptura)){
-                    myStatusExtra="";
-                    myStatus="";
-                }
-            }
+//            guardias guardia = dataSnapshot.getValue(guardias.class);
+//
+//            if (guardia.getUsuarioAsistenciaDelDia().equals("No Asistió")&& guardia.equals("")){
+//                if (guardia.getUsuarioNombre().equals(myGuardiaCaptura)){
+//                    myStatusExtra="";
+//                    myStatus="";
+//                }
+//            }
 
         }
 
@@ -202,6 +211,10 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
+        asistio = Boolean.valueOf(isMyStatusAsistio);
+        cubreDescanso = Boolean.valueOf(isMyStatusCubreDescanso);
+        dobleTurno = Boolean.valueOf(isMyStatusDobleTurno);
+
         final guardias guardia = mGuardiasList.get(position);
 
 
@@ -211,8 +224,13 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
 
             if (guardia.getUsuarioNombre().equals(myGuardiaCaptura) || guardia.getUsuarioAsistenciaDelDia() != null) {
 
+
+
                 String asistencia;
                 int image = 0;
+
+
+
 
                 if (guardia.getUsuarioNombre().equals(myGuardiaCaptura)) {
                     asistencia = GuardiaListaRecyclerAdapter.myStatus;

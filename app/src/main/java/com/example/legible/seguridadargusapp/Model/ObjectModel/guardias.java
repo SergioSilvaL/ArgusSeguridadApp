@@ -14,6 +14,34 @@ public class guardias {
     private String usuarioTurno;
     private String usuarioAsistenciaDelDia;
 
+    public boolean isUsuarioAsistio() {
+        return usuarioAsistio;
+    }
+
+    public void setUsuarioAsistio(boolean usuarioAsistio) {
+        this.usuarioAsistio = usuarioAsistio;
+    }
+
+    public boolean isUsuarioDobleTurno() {
+        return usuarioDobleTurno;
+    }
+
+    public void setUsuarioDobleTurno(boolean usuarioDobleTurno) {
+        this.usuarioDobleTurno = usuarioDobleTurno;
+    }
+
+    public boolean isUsuarioCubreTurno() {
+        return usuarioCubreTurno;
+    }
+
+    public void setUsuarioCubreTurno(boolean usuarioCubreTurno) {
+        this.usuarioCubreTurno = usuarioCubreTurno;
+    }
+
+    private boolean usuarioAsistio = false;
+    private boolean usuarioDobleTurno = false;
+    private boolean usuarioCubreTurno = false;
+
     public String getUsuarioAsistenciaExtraDelDia() {
         return usuarioAsistenciaExtraDelDia;
     }
@@ -56,11 +84,21 @@ public class guardias {
     public guardias(){}
 
     //Construct Guardia for clienteGuardias listview show
-    public guardias(String usuarioKey, String name, String status, String statusExtra, String date ){
+//    public guardias(String usuarioKey, String name, String status, String statusExtra, String date ){
+//        this.usuarioKey = usuarioKey;
+//        this.usuarioNombre = name;
+//        this.usuarioAsistenciaDelDia = status;
+//        this.usuarioAsistenciaExtraDelDia = statusExtra;
+//        this.usuarioAsistenciaFecha = date;
+//    }
+
+
+    public guardias(String usuarioKey, String name, boolean asistio, boolean cubreDescanso,boolean dobleTurno, String date ){
         this.usuarioKey = usuarioKey;
         this.usuarioNombre = name;
-        this.usuarioAsistenciaDelDia = status;
-        this.usuarioAsistenciaExtraDelDia = statusExtra;
+        this.usuarioAsistio = asistio;
+        this.usuarioCubreTurno = cubreDescanso;
+        this.usuarioDobleTurno = dobleTurno;
         this.usuarioAsistenciaFecha = date;
     }
 

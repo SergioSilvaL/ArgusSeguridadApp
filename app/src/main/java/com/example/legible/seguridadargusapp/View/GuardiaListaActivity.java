@@ -24,9 +24,16 @@ public class GuardiaListaActivity extends AppCompatActivity {
     private GuardiaListaRecyclerAdapter mAdapter;
 
     public static int REQUEST_ASISTENCIA = 0;
-    public static String EXTRA_ASISTENCIA = "EXTRA_ASISTENCIA";
     public static String EXTRA_ASISTENCIA_GUARDIA_CAPTURADO = "EXTRA_ASISTENCIA_GUARDIA_CAPTURADO";
+
+
+    public static String EXTRA_ASISTENCIA = "EXTRA_ASISTENCIA";
     public static String EXTRA_DOBLE_ASISTENCIA = "EXTRA_DOBLE_ASISTENCIA";
+
+    public static String EXTRA_ASISTIO = "EXTRA_ASISTIO";
+    public static String EXTRA_CUBRE_DESCANSO = "EXTRA_CUBRE_DESCANSO";
+    public static String  EXTRA_DOBLE_TURNO= "EXTRA_DOBLE_TURNO";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,9 +110,15 @@ public class GuardiaListaActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_ASISTENCIA){
             if (resultCode == RESULT_OK){
-                GuardiaListaRecyclerAdapter.myStatus = data.getStringExtra(EXTRA_ASISTENCIA);
+
                 GuardiaListaRecyclerAdapter.myGuardiaCaptura =  data.getStringExtra(EXTRA_ASISTENCIA_GUARDIA_CAPTURADO);
+
+                GuardiaListaRecyclerAdapter.myStatus = data.getStringExtra(EXTRA_ASISTENCIA);
                 GuardiaListaRecyclerAdapter.myStatusExtra = data.getStringExtra(EXTRA_DOBLE_ASISTENCIA);
+
+                GuardiaListaRecyclerAdapter.isMyStatusAsistio = data.getStringExtra(EXTRA_ASISTIO);
+                GuardiaListaRecyclerAdapter.isMyStatusCubreDescanso = data.getStringExtra(EXTRA_CUBRE_DESCANSO);
+                GuardiaListaRecyclerAdapter.isMyStatusDobleTurno = data.getStringExtra(EXTRA_DOBLE_TURNO);
 
                 recyclerView.setAdapter(mAdapter);
             }
