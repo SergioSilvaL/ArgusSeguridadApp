@@ -4,8 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!--Permission for checking if there is an Internet Connection -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!-- Permission for checking if there is an Internet Connection -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -20,18 +20,29 @@
         <activity
             android:name=".View.SignInActivity"
             android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity
+            android:name=".View.GuardiaListaActivity"
+            android:parentActivityName=".View.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".View.GuardiaSignatureActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".View.ConsignasActivity"
+            android:label="@string/title_activity_consignas"
+            android:parentActivityName=".View.GuardiaListaActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.legible.seguridadargusapp.View.GuardiaListaActivity" />
         </activity>
-        <activity
-            android:name=".View.GuardiaListaActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".View.MainActivity"/>
-        <activity android:name=".View.GuardiaSignatureActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
