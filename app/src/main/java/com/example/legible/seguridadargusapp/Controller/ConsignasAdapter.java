@@ -28,6 +28,8 @@ public class ConsignasAdapter extends RecyclerView.Adapter<ConsignasAdapter.View
         notifyDataSetChanged();
     }
 
+
+
     @Override
     public ConsignasAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
