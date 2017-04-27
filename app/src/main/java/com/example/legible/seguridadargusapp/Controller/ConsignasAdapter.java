@@ -23,6 +23,11 @@ public class ConsignasAdapter extends RecyclerView.Adapter<ConsignasAdapter.View
         this.mConsignas = mConsignas;
     }
 
+    public void addConsigna(Consigna consigna){
+        mConsignas.add(0,consigna);
+        notifyDataSetChanged();
+    }
+
     @Override
     public ConsignasAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 

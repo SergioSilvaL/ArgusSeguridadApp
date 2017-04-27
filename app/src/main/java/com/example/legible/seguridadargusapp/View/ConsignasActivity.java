@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
 
 import com.example.legible.seguridadargusapp.Controller.ConsignasAdapter;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.Consigna;
@@ -17,7 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConsignasActivity extends AppCompatActivity {
-
+    List<Consigna> mConsignas = new ArrayList<>();
+    ConsignasAdapter consignasAdapter;
+    EditText editTextConsigna;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,12 +30,14 @@ public class ConsignasActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        editTextConsigna = (EditText) findViewById(R.id.editTextConsigna);
+
         RecyclerView recyclerViewConsignas = (RecyclerView) findViewById(R.id.recyclerViewConsignas);
         recyclerViewConsignas.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewConsignas.setHasFixedSize(true);
 
         // ArrayList de Consginas
-        List<Consigna> mConsignas = new ArrayList<>();
+
 
         for (int i = 0 ; i< 10; i++){
 
@@ -41,30 +46,28 @@ public class ConsignasActivity extends AppCompatActivity {
 
 
         }
-
-
-        ConsignasAdapter consignasAdapter = new ConsignasAdapter(mConsignas);
-        recyclerViewConsignas.setAdapter(consignasAdapter);
-
         //Button Flotante
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 aggregarConsigna();
-
             }
         });
+
+        consignasAdapter = new ConsignasAdapter(mConsignas);
+        recyclerViewConsignas.setAdapter(consignasAdapter);
+
+
 
         //Button de Regreso
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void aggregarConsigna() {
-
         //Codigo para agregar Consgina
 
+        consignasAdapter.addConsigna(new Consigna(editTextConsigna.getText().toString()));
     }
 
 }
