@@ -443,7 +443,6 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     asistio = false;
                     dobleTurno = false;
                     cubreDescanso = false;
-                    textViewCurrentHour.setText(String.valueOf("1"));
                     Toast.makeText(GuardiaSignatureActivity.this,"Horas Extra",Toast.LENGTH_SHORT).show();
                     viewSignaturePad.setVisibility(View.VISIBLE);
                     viewNoAsistioInput.setVisibility(View.GONE);
