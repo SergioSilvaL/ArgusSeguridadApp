@@ -25,4 +25,5 @@
 
 
     <string name="No_Connection_To_Internet">Conexión Inestable a Internet</string>
+    <string name="title_activity_consignas">ConsignasActivity</string>
 </resources>
