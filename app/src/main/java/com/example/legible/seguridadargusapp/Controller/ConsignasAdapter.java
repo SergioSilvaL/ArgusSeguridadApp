@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.Consigna;
 import com.example.legible.seguridadargusapp.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,17 +19,15 @@ import java.util.List;
 public class ConsignasAdapter extends RecyclerView.Adapter<ConsignasAdapter.ViewHolder> {
 
     private List<Consigna> mConsignas;
+    private Callback mCallback;
 
-    public ConsignasAdapter(List<Consigna> mConsignas) {
-        this.mConsignas = mConsignas;
+    public ConsignasAdapter(Callback callback) {
+
+        mCallback = callback;
+        mConsignas = new ArrayList<>();
+        //Populate Consignas
+        mConsignas = getConsignas();
     }
-
-    public void addConsigna(Consigna consigna){
-        mConsignas.add(0,consigna);
-        notifyDataSetChanged();
-    }
-
-
 
     @Override
     public ConsignasAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -42,10 +41,18 @@ public class ConsignasAdapter extends RecyclerView.Adapter<ConsignasAdapter.View
     @Override
     public void onBindViewHolder(ConsignasAdapter.ViewHolder holder, int position) {
 
-        Consigna consignas = mConsignas.get(position);
+        final Consigna consigna = mConsignas.get(position);
 
         TextView textView = holder.textViewConsignaTarea;
-        textView.setText(consignas.getConsignaTarea());
+        textView.setText(consigna.getConsignaNombre());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Open new Dialog
+                mCallback.onEdit(consigna);
+            }
+        });
 
     }
 
@@ -54,9 +61,38 @@ public class ConsignasAdapter extends RecyclerView.Adapter<ConsignasAdapter.View
         return mConsignas.size();
     }
 
+    public ArrayList<Consigna> getConsignas(){
+
+        List<Consigna> consignaList = new ArrayList<>();
+
+        // ArrayList de Consginas
+        for (int i = 0 ; i< 10; i++){
+            Consigna consigna = new Consigna("consigna"+i);
+            consignaList.add(mConsignas.size(),consigna);
+        }
+
+        return (ArrayList<Consigna>) consignaList;
+
+    }
+
+    public void add(Consigna consigna){
+        //TODO: Remove the lines(s) and use Firebase instead
+        mConsignas.add(0,consigna);
+        notifyDataSetChanged();
+    }
+
+    public void update(){}
+
+    public void  remove(){}
+
+    public interface Callback {
+        public void onEdit(Consigna consigna);
+    }
+
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewConsignaTarea;
+        private TextView textViewConsignaTarea;
 
         public ViewHolder(View itemView) {
             super(itemView);
