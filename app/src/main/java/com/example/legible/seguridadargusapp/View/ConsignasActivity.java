@@ -60,11 +60,11 @@ public class ConsignasActivity extends AppCompatActivity implements ConsignasAda
     }
 
     @Override
-    public void onEdit(final Consigna consigna) {
+    public void onEdit(final String consigna) {
         showConsignaDialogFragment(consigna);
     }
 
-    private void showConsignaDialogFragment(final Consigna consigna) {
+    private void showConsignaDialogFragment(final String consigna) {
 
         FragmentManager fm =getSupportFragmentManager();
         ConsignaDialogFragment cdf = ConsignaDialogFragment.newInstance(consigna);

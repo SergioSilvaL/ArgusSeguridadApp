@@ -32,10 +32,10 @@ public class ConsignaDialogFragment extends DialogFragment implements  ConsignaD
         //Empty constructor required for DialogFragment
     }
 
-    public static ConsignaDialogFragment newInstance(Consigna consigna){
+    public static ConsignaDialogFragment newInstance(String consigna){
         ConsignaDialogFragment frag = new ConsignaDialogFragment();
         Bundle args = new Bundle();
-        args.putString("title", consigna.getConsignaNombre());
+        args.putString("title", consigna);
         frag.setArguments(args);
         return frag;
     }
@@ -53,7 +53,7 @@ public class ConsignaDialogFragment extends DialogFragment implements  ConsignaD
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewConsignaDialogFragment);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         recyclerView.setHasFixedSize(true);
-        myAdapter = new ConsignaDialogFragmentAdapter(this);
+        myAdapter = new ConsignaDialogFragmentAdapter(this, getArguments().getString("title"));
         recyclerView.setAdapter(myAdapter);
 
 

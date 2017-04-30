@@ -8,6 +8,11 @@ import android.widget.TextView;
 
 import com.example.legible.seguridadargusapp.Model.ObjectModel.Consigna;
 import com.example.legible.seguridadargusapp.R;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,15 +23,44 @@ import java.util.List;
 
 public class ConsignasAdapter extends RecyclerView.Adapter<ConsignasAdapter.ViewHolder> {
 
-    private List<Consigna> mConsignas;
+    private List<String> mConsignas;
     private Callback mCallback;
+    DatabaseReference mConsigaTareaRef;
 
     public ConsignasAdapter(Callback callback) {
 
         mCallback = callback;
         mConsignas = new ArrayList<>();
-        //Populate Consignas
-        mConsignas = getConsignas();
+        mConsigaTareaRef  = FirebaseDatabase.getInstance().getReference().child("Argus").child("Consigna").child("Intech");
+        mConsigaTareaRef.addChildEventListener(new ConsignaChildEventListener());
+    }
+
+    private class ConsignaChildEventListener implements ChildEventListener {
+        @Override
+        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            mConsignas.add(0,dataSnapshot.getKey());
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+        }
+
+        @Override
+        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
     }
 
     @Override
@@ -41,10 +75,10 @@ public class ConsignasAdapter extends RecyclerView.Adapter<ConsignasAdapter.View
     @Override
     public void onBindViewHolder(ConsignasAdapter.ViewHolder holder, int position) {
 
-        final Consigna consigna = mConsignas.get(position);
+        final String consigna = mConsignas.get(position);
 
         TextView textView = holder.textViewConsignaTarea;
-        textView.setText(consigna.getConsignaNombre());
+        textView.setText(consigna);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,24 +95,10 @@ public class ConsignasAdapter extends RecyclerView.Adapter<ConsignasAdapter.View
         return mConsignas.size();
     }
 
-    public ArrayList<Consigna> getConsignas(){
-
-        List<Consigna> consignaList = new ArrayList<>();
-
-        // ArrayList de Consginas
-        for (int i = 0 ; i< 10; i++){
-            Consigna consigna = new Consigna("consigna"+i);
-            consignaList.add(mConsignas.size(),consigna);
-        }
-
-        return (ArrayList<Consigna>) consignaList;
-
-    }
-
     public void add(Consigna consigna){
-        //TODO: Remove the lines(s) and use Firebase instead
-        mConsignas.add(0,consigna);
-        notifyDataSetChanged();
+//        //TODO: Remove the lines(s) and use Firebase instead
+//        mConsignas.add(0,consigna);
+//        notifyDataSetChanged();
     }
 
     public void update(){}
@@ -86,7 +106,7 @@ public class ConsignasAdapter extends RecyclerView.Adapter<ConsignasAdapter.View
     public void  remove(){}
 
     public interface Callback {
-        public void onEdit(Consigna consigna);
+        public void onEdit(String consigna);
     }
 
 
