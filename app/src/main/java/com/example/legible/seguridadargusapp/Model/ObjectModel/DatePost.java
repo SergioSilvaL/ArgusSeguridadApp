@@ -33,6 +33,14 @@ public class DatePost{
 
     }
 
+    public String get24HourFormat(){
+
+        String hour = getTimeFormat(c.get(Calendar.HOUR));
+        String minute = getTimeFormat(c.get(Calendar.MINUTE));
+        String time = hour + ":" +minute;
+        return time;
+    }
+
 
     public String getDatePost(){
         c.setTime(new Date());

@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.legible.seguridadargusapp.Model.ObjectModel.Cliente;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.supervisores;
 import com.example.legible.seguridadargusapp.R;
 import com.example.legible.seguridadargusapp.Controller.ClienteRecyclerAdapter;
@@ -110,7 +111,7 @@ public class ClienteFragment extends Fragment {
                     isSupervisor = true;
                     zonaSupervisorRef = supervisor.getUsuarioNombre();
                     zonaRef = supervisor.getUsuarioZona();
-
+                    ClienteRecyclerAdapter.mySupervisorKey = data.getKey();
                     //Create the Adapter
                     mAdapter = new ClienteRecyclerAdapter(ClienteFragment.this.getContext(), recyclerView, zonaRef, zonaSupervisorRef);
                     //Binding

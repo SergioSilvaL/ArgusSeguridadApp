@@ -20,7 +20,11 @@
         <activity
             android:name=".View.SignInActivity"
             android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
         <activity
             android:name=".View.GuardiaListaActivity"
@@ -34,11 +38,19 @@
             android:label="@string/title_activity_consignas"
             android:parentActivityName=".View.GuardiaListaActivity"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.legible.seguridadargusapp.View.GuardiaListaActivity" />
+        </activity>
+        <activity
+            android:name=".View.BitacoraRegistroActivity"
+            android:label="@string/title_activity_bitacora_registro"
+            android:parentActivityName=".View.GuardiaListaActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.legible.seguridadargusapp.View.GuardiaListaActivity" />

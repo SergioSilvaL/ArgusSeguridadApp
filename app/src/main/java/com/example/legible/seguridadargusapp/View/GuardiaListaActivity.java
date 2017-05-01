@@ -79,11 +79,21 @@ public class GuardiaListaActivity extends AppCompatActivity {
                 //Do something
                 addIncidente();
 
+            case R.id.action_bitacora:
+                openBitacora();
+                return true;
+
+            case R.id.action_consigna:
+                openConsigna();
                 return true;
 
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openConsigna() {
+        startActivity(new Intent(this, ConsignasActivity.class));
     }
 
     public void addGuardiaTemporal(){
@@ -100,6 +110,12 @@ public class GuardiaListaActivity extends AppCompatActivity {
         fm = getSupportFragmentManager();
         df.show(fm,"dialog_fragment_incidente_add");
     }
+
+    public void openBitacora(){
+        startActivity(new Intent(this, BitacoraRegistroActivity.class));
+    }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

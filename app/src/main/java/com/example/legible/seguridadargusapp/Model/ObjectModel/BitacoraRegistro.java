@@ -1,0 +1,46 @@
+package com.example.legible.seguridadargusapp.Model.ObjectModel;
+
+import com.google.firebase.database.Exclude;
+
+/**
+ * Created by sergiosilva on 5/1/17.
+ */
+
+public class BitacoraRegistro {
+    private String hora;
+    private String observacion;
+    private String key;
+
+    public BitacoraRegistro(){}
+
+    public BitacoraRegistro(String observacion, String hora) {
+        this.observacion = observacion;
+        this.hora = hora;
+    }
+
+    @Exclude
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
+    }
+
+}

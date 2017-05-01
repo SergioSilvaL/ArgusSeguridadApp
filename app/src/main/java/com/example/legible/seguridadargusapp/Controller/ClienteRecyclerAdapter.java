@@ -38,7 +38,7 @@ public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecycler
     public static String myCliente;
     public static String myZona;
     public static String mySupervisor;
-
+    public static String mySupervisorKey;
     //Firebase Reference
     private DatabaseReference mClientRef;
 
