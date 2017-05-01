@@ -1,9 +1,11 @@
 package com.example.legible.seguridadargusapp.View;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,9 +24,6 @@ public class ConsignasActivity extends AppCompatActivity implements ConsignasAda
 
     ConsignasAdapter consignasAdapter;
 
-    EditText editTextConsigna;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +33,6 @@ public class ConsignasActivity extends AppCompatActivity implements ConsignasAda
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        editTextConsigna = (EditText) findViewById(R.id.editTextConsigna);
 
         RecyclerView recyclerViewConsignas = (RecyclerView) findViewById(R.id.recyclerViewConsignas);
         recyclerViewConsignas.setLayoutManager(new LinearLayoutManager(this));
@@ -47,16 +45,31 @@ public class ConsignasActivity extends AppCompatActivity implements ConsignasAda
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                aggregarConsigna();
+                showAddDialog();
             }
         });
         //Back Button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void aggregarConsigna() {
-        //Codigo para agregar Consgina
-        consignasAdapter.add(new Consigna(editTextConsigna.getText().toString()));
+    private void showAddDialog() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final EditText edittext = new EditText(this);
+        alert.setTitle("Agregar Consigna");
+        alert.setView(edittext);
+
+        alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String text = edittext.getText().toString();
+                consignasAdapter.add(text);
+            }
+        });
+
+        alert.setNegativeButton(android.R.string.cancel, null);
+
+        alert.show();
+
     }
 
     @Override

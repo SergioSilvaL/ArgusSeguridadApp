@@ -31,7 +31,7 @@ public class ConsignasAdapter extends RecyclerView.Adapter<ConsignasAdapter.View
 
         mCallback = callback;
         mConsignas = new ArrayList<>();
-        mConsigaTareaRef  = FirebaseDatabase.getInstance().getReference().child("Argus").child("Consigna").child("Intech");
+        mConsigaTareaRef  = FirebaseDatabase.getInstance().getReference().child("Argus").child("Consigna").child(ClienteRecyclerAdapter.myCliente);
         mConsigaTareaRef.addChildEventListener(new ConsignaChildEventListener());
     }
 
@@ -73,7 +73,7 @@ public class ConsignasAdapter extends RecyclerView.Adapter<ConsignasAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(ConsignasAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ConsignasAdapter.ViewHolder holder, final int position) {
 
         final String consigna = mConsignas.get(position);
 
@@ -88,6 +88,14 @@ public class ConsignasAdapter extends RecyclerView.Adapter<ConsignasAdapter.View
             }
         });
 
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                remove(mConsignas.get(position));
+                return true;
+            }
+        });
+
     }
 
     @Override
@@ -95,15 +103,15 @@ public class ConsignasAdapter extends RecyclerView.Adapter<ConsignasAdapter.View
         return mConsignas.size();
     }
 
-    public void add(Consigna consigna){
-//        //TODO: Remove the lines(s) and use Firebase instead
-//        mConsignas.add(0,consigna);
-//        notifyDataSetChanged();
+    public void add(String consigna){
+        mConsigaTareaRef.child(consigna).push().setValue(new Consigna(""));
     }
 
     public void update(){}
 
-    public void  remove(){}
+    public void  remove(String s){
+        mConsigaTareaRef.child(s).removeValue();
+    }
 
     public interface Callback {
         public void onEdit(String consigna);
