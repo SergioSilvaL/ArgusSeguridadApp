@@ -19,26 +19,6 @@ public class Consigna {
 
     public Consigna(String consignaNombre) {
         this.consignaNombre = consignaNombre;
-       tareaList = new ArrayList<>();
-        populateTareas();
-    }
-
-    private void populateTareas(){
-
-        String tarea = "tarea";
-
-        for (int i = 0; i< 10; i++){
-            tareaList.add(0, tarea += "" + i);
-        }
-
-    }
-
-    public List<String> getTareaList() {
-        return tareaList;
-    }
-
-    public void setTareaList(List<String> tareaList) {
-        this.tareaList = tareaList;
     }
 
     public String getConsignaNombre() {

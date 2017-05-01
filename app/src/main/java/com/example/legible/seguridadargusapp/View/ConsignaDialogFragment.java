@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.legible.seguridadargusapp.Controller.ConsignaDialogFragmentAdapter;
@@ -57,9 +58,9 @@ public class ConsignaDialogFragment extends DialogFragment implements  ConsignaD
         recyclerView.setAdapter(myAdapter);
 
 
-        //Fab Button
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fabConsignaDialogFragment);
-        fab.setOnClickListener(new View.OnClickListener() {
+        //Fab Button //TODO : Replace with Button
+        Button button = (Button) view.findViewById(R.id.buttonConsignaDialogFragment);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showAddEditDialog(null);
