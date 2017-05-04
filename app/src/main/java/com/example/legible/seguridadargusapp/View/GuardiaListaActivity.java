@@ -78,6 +78,7 @@ public class GuardiaListaActivity extends AppCompatActivity {
             case R.id.action_add_incidente:
                 //Do something
                 addIncidente();
+                return true;
 
             case R.id.action_bitacora:
                 openBitacora();

@@ -104,7 +104,7 @@ public class ConsignasAdapter extends RecyclerView.Adapter<ConsignasAdapter.View
     }
 
     public void add(String consigna){
-        mConsigaTareaRef.child(consigna).push().setValue(new Consigna(""));
+        mConsigaTareaRef.child(consigna).push().setValue(new Consigna("prueba"));
     }
 
     public void update(){}
