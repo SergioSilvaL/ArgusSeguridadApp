@@ -32,7 +32,7 @@ public class ConsignaDialogFragmentAdapter extends RecyclerView.Adapter<Consigna
         mCallback = callback;
         mConsignaList = new ArrayList<>();
 
-        mConsignaTareaRef = FirebaseDatabase.getInstance().getReference().child("Argus").child("Consigna").child("Intech").child(consignaTarea);
+        mConsignaTareaRef = FirebaseDatabase.getInstance().getReference().child("Argus").child("Consigna").child(ClienteRecyclerAdapter.myCliente).child(consignaTarea);
         mConsignaTareaRef.addChildEventListener(new ConsignaChildEventListener());
 
     }
