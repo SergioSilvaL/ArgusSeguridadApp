@@ -9,7 +9,8 @@
         android:id="@+id/dialog_add_observacion_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Observacion" />
+        android:hint="Observacion"
+        android:layout_margin="10dp" />
 
     <!--<TextView-->
         <!--android:layout_width="match_parent"-->

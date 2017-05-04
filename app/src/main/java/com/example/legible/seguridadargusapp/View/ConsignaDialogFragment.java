@@ -58,14 +58,6 @@ public class ConsignaDialogFragment extends DialogFragment implements  ConsignaD
         recyclerView.setAdapter(myAdapter);
 
 
-        //Fab Button //TODO : Replace with Button
-        Button button = (Button) view.findViewById(R.id.buttonConsignaDialogFragment);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAddEditDialog(null);
-            }
-        });
 
         builder.setView(view);
 
@@ -73,6 +65,12 @@ public class ConsignaDialogFragment extends DialogFragment implements  ConsignaD
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+            }
+        });
+        builder.setNeutralButton("Anadir", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                showAddEditDialog(null);
             }
         });
 
