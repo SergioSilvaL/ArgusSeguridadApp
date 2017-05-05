@@ -32,9 +32,7 @@ import java.util.Random;
 public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecyclerAdapter.ViewHolder> {
 
     private Context mContext;
-    private RecyclerView mRecyclerView;
     private final List<Cliente> mClient;
-    private Random mRandom;
     public static String myCliente;
     public static String myZona;
     public static String mySupervisor;
@@ -43,10 +41,10 @@ public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecycler
     private DatabaseReference mClientRef;
 
 
-    public ClienteRecyclerAdapter(Context context, RecyclerView recyclerView,String Zona,String supervisor) {
-        mClient = new ArrayList<>();//mPasswords = new ArrayList<>();
+    public ClienteRecyclerAdapter(Context context, String Zona,String supervisor) {
+
+        mClient = new ArrayList<>();
         mContext = context;//mInflator = LayoutInflator.from(context);
-        mRecyclerView = recyclerView;
 
         //get all the clients from the database reference
         mClientRef = FirebaseDatabase.getInstance().getReference()
@@ -58,58 +56,38 @@ public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecycler
 
         mClientRef.addChildEventListener(new ClientChildEventListener());
 
-
-        //Todo add Ref
         myZona = Zona;
         mySupervisor = supervisor;
-
-
 
     }
 
 
-
-
     class ClientChildEventListener implements ChildEventListener{
-
-
 
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
             Cliente cliente = dataSnapshot.getValue(Cliente.class);
 
-
             boolean bandera = false;
 
             if (mClient.size()>0) {
-
                 for (Cliente Cliente : mClient) {
-
-
                     if (Cliente.getClienteNombre().equals(cliente.getClienteNombre()))
                         bandera = true;
-
-
                 }
             }
 
-
-
             if (bandera==false){
-                mClient.add(0,cliente);
+                mClient.add(mClient.size(),cliente);
             }
-
-
-
-            //TODO Order LIST
 
             notifyDataSetChanged();
         }
 
         @Override
         public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+            //Empty
         }
 
 
@@ -131,18 +109,16 @@ public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecycler
 
             notifyItemRemoved(i);
 
-
-
         }
 
         @Override
         public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+            //Empty
         }
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
-
+            //Firebase Error
         }
     }
 
@@ -166,8 +142,6 @@ public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecycler
             @Override
             public void onClick(View view) {
 
-                //Todo How to pass Intents
-
                 // Todo my Cliente Ref
                 Intent i = new Intent(mContext, GuardiaSignatureActivity.class);
                 i.putExtra("cliente",currentCliente.getClienteNombre());
@@ -186,7 +160,6 @@ public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecycler
     public int getItemCount() {
         return mClient.size();
     }
-
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {

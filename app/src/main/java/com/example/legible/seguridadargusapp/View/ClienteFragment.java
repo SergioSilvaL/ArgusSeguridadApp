@@ -113,7 +113,7 @@ public class ClienteFragment extends Fragment {
                     zonaRef = supervisor.getUsuarioZona();
                     ClienteRecyclerAdapter.mySupervisorKey = data.getKey();
                     //Create the Adapter
-                    mAdapter = new ClienteRecyclerAdapter(ClienteFragment.this.getContext(), recyclerView, zonaRef, zonaSupervisorRef);
+                    mAdapter = new ClienteRecyclerAdapter(ClienteFragment.this.getContext(), zonaRef, zonaSupervisorRef);
                     //Binding
 
                     //Capture the recyclerView
@@ -144,15 +144,14 @@ public class ClienteFragment extends Fragment {
     }
 
     public void signOut () {
+
         FirebaseAuth.getInstance().signOut();
-
-
         Intent intent = new Intent(getActivity(),SignInActivity.class);
-        //Todo change to String recource
+
+        //Todo: String recource
         Toast.makeText(getContext(),"Error, Solo los Supervisores tiene acceso al Sistema Movil",Toast.LENGTH_LONG).show();
         startActivity(intent);
         getActivity().finish();
-
 
         getActivity().finish();
     }
