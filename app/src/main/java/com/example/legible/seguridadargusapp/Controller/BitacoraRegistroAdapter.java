@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.legible.seguridadargusapp.Model.ObjectModel.BitacoraRegistro;
@@ -47,22 +48,22 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
 
         @Override
         public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+            // TODO
         }
 
         @Override
         public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+            // TODO
         }
 
         @Override
         public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+            // Empty
         }
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
-
+            // Firebase Error
         }
     }
     @Override
@@ -76,9 +77,11 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
         final BitacoraRegistro bitacoraRegistro = mRegistro.get(position);
         holder.mObservacionTextView.setText(bitacoraRegistro.getObservacion());
         holder.mHoraTextView.setText(bitacoraRegistro.getHora());
+
+        // Todo Show Currnent Status
+        //holder.mSemaforoImageView.setBackgroundResource();
+
     }
-
-
 
     @Override
     public int getItemCount() {
@@ -86,7 +89,6 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
     }
 
     public void add(BitacoraRegistro bitacoraRegistro){
-        //TODO: Get Current Hour
         bitacoraRegistro.setHora(new DatePost().get24HourFormat());
         mBitacoraRegistroRef.push().setValue(bitacoraRegistro);
     }
@@ -98,11 +100,13 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mObservacionTextView;
         private TextView mHoraTextView;
+        private ImageView mSemaforoImageView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mObservacionTextView = (TextView) itemView.findViewById(R.id.textViewBitacoraRegistroObservacion);
             mHoraTextView = (TextView) itemView.findViewById(R.id.textViewBitacoraRegistroHora);
+            mSemaforoImageView = (ImageView) itemView.findViewById(R.id.imageViewSemaforo);
         }
     }
 

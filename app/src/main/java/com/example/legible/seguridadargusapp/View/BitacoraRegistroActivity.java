@@ -62,7 +62,7 @@ public class BitacoraRegistroActivity extends AppCompatActivity implements Bitac
                 if (bitacoraRegistro == null) {
                     String observacion = observacionEditText.getText().toString();
                     //String hora = horaEditText.getText().toString();
-                    mAdapter.add(new BitacoraRegistro(observacion, ""));
+                    mAdapter.add(new BitacoraRegistro(observacion, "", 0));
                 }
             }
         });

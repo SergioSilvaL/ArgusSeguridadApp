@@ -9,14 +9,18 @@ import com.google.firebase.database.Exclude;
 public class BitacoraRegistro {
     private String hora;
     private String observacion;
+    private long semaforo;
     private String key;
 
     public BitacoraRegistro(){}
 
-    public BitacoraRegistro(String observacion, String hora) {
+    public BitacoraRegistro(String observacion, String hora , long semaforo) {
         this.observacion = observacion;
         this.hora = hora;
+        this.semaforo = semaforo;
     }
+
+
 
     @Exclude
     public String getKey() {
@@ -43,4 +47,11 @@ public class BitacoraRegistro {
         this.observacion = observacion;
     }
 
+    public long getSemaforo() {
+        return semaforo;
+    }
+
+    public void setSemaforo(long semaforo) {
+        this.semaforo = semaforo;
+    }
 }
