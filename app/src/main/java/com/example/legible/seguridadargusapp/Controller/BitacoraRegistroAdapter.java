@@ -17,7 +17,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by sergiosilva on 5/1/17.
@@ -40,12 +42,16 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
     private class bitacoraRegistroChildEventListener implements ChildEventListener {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            BitacoraRegistro registro = dataSnapshot.getValue(BitacoraRegistro.class);
-            if (registro.getObservacion()!=null)  {
-                registro.setKey(dataSnapshot.getKey());
-                mRegistro.add(mRegistro.size(), registro);
-                notifyDataSetChanged();
+
+            if (!dataSnapshot.getKey().equals("supervisor") && !dataSnapshot.getKey().equals("zona")) {
+                BitacoraRegistro registro = dataSnapshot.getValue(BitacoraRegistro.class);
+                if (registro.getObservacion() != null) {
+                    registro.setKey(dataSnapshot.getKey());
+                    mRegistro.add(mRegistro.size(), registro);
+                    notifyDataSetChanged();
+                }
             }
+
         }
 
         @Override
@@ -117,6 +123,15 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
     public void add(BitacoraRegistro bitacoraRegistro){
         bitacoraRegistro.setHora(new DatePost().get24HourFormat());
         mBitacoraRegistroRef.push().setValue(bitacoraRegistro);
+        updateSupervisorInfo(ClienteRecyclerAdapter.mySupervisor, ClienteRecyclerAdapter.myZona);
+    }
+
+    private void updateSupervisorInfo(String supervisor, String zona) {
+
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("/supervisor", supervisor);
+        childUpdates.put("/zona", zona);
+        mBitacoraRegistroRef.updateChildren(childUpdates);
     }
 
     public void update(BitacoraRegistro bitacoraRegistro, String newObservacion, long newSemaforoStatus){
