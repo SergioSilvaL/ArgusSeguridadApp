@@ -11,13 +11,16 @@ public class BitacoraRegistro {
     private String observacion;
     private long semaforo;
     private String key;
+    private String supervisor;
+    private String zona;
 
     public BitacoraRegistro(){}
 
-    public BitacoraRegistro(String observacion, String hora , long semaforo) {
+    public BitacoraRegistro(String observacion, long semaforo, String supervisor, String zona) {
         this.observacion = observacion;
-        this.hora = hora;
         this.semaforo = semaforo;
+        this.supervisor = supervisor;
+        this.zona = zona;
     }
 
 
@@ -53,5 +56,21 @@ public class BitacoraRegistro {
 
     public void setSemaforo(long semaforo) {
         this.semaforo = semaforo;
+    }
+
+    public String getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(String supervisor) {
+        this.supervisor = supervisor;
+    }
+
+    public String getZona() {
+        return zona;
+    }
+
+    public void setZona(String zona) {
+        this.zona = zona;
     }
 }

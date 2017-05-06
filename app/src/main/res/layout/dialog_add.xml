@@ -12,6 +12,44 @@
         android:hint="Observacion"
         android:layout_margin="10dp" />
 
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:id="@+id/radio_group"
+        android:checkedButton="@+id/radioButtonBitacoraRegistroStatusBAJA">
+
+        <RadioButton
+            android:text="BAJO"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButtonBitacoraRegistroStatusBAJA"
+            android:onClick="onRadioButtonClickedBitacoraRegistro"
+            android:layout_weight="1"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:text="MEDIO"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButtonBitacoraRegistroStatusMEDIA"
+            android:onClick="onRadioButtonClickedBitacoraRegistro"
+            android:layout_weight="1"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:text="ALTO"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButtonBitacoraRegistroStatusALTA"
+            android:layout_weight="1"
+            android:onClick="onRadioButtonClickedBitacoraRegistro"
+            android:textSize="14sp" />
+
+    </RadioGroup>
+
     <!--<TextView-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"-->

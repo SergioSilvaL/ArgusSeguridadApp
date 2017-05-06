@@ -7,6 +7,10 @@
     <string name="action_bitacora">Biracora</string>
     <string name="action_consigna">Consigna(s)</string>
 
+    <string name="dialog_bitacora_registro_add_title">Añadir Bitacora</string>
+    <string name="dialog_bitacora_registro_edit_title">Editar Bitacora</string>
+
+
     <string name="Guardia">Guardia</string>
     <string name="Zona">Zona</string>
 

@@ -78,8 +78,17 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
         holder.mObservacionTextView.setText(bitacoraRegistro.getObservacion());
         holder.mHoraTextView.setText(bitacoraRegistro.getHora());
 
-        // Todo Show Currnent Status
-        //holder.mSemaforoImageView.setBackgroundResource();
+        switch ((int) bitacoraRegistro.getSemaforo()){
+            case 1:
+                holder.mSemaforoImageView.setBackgroundResource(android.R.drawable.presence_online);
+                break;
+            case 2:
+                holder.mSemaforoImageView.setBackgroundResource(android.R.drawable.presence_away);
+                break;
+            case 3:
+                holder.mSemaforoImageView.setBackgroundResource(android.R.drawable.presence_busy);
+                break;
+        }
 
     }
 
