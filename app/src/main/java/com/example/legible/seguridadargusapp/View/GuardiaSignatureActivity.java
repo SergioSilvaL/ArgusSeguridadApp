@@ -72,6 +72,10 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
     DatabaseReference mRefBitacora =
             FirebaseDatabase.getInstance().getReference().child("Argus").child("Bitacora");
 
+    private DatabaseReference mBitacoraRegistroRef =
+            FirebaseDatabase.getInstance().getReference().child("Argus").child("BitacoraRegistro").child(new DatePost().getDateKey()).child(ClienteRecyclerAdapter.mySupervisorKey);
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -358,6 +362,13 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
                 referenceNot.child("NotificacionTmp").push().setValue(notificacion);
                 referenceNot.child("Notificacion").push().setValue(notificacion);
+
+                // Enviar Confirmacion de asistencia bitacora
+                mBitacoraRegistroRef = FirebaseDatabase.getInstance().getReference().child("Argus")
+                        .child("BitacoraRegistro").child(new DatePost().getDateKey()).child(ClienteRecyclerAdapter.mySupervisorKey);
+
+                mBitacoraRegistroRef.push().setValue(notificacion);
+
 
             }
 
