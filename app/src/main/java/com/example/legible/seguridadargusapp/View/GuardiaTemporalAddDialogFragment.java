@@ -42,6 +42,10 @@ public class GuardiaTemporalAddDialogFragment extends DialogFragment{
 
     private DatabaseReference mNotificationTmpRef =
             FirebaseDatabase.getInstance().getReference().child("Argus").child("NotificacionTmp");
+
+    private DatabaseReference mBitacoraRegistroRef =
+            FirebaseDatabase.getInstance().getReference().child("Argus").child("BitacoraRegistro").child(new DatePost().getDateKey()).child(ClienteRecyclerAdapter.mySupervisorKey);
+
     public GuardiaTemporalAddDialogFragment(){}
 
 
@@ -104,10 +108,6 @@ public class GuardiaTemporalAddDialogFragment extends DialogFragment{
 
     private void pushData(){
 
-        //Todo push Information to Notification
-
-
-
         //Get Action
         String accion = "AG";
 
@@ -122,7 +122,6 @@ public class GuardiaTemporalAddDialogFragment extends DialogFragment{
         String descripcion = supervisorNombre + " agrego a un nuevo guardia";
 
 
-
         // Get the current notificition
         Notificacion notificacion = new Notificacion(accion,descripcion,fecha);
         //Set the Guardia data model
@@ -133,9 +132,6 @@ public class GuardiaTemporalAddDialogFragment extends DialogFragment{
         guardia.setUsuarioTelefono(Long.valueOf(telefono));
         guardia.setUsuarioClienteAsignado(ClienteRecyclerAdapter.myCliente);
 
-        //Set the information for the Notification
-        //Todo set notification with it's information
-
 
         // Push notification with nested class
         String key = mNotificationRef.push().getKey();
@@ -145,6 +141,9 @@ public class GuardiaTemporalAddDialogFragment extends DialogFragment{
 
         mNotificationTmpRef.child(key).setValue(notificacion);
         mNotificationTmpRef.child(key).child("informacion").setValue(guardia);
+
+        mBitacoraRegistroRef.child(key).setValue(notificacion);
+        mBitacoraRegistroRef.child(key).child("informacion").setValue(guardia);
 
         Toast.makeText(getContext(),"Se envio una solicitud con exito",Toast.LENGTH_LONG).show();
 
