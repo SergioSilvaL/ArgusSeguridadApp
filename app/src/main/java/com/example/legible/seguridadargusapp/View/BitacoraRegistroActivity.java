@@ -78,15 +78,12 @@ public class BitacoraRegistroActivity extends AppCompatActivity implements Bitac
         View view = getLayoutInflater().inflate(R.layout.dialog_add, null, false);
         builder.setView(view);
         final EditText observacionEditText = (EditText) view.findViewById(R.id.dialog_add_observacion_text);
-        // Todo set Radio Group
-        //final TextView horaEditText = (TextView) view.findViewById(R.id.dialog_add_hora_text);
-
-        semaforoStatus = 1; // Reset Semaforo Status
+        semaforoStatus = 1;// Sets default semaforo Value
+        // Todo: set Default radiobutton base on its current semaaforo
 
         if (bitacoraRegistro != null){
             // pre-populate
             observacionEditText.setText(bitacoraRegistro.getObservacion());
-            // Todo Set observacion semaforo//
         }
 
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -95,7 +92,8 @@ public class BitacoraRegistroActivity extends AppCompatActivity implements Bitac
                 if (bitacoraRegistro == null) {
                     String observacion = observacionEditText.getText().toString();
                     mAdapter.add(new BitacoraRegistro(observacion, semaforoStatus, ClienteRecyclerAdapter.mySupervisor, ClienteRecyclerAdapter.myZona));
-                    semaforoStatus = 1;
+                }else {
+                    mAdapter.update(bitacoraRegistro, observacionEditText.getText().toString(), semaforoStatus);
                 }
             }
         });

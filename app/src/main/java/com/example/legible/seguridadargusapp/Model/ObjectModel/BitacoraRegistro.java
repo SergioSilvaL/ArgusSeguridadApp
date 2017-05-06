@@ -23,7 +23,12 @@ public class BitacoraRegistro {
         this.zona = zona;
     }
 
-
+    public void setValues(BitacoraRegistro updatedBitacoraRegistro){
+        observacion = updatedBitacoraRegistro.observacion;
+        semaforo = updatedBitacoraRegistro.semaforo;
+        supervisor = updatedBitacoraRegistro.supervisor;
+        zona = updatedBitacoraRegistro.zona;
+    }
 
     @Exclude
     public String getKey() {

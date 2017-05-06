@@ -48,7 +48,15 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
 
         @Override
         public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-            // TODO
+            String key = dataSnapshot.getKey();
+            BitacoraRegistro updatedBitacoraRegistro = dataSnapshot.getValue(BitacoraRegistro.class);
+            for (BitacoraRegistro br: mRegistro){
+                if (br.getKey().equals(key)){
+                    br.setValues(updatedBitacoraRegistro);
+                    notifyDataSetChanged();
+                    return;
+                }
+            }
         }
 
         @Override
@@ -90,6 +98,13 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
                 break;
         }
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.onEdit(bitacoraRegistro);
+            }
+        });
+
     }
 
     @Override
@@ -100,6 +115,12 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
     public void add(BitacoraRegistro bitacoraRegistro){
         bitacoraRegistro.setHora(new DatePost().get24HourFormat());
         mBitacoraRegistroRef.push().setValue(bitacoraRegistro);
+    }
+
+    public void update(BitacoraRegistro bitacoraRegistro, String newObservacion, long newSemaforoStatus){
+        bitacoraRegistro.setObservacion(newObservacion);
+        bitacoraRegistro.setSemaforo(newSemaforoStatus);
+        mBitacoraRegistroRef.child(bitacoraRegistro.getKey()).setValue(bitacoraRegistro);
     }
 
     public interface Callback {
