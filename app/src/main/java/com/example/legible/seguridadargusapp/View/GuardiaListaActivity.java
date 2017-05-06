@@ -75,11 +75,6 @@ public class GuardiaListaActivity extends AppCompatActivity {
                 addGuardiaTemporal();
                 return true;
 
-            case R.id.action_add_incidente:
-                //Do something
-                addIncidente();
-                return true;
-
             case R.id.action_consigna:
                 openConsigna();
                 return true;
@@ -99,13 +94,6 @@ public class GuardiaListaActivity extends AppCompatActivity {
         fm = getSupportFragmentManager();
         dialogFragment.show(fm,"fragment_guarida_temporal_add");
 
-    }
-
-    public void addIncidente(){
-
-        IncidenteAddDialogFragment df = IncidenteAddDialogFragment.newInstance(clienteRef,supervisorRef);
-        fm = getSupportFragmentManager();
-        df.show(fm,"dialog_fragment_incidente_add");
     }
 
     @Override
