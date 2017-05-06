@@ -41,9 +41,11 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
             BitacoraRegistro registro = dataSnapshot.getValue(BitacoraRegistro.class);
-            registro.setKey(dataSnapshot.getKey());
-            mRegistro.add(mRegistro.size(), registro);
-            notifyDataSetChanged();
+            if (registro.getObservacion()!=null)  {
+                registro.setKey(dataSnapshot.getKey());
+                mRegistro.add(mRegistro.size(), registro);
+                notifyDataSetChanged();
+            }
         }
 
         @Override
