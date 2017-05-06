@@ -123,12 +123,15 @@ public class MainActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_sign_out) {
-            signOut();
-            return true;
+        switch (item.getItemId()){
+            case R.id.action_bitacora:
+                openBitacora();
+                return true;
+
+            case R.id.action_sign_out:
+                signOut();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -139,6 +142,10 @@ public class MainActivity extends AppCompatActivity {
         //TODO if finish() is better practice replace
         startActivity(new Intent(this,SignInActivity.class));
         finish();
+    }
+
+    public void openBitacora(){
+        startActivity(new Intent(this, BitacoraRegistroActivity.class));
     }
 
     public void setTabLayoutMain(){

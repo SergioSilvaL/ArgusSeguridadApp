@@ -16,12 +16,6 @@
             app:showAsAction="never" />
 
         <item
-            android:id="@+id/action_bitacora"
-            android:orderInCategory="100"
-            android:title="@string/action_bitacora"
-            app:showAsAction="never" />
-
-        <item
             android:id="@+id/action_consigna"
             android:orderInCategory="100"
             android:title="@string/action_consigna"
