@@ -10,6 +10,11 @@
         <!--app:showAsAction="ifRoom|collapseActionView"-->
         <!--android:title="Search"/>-->
 
+    <item
+        android:id="@+id/action_sign_out"
+        android:orderInCategory="100"
+        android:title="@string/action_sign_out"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_bitacora"
@@ -17,10 +22,4 @@
         android:title="@string/action_bitacora"
         app:showAsAction="never" />
 
-
-    <item
-        android:id="@+id/action_sign_out"
-        android:orderInCategory="100"
-        android:title="@string/action_sign_out"
-        app:showAsAction="never" />
 </menu>
