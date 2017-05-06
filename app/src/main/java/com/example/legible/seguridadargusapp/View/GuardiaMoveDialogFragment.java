@@ -45,6 +45,10 @@ public class GuardiaMoveDialogFragment extends DialogFragment{
     private DatabaseReference mRefTmpNofication =
             FirebaseDatabase.getInstance().getReference().child("Argus").child("NotificacionTmp");
 
+    private DatabaseReference mBitacoraRegistroRef =
+            FirebaseDatabase.getInstance().getReference().child("Argus").child("BitacoraRegistro").child(new DatePost().getDateKey()).child(ClienteRecyclerAdapter.mySupervisorKey);
+
+
     public static GuardiaMoveDialogFragment newInstance(String cliente,String supervisor,String guardiaKey,String guardiaNombre){
         GuardiaMoveDialogFragment fragment = new GuardiaMoveDialogFragment();
 
@@ -144,6 +148,8 @@ public class GuardiaMoveDialogFragment extends DialogFragment{
         mRefTmpNofication.child(key).setValue(notificacion);
         mRefTmpNofication.child(key).child("informacion").setValue(guardia);
 
+        mBitacoraRegistroRef.child(key).setValue(notificacion);
+        mBitacoraRegistroRef.child(key).child("informacion").setValue(guardia);
 
         Toast.makeText(getContext(), "Su solicitud se ha enviado con exito",Toast.LENGTH_LONG).show();
 
