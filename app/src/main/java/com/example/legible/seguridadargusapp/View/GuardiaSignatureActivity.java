@@ -37,6 +37,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GuardiaSignatureActivity extends AppCompatActivity {
 
@@ -76,6 +78,8 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
     private DatabaseReference mBitacoraRegistroRef =
             FirebaseDatabase.getInstance().getReference().child("Argus").child("BitacoraRegistro").child(new DatePost().getDateKey()).child(ClienteRecyclerAdapter.mySupervisorKey);
 
+    private DatabaseReference mBitacoraFechaRef =
+            FirebaseDatabase.getInstance().getReference().child("Argus").child("Bitacora").child(new DatePost().getDateKey());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -224,6 +228,12 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
     }
 
+    private void updateFechaInfo(){
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("/fecha", new DatePost().getDateKey());
+        mBitacoraFechaRef.updateChildren(childUpdates);
+    }
+
     private void uploadContent(){
 
         //Begin Upload Task
@@ -343,7 +353,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     currentDate);
 
             mRefBitacora.child(dateKey).child(guardiaKey).setValue(bc);
-            //mRefBitacora.child(dateKey).setValue(fecha);
+            updateFechaInfo();
 
             DatabaseReference reference = GuardiaListaRecyclerAdapter.ClienteGuardiasRef;
             reference.child(guardiaKey).setValue(new guardias(guardiaKey,guardiaNombre, asistio, cubreDescanso, dobleTurno, hourTotalStatus,new DatePost().getDate()));
@@ -377,6 +387,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     new BitacoraGuardia(false, false, false, 0, null, null, " ", cliente, zona, turno, guardiaNombre, currentDate);
 
             mRefBitacora.child(dateKey).child(guardiaKey).setValue(bitacoraNoAsistio);
+            updateFechaInfo();
 
             DatabaseReference reference =
                     GuardiaListaRecyclerAdapter.ClienteGuardiasRef;

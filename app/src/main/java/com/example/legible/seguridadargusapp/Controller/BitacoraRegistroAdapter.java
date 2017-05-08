@@ -32,10 +32,12 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
     private List<BitacoraRegistro> mRegistro;
     private Callback mCallback;
     private DatabaseReference mBitacoraRegistroRef;
+    private DatabaseReference mBitacoraRegistroFechaRef;
 
     public BitacoraRegistroAdapter(Callback callback){
         mCallback = callback;
         mRegistro = new ArrayList<>();
+        mBitacoraRegistroFechaRef = FirebaseDatabase.getInstance().getReference().child("Argus").child("BitacoraRegistro").child(new DatePost().getDateKey());
         mBitacoraRegistroRef = FirebaseDatabase.getInstance().getReference().child("Argus").child("BitacoraRegistro").child(new DatePost().getDateKey()).child(ClienteRecyclerAdapter.mySupervisorKey);
         mBitacoraRegistroRef.addChildEventListener(new bitacoraRegistroChildEventListener());
     }
@@ -125,6 +127,7 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
         bitacoraRegistro.setHora(new DatePost().get24HourFormat());
         mBitacoraRegistroRef.push().setValue(bitacoraRegistro);
         updateSupervisorInfo(ClienteRecyclerAdapter.mySupervisor, ClienteRecyclerAdapter.myZona);
+        updateFechaInfo();
         addEditNotification(bitacoraRegistro.getSemaforo(), bitacoraRegistro.getObservacion());
     }
 
@@ -142,6 +145,12 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
         else {
             // TODO: Delete notification or add notification which warns the system administrador the event has been handeled
         }
+    }
+
+    private void updateFechaInfo(){
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("/fecha", new DatePost().getDateKey());
+        mBitacoraRegistroFechaRef.updateChildren(childUpdates);
     }
 
     private void updateSupervisorInfo(String supervisor, String zona) {
