@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.legible.seguridadargusapp.Model.ObjectModel.BitacoraRegistro;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.DatePost;
+import com.example.legible.seguridadargusapp.Model.ObjectModel.Notificacion;
 import com.example.legible.seguridadargusapp.R;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -124,6 +125,23 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
         bitacoraRegistro.setHora(new DatePost().get24HourFormat());
         mBitacoraRegistroRef.push().setValue(bitacoraRegistro);
         updateSupervisorInfo(ClienteRecyclerAdapter.mySupervisor, ClienteRecyclerAdapter.myZona);
+        addEditNotification(bitacoraRegistro.getSemaforo(), bitacoraRegistro.getObservacion());
+    }
+
+    private void addEditNotification(long semaforo, String observacion){
+
+        DatabaseReference databaseReference =
+                FirebaseDatabase.getInstance().getReference().child("Argus");
+
+        if (semaforo == 3){
+            Notificacion notificacion = new Notificacion("AI", observacion, new DatePost().getDatePost());
+            databaseReference.child("NotificacionTmp").push().setValue(notificacion);
+            databaseReference.child("Notificacion").push().setValue(notificacion);
+        }
+        // Delete notification
+        else {
+            // TODO: Delete notification or add notification which warns the system administrador the event has been handeled
+        }
     }
 
     private void updateSupervisorInfo(String supervisor, String zona) {
@@ -138,6 +156,7 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
         bitacoraRegistro.setObservacion(newObservacion);
         bitacoraRegistro.setSemaforo(newSemaforoStatus);
         mBitacoraRegistroRef.child(bitacoraRegistro.getKey()).setValue(bitacoraRegistro);
+        addEditNotification(newSemaforoStatus, newObservacion);
     }
 
     public interface Callback {
