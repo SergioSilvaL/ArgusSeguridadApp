@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.legible.seguridadargusapp.Controller.ClienteRecyclerAdapter;
 import com.example.legible.seguridadargusapp.Controller.GuardiaListaRecyclerAdapter;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.BitacoraGuardia;
+import com.example.legible.seguridadargusapp.Model.ObjectModel.BitacoraRegistro;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.DatePost;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.Notificacion;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.guardias;
@@ -367,7 +368,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                 mBitacoraRegistroRef = FirebaseDatabase.getInstance().getReference().child("Argus")
                         .child("BitacoraRegistro").child(new DatePost().getDateKey()).child(ClienteRecyclerAdapter.mySupervisorKey);
 
-                mBitacoraRegistroRef.push().setValue(notificacion);
+                mBitacoraRegistroRef.push().setValue(new BitacoraRegistro("Confirmacion de Inasistencia : "+ observacion, 1, ClienteRecyclerAdapter.mySupervisor, ClienteRecyclerAdapter.myZona, new DatePost().get24HourFormat()));
 
 
             }

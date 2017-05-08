@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.legible.seguridadargusapp.Controller.ClienteRecyclerAdapter;
+import com.example.legible.seguridadargusapp.Model.ObjectModel.BitacoraRegistro;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.DatePost;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.Notificacion;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.guardias;
@@ -142,8 +143,8 @@ public class GuardiaTemporalAddDialogFragment extends DialogFragment{
         mNotificationTmpRef.child(key).setValue(notificacion);
         mNotificationTmpRef.child(key).child("informacion").setValue(guardia);
 
-        mBitacoraRegistroRef.child(key).setValue(notificacion);
-        mBitacoraRegistroRef.child(key).child("informacion").setValue(guardia);
+        // Todo: Send info to Bitacora
+        mBitacoraRegistroRef.child(key).setValue(new BitacoraRegistro(descripcion, 1, ClienteRecyclerAdapter.mySupervisor, ClienteRecyclerAdapter.myZona, new DatePost().get24HourFormat()));
 
         Toast.makeText(getContext(),"Se envio una solicitud con exito",Toast.LENGTH_LONG).show();
 
