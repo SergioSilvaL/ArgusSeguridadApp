@@ -13,25 +13,47 @@
     tools:context="com.example.legible.seguridadargusapp.View.BitacoraRegistroActivity"
     tools:showIn="@layout/activity_bitacora_registro">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
-        <android.support.v7.widget.RecyclerView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/recyclerViewBitacoraRegistro"/>
+            android:orientation="vertical" >
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Eventos No Resueltos"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/recyclerViewBitacoraRegistroNoResuelto"/>
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hoy"
+                android:textColor="#000"
+                android:textStyle="bold|italic"
+                android:textSize="24sp"
+                android:layout_margin="10dp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/recyclerViewBitacoraRegistro"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sin Resolver"
+                android:textColor="#000"
+                android:textStyle="bold|italic"
+                android:textSize="22sp"
+                android:layout_margin="10dp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/recyclerViewBitacoraRegistroNoResuelto"/>
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

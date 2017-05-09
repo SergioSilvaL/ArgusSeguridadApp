@@ -1,10 +1,12 @@
 package com.example.legible.seguridadargusapp.Controller;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.legible.seguridadargusapp.Model.ObjectModel.BitacoraRegistro;
@@ -107,13 +109,13 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
 
         switch ((int) bitacoraRegistro.getSemaforo()){
             case 1:
-                holder.mSemaforoImageView.setBackgroundResource(R.drawable.semaforo_verde);
+                holder.mSemaforoView.setBackgroundColor(Color.parseColor("#4CAF50"));
                 break;
             case 2:
-                holder.mSemaforoImageView.setBackgroundResource(R.drawable.semaforo_amarillo);
+                holder.mSemaforoView.setBackgroundColor(Color.parseColor("#FFEB3B"));
                 break;
             case 3:
-                holder.mSemaforoImageView.setBackgroundResource(R.drawable.semaforo_rojo);
+                holder.mSemaforoView.setBackgroundColor(Color.parseColor("#f44336"));
                 break;
         }
 
@@ -214,13 +216,13 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mObservacionTextView;
         private TextView mHoraTextView;
-        private ImageView mSemaforoImageView;
+        private LinearLayout mSemaforoView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mObservacionTextView = (TextView) itemView.findViewById(R.id.textViewBitacoraRegistroObservacion);
             mHoraTextView = (TextView) itemView.findViewById(R.id.textViewBitacoraRegistroHora);
-            mSemaforoImageView = (ImageView) itemView.findViewById(R.id.imageViewSemaforo);
+            mSemaforoView = (LinearLayout) itemView.findViewById(R.id.LinearLayoutSemaforoRepresentation);
         }
     }
 
