@@ -13,9 +13,25 @@
     tools:context="com.example.legible.seguridadargusapp.View.BitacoraRegistroActivity"
     tools:showIn="@layout/activity_bitacora_registro">
 
-    <android.support.v7.widget.RecyclerView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/recyclerViewBitacoraRegistro"/>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recyclerViewBitacoraRegistro"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Eventos No Resueltos"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recyclerViewBitacoraRegistroNoResuelto"/>
+    </LinearLayout>
 
 </RelativeLayout>

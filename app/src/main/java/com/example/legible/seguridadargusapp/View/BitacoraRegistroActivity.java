@@ -14,13 +14,15 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 
 import com.example.legible.seguridadargusapp.Controller.BitacoraRegistroAdapter;
+import com.example.legible.seguridadargusapp.Controller.BitacoraRegistroNoResueltoAdapter;
 import com.example.legible.seguridadargusapp.Controller.ClienteRecyclerAdapter;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.BitacoraRegistro;
 import com.example.legible.seguridadargusapp.R;
 
-public class BitacoraRegistroActivity extends AppCompatActivity implements BitacoraRegistroAdapter.Callback{
+public class BitacoraRegistroActivity extends AppCompatActivity implements BitacoraRegistroAdapter.Callback, BitacoraRegistroNoResueltoAdapter.Callback {
 
-    BitacoraRegistroAdapter mAdapter;
+    BitacoraRegistroAdapter mBitacoraRegistroAdapter;
+    BitacoraRegistroNoResueltoAdapter mBitacoraRegistroNoResueltoAdapter;
     private static final String TAG = BitacoraRegistroActivity.class.getSimpleName();
 
     @Override
@@ -34,30 +36,35 @@ public class BitacoraRegistroActivity extends AppCompatActivity implements Bitac
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showAddEditDialog(null);
+                showAddEditDialog(null,true);
             }
         });
 
-        mAdapter = new BitacoraRegistroAdapter(this);
-        RecyclerView view = (RecyclerView) findViewById(R.id.recyclerViewBitacoraRegistro);
-        view.setLayoutManager(new LinearLayoutManager(this));
-        view.setHasFixedSize(true);
-        view.setAdapter(mAdapter);
+        mBitacoraRegistroAdapter = new BitacoraRegistroAdapter(this);
+        RecyclerView recyclerviewBitacoraRegistro = (RecyclerView) findViewById(R.id.recyclerViewBitacoraRegistro);
+        recyclerviewBitacoraRegistro.setLayoutManager(new LinearLayoutManager(this));
+        recyclerviewBitacoraRegistro.setHasFixedSize(true);
+        recyclerviewBitacoraRegistro.setAdapter(mBitacoraRegistroAdapter);
 
+        mBitacoraRegistroNoResueltoAdapter = new BitacoraRegistroNoResueltoAdapter(this);
+        RecyclerView recyclerviewBitacoraRegistroNoResuelto = (RecyclerView) findViewById(R.id.recyclerViewBitacoraRegistroNoResuelto);
+        recyclerviewBitacoraRegistroNoResuelto.setLayoutManager(new LinearLayoutManager(this));
+        recyclerviewBitacoraRegistroNoResuelto.setHasFixedSize(true);
+        recyclerviewBitacoraRegistroNoResuelto.setAdapter(mBitacoraRegistroNoResueltoAdapter);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private int semaforoStatus = 1;
 
-    public void onRadioButtonClickedBitacoraRegistro(View view){
+    public void onRadioButtonClickedBitacoraRegistro(View view) {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was created
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.radioButtonBitacoraRegistroStatusBAJA:
                 if (checked)
-                semaforoStatus = 1;
+                    semaforoStatus = 1;
                 break;
 
             case R.id.radioButtonBitacoraRegistroStatusMEDIA:
@@ -65,13 +72,13 @@ public class BitacoraRegistroActivity extends AppCompatActivity implements Bitac
                 break;
 
             case R.id.radioButtonBitacoraRegistroStatusALTA:
-                semaforoStatus =3;
+                semaforoStatus = 3;
                 break;
         }
         Log.v(TAG, String.valueOf(semaforoStatus));
     }
 
-    private void showAddEditDialog(final BitacoraRegistro bitacoraRegistro) {
+    private void showAddEditDialog(final BitacoraRegistro bitacoraRegistro, final Boolean isBitacoraRegistro) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(bitacoraRegistro == null ? R.string.dialog_bitacora_registro_add_title : R.string.dialog_bitacora_registro_edit_title);
         //Todo: Rename dialog
@@ -81,7 +88,7 @@ public class BitacoraRegistroActivity extends AppCompatActivity implements Bitac
         semaforoStatus = 1;// Sets default semaforo Value
         // Todo: set Default radiobutton base on its current semaaforo
 
-        if (bitacoraRegistro != null){
+        if (bitacoraRegistro != null) {
             // pre-populate
             observacionEditText.setText(bitacoraRegistro.getObservacion());
         }
@@ -91,9 +98,14 @@ public class BitacoraRegistroActivity extends AppCompatActivity implements Bitac
             public void onClick(DialogInterface dialog, int which) {
                 if (bitacoraRegistro == null) {
                     String observacion = observacionEditText.getText().toString();
-                    mAdapter.add(new BitacoraRegistro(observacion, semaforoStatus, ClienteRecyclerAdapter.mySupervisor, ClienteRecyclerAdapter.myZona));
-                }else {
-                    mAdapter.update(bitacoraRegistro, observacionEditText.getText().toString(), semaforoStatus);
+                    mBitacoraRegistroAdapter.add(new BitacoraRegistro(observacion, semaforoStatus, ClienteRecyclerAdapter.mySupervisor, ClienteRecyclerAdapter.myZona));
+                } else {
+                    // Todo: decide what will happen inside the scope
+                    if (isBitacoraRegistro) {
+                        mBitacoraRegistroAdapter.update(bitacoraRegistro, observacionEditText.getText().toString(), semaforoStatus);
+                    }else {
+                        mBitacoraRegistroNoResueltoAdapter.update(bitacoraRegistro, observacionEditText.getText().toString(), semaforoStatus);
+                    }
                 }
             }
         });
@@ -104,9 +116,16 @@ public class BitacoraRegistroActivity extends AppCompatActivity implements Bitac
 
 
     @Override
-    public void onEdit(final BitacoraRegistro bitacoraRegistro) {
-        showAddEditDialog(bitacoraRegistro);
+    public void onAddEdit(final BitacoraRegistro bitacoraRegistro) {
+        showAddEditDialog(bitacoraRegistro, true);
     }
+
+    public void onEdit(final BitacoraRegistro bitacoraRegistro){
+        showAddEditDialog(bitacoraRegistro, false);
+    }
+
 }
+
+
 
 

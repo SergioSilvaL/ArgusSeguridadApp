@@ -33,12 +33,25 @@ public class DatePost{
 
     }
 
+    // Todo Refactor get24HourFormatCode
+
     public String get24HourFormat(){
 
         String hour = getTimeFormat(c.get(Calendar.HOUR));
         String minute = getTimeFormat(c.get(Calendar.MINUTE));
         String time = hour + ":" +minute;
         return time;
+    }
+
+    public String getTimeCompletetKey(){
+
+        String ano = "" + c.get(Calendar.YEAR);
+        String mes = "" + c.get(Calendar.MONTH);
+        String dia = "" + c.get(Calendar.DAY_OF_MONTH);
+        String hour = getTimeFormat(c.get(Calendar.HOUR));
+        String minute = getTimeFormat(c.get(Calendar.MINUTE));
+        String seconds = "" + c.get(Calendar.SECOND);
+        return String.format("%s%s%s%s%s%s", ano, mes, dia, hour, minute, seconds);
     }
 
 

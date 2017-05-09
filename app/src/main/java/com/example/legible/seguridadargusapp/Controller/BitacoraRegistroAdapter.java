@@ -72,7 +72,15 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
 
         @Override
         public void onChildRemoved(DataSnapshot dataSnapshot) {
-            // TODO
+            String key = dataSnapshot.getKey();
+            // Remove the item with the given key
+            for (BitacoraRegistro br : mRegistro){
+                if (br.getKey().equals(key)){
+                    mRegistro.remove(br);
+                    break;
+                }
+            }
+            notifyDataSetChanged();
         }
 
         @Override
@@ -112,7 +120,7 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCallback.onEdit(bitacoraRegistro);
+                mCallback.onAddEdit(bitacoraRegistro);
             }
         });
 
@@ -125,10 +133,21 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
 
     public void add(BitacoraRegistro bitacoraRegistro){
         bitacoraRegistro.setHora(new DatePost().get24HourFormat());
-        mBitacoraRegistroRef.push().setValue(bitacoraRegistro);
+
         updateSupervisorInfo(ClienteRecyclerAdapter.mySupervisor, ClienteRecyclerAdapter.myZona);
         updateFechaInfo();
         addEditNotification(bitacoraRegistro.getSemaforo(), bitacoraRegistro.getObservacion());
+
+        if (bitacoraRegistro.getSemaforo()!= 3) {
+            mBitacoraRegistroRef.child(new DatePost().getTimeCompletetKey()).setValue(bitacoraRegistro);
+        }else{
+            DatabaseReference bitacoraRegistroNRRef = FirebaseDatabase.getInstance().getReference()
+                    .child("Argus")
+                    .child("BitacoraRegistroNoResuelto")
+                    .child(ClienteRecyclerAdapter.mySupervisorKey)
+                    .child(new DatePost().getTimeCompletetKey());
+            bitacoraRegistroNRRef.setValue(bitacoraRegistro);
+        }
     }
 
     private void addEditNotification(long semaforo, String observacion){
@@ -162,14 +181,34 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
     }
 
     public void update(BitacoraRegistro bitacoraRegistro, String newObservacion, long newSemaforoStatus){
+        addEditNotification(newSemaforoStatus, newObservacion);
+
+
         bitacoraRegistro.setObservacion(newObservacion);
         bitacoraRegistro.setSemaforo(newSemaforoStatus);
-        mBitacoraRegistroRef.child(bitacoraRegistro.getKey()).setValue(bitacoraRegistro);
-        addEditNotification(newSemaforoStatus, newObservacion);
+        if (newSemaforoStatus!=3) {
+            mBitacoraRegistroRef.child(bitacoraRegistro.getKey()).setValue(bitacoraRegistro);
+        }else{
+            // Delete from current List and add to new List;
+            // add
+            DatabaseReference bitacoraRegistroNRRef = FirebaseDatabase.getInstance().getReference()
+                    .child("Argus")
+                    .child("BitacoraRegistroNoResuelto")
+                    .child(ClienteRecyclerAdapter.mySupervisorKey)
+                    .child(new DatePost().getTimeCompletetKey());
+            bitacoraRegistroNRRef.setValue(bitacoraRegistro);
+
+            // Delete
+            remove(bitacoraRegistro);
+        }
+    }
+
+    public void remove(BitacoraRegistro bitacoraRegistro){
+        mBitacoraRegistroRef.child(bitacoraRegistro.getKey()).removeValue();
     }
 
     public interface Callback {
-        public void onEdit(BitacoraRegistro bitacoraRegistro);
+        public void onAddEdit(BitacoraRegistro bitacoraRegistro);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
