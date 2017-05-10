@@ -14,11 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".View.MainActivity"
+            android:name=".View.Activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".View.SignInActivity"
+            android:name=".View.Activity.SignInActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
             <action android:name="android.intent.action.MAIN" />
@@ -27,33 +27,33 @@
         </intent-filter>
         </activity>
         <activity
-            android:name=".View.GuardiaListaActivity"
-            android:parentActivityName=".View.MainActivity"
+            android:name=".View.Activity.GuardiaListaActivity"
+            android:parentActivityName=".View.Activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".View.GuardiaSignatureActivity"
+            android:name=".View.Activity.GuardiaSignatureActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".View.ConsignasActivity"
+            android:name=".View.Activity.ConsignasActivity"
             android:label="@string/title_activity_consignas"
-            android:parentActivityName=".View.GuardiaListaActivity"
+            android:parentActivityName=".View.Activity.GuardiaListaActivity"
             android:theme="@style/AppTheme.NoActionBar">
 
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.legible.seguridadargusapp.View.GuardiaListaActivity" />
+                android:value="com.example.legible.seguridadargusapp.View.Activity.GuardiaListaActivity" />
         </activity>
         <activity
-            android:name=".View.BitacoraRegistroActivity"
+            android:name=".View.Activity.BitacoraRegistroActivity"
             android:label="@string/title_activity_bitacora_registro"
-            android:parentActivityName=".View.GuardiaListaActivity"
+            android:parentActivityName=".View.Activity.GuardiaListaActivity"
             android:theme="@style/AppTheme.NoActionBar">
 
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.legible.seguridadargusapp.View.GuardiaListaActivity" />
+                android:value="com.example.legible.seguridadargusapp.View.Activity.GuardiaListaActivity" />
         </activity>
     </application>
 
