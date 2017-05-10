@@ -1,4 +1,4 @@
-package com.example.legible.seguridadargusapp.View;
+package com.example.legible.seguridadargusapp.View.Fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

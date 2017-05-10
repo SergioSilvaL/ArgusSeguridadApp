@@ -9,11 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.legible.seguridadargusapp.View.ClienteFragment;
-import com.example.legible.seguridadargusapp.View.GuardiaListaActivity;
+import com.example.legible.seguridadargusapp.View.Activity.GuardiaListaActivity;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.Cliente;
 import com.example.legible.seguridadargusapp.R;
-import com.example.legible.seguridadargusapp.View.GuardiaSignatureActivity;
+import com.example.legible.seguridadargusapp.View.Activity.GuardiaSignatureActivity;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,9 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by SERGIO on 20/02/2017.

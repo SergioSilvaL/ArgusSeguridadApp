@@ -1,4 +1,4 @@
-package com.example.legible.seguridadargusapp.View;
+package com.example.legible.seguridadargusapp.View.DialogFragment;
 
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.example.legible.seguridadargusapp.Model.ObjectModel.guardias;
 import com.example.legible.seguridadargusapp.R;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

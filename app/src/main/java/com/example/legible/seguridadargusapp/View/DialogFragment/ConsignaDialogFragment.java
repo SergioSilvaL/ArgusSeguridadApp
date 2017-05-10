@@ -1,6 +1,5 @@
-package com.example.legible.seguridadargusapp.View;
+package com.example.legible.seguridadargusapp.View.DialogFragment;
 
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -11,14 +10,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.legible.seguridadargusapp.Controller.ConsignaDialogFragmentAdapter;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.Consigna;
 import com.example.legible.seguridadargusapp.R;
-
-import java.util.ArrayList;
 
 /**
  * Created by sergiosilva on 4/29/17.

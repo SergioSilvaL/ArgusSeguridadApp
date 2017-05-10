@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.legible.seguridadargusapp.View.ClienteFragment;
-import com.example.legible.seguridadargusapp.View.GuardiaFragment;
+import com.example.legible.seguridadargusapp.View.Fragment.ClienteFragment;
+import com.example.legible.seguridadargusapp.View.Fragment.GuardiaFragment;
 
 /**
  * Created by Legible on 17/02/2017.

@@ -1,4 +1,4 @@
-package com.example.legible.seguridadargusapp.View;
+package com.example.legible.seguridadargusapp.View.Activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;

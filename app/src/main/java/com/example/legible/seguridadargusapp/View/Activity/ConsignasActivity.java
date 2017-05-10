@@ -1,9 +1,8 @@
-package com.example.legible.seguridadargusapp.View;
+package com.example.legible.seguridadargusapp.View.Activity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,11 +13,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.example.legible.seguridadargusapp.Controller.ConsignasAdapter;
-import com.example.legible.seguridadargusapp.Model.ObjectModel.Consigna;
 import com.example.legible.seguridadargusapp.R;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.legible.seguridadargusapp.View.DialogFragment.ConsignaDialogFragment;
 
 public class ConsignasActivity extends AppCompatActivity implements ConsignasAdapter.Callback{
 

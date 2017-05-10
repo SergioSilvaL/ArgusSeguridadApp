@@ -7,7 +7,7 @@
 
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.legible.seguridadargusapp.View.GuardiaListaActivity"
+    tools:context="com.example.legible.seguridadargusapp.View.Activity.GuardiaListaActivity"
     android:weightSum="1">
 
 

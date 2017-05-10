@@ -1,4 +1,4 @@
-package com.example.legible.seguridadargusapp.View;
+package com.example.legible.seguridadargusapp.View.DialogFragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

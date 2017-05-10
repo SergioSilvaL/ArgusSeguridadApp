@@ -1,4 +1,4 @@
-package com.example.legible.seguridadargusapp;
+package com.example.legible.seguridadargusapp.Model.ObjectModel;
 
 /**
  * Created by sergiosilva on 3/15/17.

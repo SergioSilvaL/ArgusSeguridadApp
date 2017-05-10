@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:paddingLeft="8dp"
     android:paddingRight="8dp"
-    tools:context="com.example.legible.seguridadargusapp.View.GuardiaSignatureActivity"
+    tools:context="com.example.legible.seguridadargusapp.View.Activity.GuardiaSignatureActivity"
     android:orientation="vertical"
     android:weightSum="1"
     android:focusable="true"

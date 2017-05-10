@@ -1,4 +1,4 @@
-package com.example.legible.seguridadargusapp.View;
+package com.example.legible.seguridadargusapp.View.Activity;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
@@ -11,9 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.legible.seguridadargusapp.Controller.ClienteRecyclerAdapter;
-import com.example.legible.seguridadargusapp.Controller.GuardiaRecyclerAdapter;
 import com.example.legible.seguridadargusapp.R;
 import com.example.legible.seguridadargusapp.Controller.GuardiaListaRecyclerAdapter;
+import com.example.legible.seguridadargusapp.View.DialogFragment.GuardiaTemporalAddDialogFragment;
 
 public class GuardiaListaActivity extends AppCompatActivity {
 
