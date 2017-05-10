@@ -43,6 +43,12 @@
             android:gravity="right"
             android:layout_margin="10dp" />
 
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewFecha" />
+
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

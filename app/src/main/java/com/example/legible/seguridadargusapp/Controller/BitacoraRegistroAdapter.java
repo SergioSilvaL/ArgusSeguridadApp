@@ -106,6 +106,8 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
         final BitacoraRegistro bitacoraRegistro = mRegistro.get(position);
         holder.mObservacionTextView.setText(bitacoraRegistro.getObservacion());
         holder.mHoraTextView.setText(bitacoraRegistro.getHora());
+        // Todo: Set Creation Date when Event was created
+        holder.mTextViewFecha.setText(new DatePost().getDate());
 
         switch ((int) bitacoraRegistro.getSemaforo()){
             case 1:
@@ -140,7 +142,7 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
         updateFechaInfo();
         addEditNotification(bitacoraRegistro.getSemaforo(), bitacoraRegistro.getObservacion());
 
-        if (bitacoraRegistro.getSemaforo()!= 3) {
+        if (bitacoraRegistro.getSemaforo()== 1) {
             mBitacoraRegistroRef.child(new DatePost().getTimeCompletetKey()).setValue(bitacoraRegistro);
         }else{
             DatabaseReference bitacoraRegistroNRRef = FirebaseDatabase.getInstance().getReference()
@@ -157,7 +159,7 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
         DatabaseReference databaseReference =
                 FirebaseDatabase.getInstance().getReference().child("Argus");
 
-        if (semaforo == 3){
+        if (semaforo != 1){
             Notificacion notificacion = new Notificacion("AI", observacion, new DatePost().getDatePost());
             databaseReference.child("NotificacionTmp").push().setValue(notificacion);
             databaseReference.child("Notificacion").push().setValue(notificacion);
@@ -188,7 +190,7 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
 
         bitacoraRegistro.setObservacion(newObservacion);
         bitacoraRegistro.setSemaforo(newSemaforoStatus);
-        if (newSemaforoStatus!=3) {
+        if (newSemaforoStatus==1) {
             mBitacoraRegistroRef.child(bitacoraRegistro.getKey()).setValue(bitacoraRegistro);
         }else{
             // Delete from current List and add to new List;
@@ -215,7 +217,7 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mObservacionTextView;
-        private TextView mHoraTextView;
+        private TextView mHoraTextView, mTextViewFecha;
         private LinearLayout mSemaforoView;
 
         public ViewHolder(View itemView) {
@@ -223,6 +225,7 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
             mObservacionTextView = (TextView) itemView.findViewById(R.id.textViewBitacoraRegistroObservacion);
             mHoraTextView = (TextView) itemView.findViewById(R.id.textViewBitacoraRegistroHora);
             mSemaforoView = (LinearLayout) itemView.findViewById(R.id.LinearLayoutSemaforoRepresentation);
+            mTextViewFecha = (TextView) itemView.findViewById(R.id.textViewFecha);
         }
     }
 

@@ -56,6 +56,8 @@ public class BitacoraRegistroNoResueltoAdapter
         final BitacoraRegistro bitacoraRegistro = mRegistroList.get(position);
         holder.mHoraTextView.setText(bitacoraRegistro.getHora());
         holder.mObservacionTextView.setText(bitacoraRegistro.getObservacion());
+        // Todo: Set Creation Date when Event was created
+        holder.mTextViewFecha.setText(new DatePost().getDate());
 
         switch ((int) bitacoraRegistro.getSemaforo()){
             case 1:
@@ -112,12 +114,14 @@ public class BitacoraRegistroNoResueltoAdapter
         private TextView mObservacionTextView;
         private TextView mHoraTextView;
         private LinearLayout mSemaforoView;
+        private TextView mTextViewFecha;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mObservacionTextView = (TextView) itemView.findViewById(R.id.textViewBitacoraRegistroObservacion);
             mHoraTextView = (TextView) itemView.findViewById(R.id.textViewBitacoraRegistroHora);
             mSemaforoView = (LinearLayout) itemView.findViewById(R.id.LinearLayoutSemaforoRepresentation);
+            mTextViewFecha = (TextView) itemView.findViewById(R.id.textViewFecha);
         }
     }
 

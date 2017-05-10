@@ -22,7 +22,7 @@
         android:checkedButton="@+id/radioButtonBitacoraRegistroStatusBAJA">
 
         <RadioButton
-            android:text="BAJO"
+            android:text="Resuelto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/radioButtonBitacoraRegistroStatusBAJA"
@@ -31,7 +31,7 @@
             android:textSize="14sp" />
 
         <RadioButton
-            android:text="MEDIO"
+            android:text="En Proceso"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/radioButtonBitacoraRegistroStatusMEDIA"
@@ -40,7 +40,7 @@
             android:textSize="14sp" />
 
         <RadioButton
-            android:text="ALTO"
+            android:text="No Resuelto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/radioButtonBitacoraRegistroStatusALTA"
