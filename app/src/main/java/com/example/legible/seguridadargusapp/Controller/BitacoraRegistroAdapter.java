@@ -107,7 +107,7 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
         holder.mObservacionTextView.setText(bitacoraRegistro.getObservacion());
         holder.mHoraTextView.setText(bitacoraRegistro.getHora());
         // Todo: Set Creation Date when Event was created
-        holder.mTextViewFecha.setText(new DatePost().getDate());
+        holder.mTextViewFecha.setText(bitacoraRegistro.getDateCreation());
 
         switch ((int) bitacoraRegistro.getSemaforo()){
             case 1:

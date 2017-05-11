@@ -13,24 +13,27 @@ public class BitacoraRegistro {
     private String key;
     private String supervisor;
     private String zona;
+    private String dateCreation;
     private String dateCreationKey; // Todo see when creation key really needes to be set
 
     public BitacoraRegistro(){}
 
-    public BitacoraRegistro(String observacion, long semaforo, String supervisor, String zona) {
+    public BitacoraRegistro(String observacion, long semaforo, String supervisor, String zona, String dateCreation) {
         this.observacion = observacion;
         this.semaforo = semaforo;
         this.supervisor = supervisor;
         this.zona = zona;
+        this.dateCreation = dateCreation;
         dateCreationKey = new DatePost().getDateKey();
     }
 
-    public BitacoraRegistro(String observacion, long semaforo, String supervisor, String zona, String hora) {
+    public BitacoraRegistro(String observacion, long semaforo, String supervisor, String zona, String hora, String dateCreation) {
         this.observacion = observacion;
         this.semaforo = semaforo;
         this.supervisor = supervisor;
         this.zona = zona;
         this.hora = hora;
+        this.dateCreation = dateCreation;
         dateCreationKey = new DatePost().getDateKey();
     }
 
@@ -96,5 +99,13 @@ public class BitacoraRegistro {
 
     public void setDateCreationKey(String dateCreationKey) {
         this.dateCreationKey = dateCreationKey;
+    }
+
+    public String getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(String dateCreation) {
+        this.dateCreation = dateCreation;
     }
 }

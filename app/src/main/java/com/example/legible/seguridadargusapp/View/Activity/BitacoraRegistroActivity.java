@@ -17,6 +17,7 @@ import com.example.legible.seguridadargusapp.Controller.BitacoraRegistroAdapter;
 import com.example.legible.seguridadargusapp.Controller.BitacoraRegistroNoResueltoAdapter;
 import com.example.legible.seguridadargusapp.Controller.ClienteRecyclerAdapter;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.BitacoraRegistro;
+import com.example.legible.seguridadargusapp.Model.ObjectModel.DatePost;
 import com.example.legible.seguridadargusapp.R;
 
 public class BitacoraRegistroActivity extends AppCompatActivity implements BitacoraRegistroAdapter.Callback, BitacoraRegistroNoResueltoAdapter.Callback {
@@ -86,7 +87,7 @@ public class BitacoraRegistroActivity extends AppCompatActivity implements Bitac
         builder.setView(view);
         final EditText observacionEditText = (EditText) view.findViewById(R.id.dialog_add_observacion_text);
         semaforoStatus = 1;// Sets default semaforo Value
-        // Todo: set Default radiobutton base on its current semaaforo
+
 
         if (bitacoraRegistro != null) {
             // pre-populate
@@ -98,9 +99,8 @@ public class BitacoraRegistroActivity extends AppCompatActivity implements Bitac
             public void onClick(DialogInterface dialog, int which) {
                 if (bitacoraRegistro == null) {
                     String observacion = observacionEditText.getText().toString();
-                    mBitacoraRegistroAdapter.add(new BitacoraRegistro(observacion, semaforoStatus, ClienteRecyclerAdapter.mySupervisor, ClienteRecyclerAdapter.myZona));
+                    mBitacoraRegistroAdapter.add(new BitacoraRegistro(observacion, semaforoStatus, ClienteRecyclerAdapter.mySupervisor, ClienteRecyclerAdapter.myZona, new DatePost().getDate()));
                 } else {
-                    // Todo: decide what will happen inside the scope
                     if (isBitacoraRegistro) {
                         mBitacoraRegistroAdapter.update(bitacoraRegistro, observacionEditText.getText().toString(), semaforoStatus);
                     }else {
