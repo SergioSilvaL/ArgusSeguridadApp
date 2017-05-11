@@ -99,7 +99,7 @@ public class BitacoraRegistroActivity extends AppCompatActivity implements Bitac
             public void onClick(DialogInterface dialog, int which) {
                 if (bitacoraRegistro == null) {
                     String observacion = observacionEditText.getText().toString();
-                    mBitacoraRegistroAdapter.add(new BitacoraRegistro(observacion, semaforoStatus, ClienteRecyclerAdapter.mySupervisor, ClienteRecyclerAdapter.myZona, new DatePost().getDate()));
+                    mBitacoraRegistroAdapter.add(new BitacoraRegistro(observacion, semaforoStatus, ClienteRecyclerAdapter.mySupervisor, ClienteRecyclerAdapter.myZona, new DatePost().getDatePost()));
                 } else {
                     if (isBitacoraRegistro) {
                         mBitacoraRegistroAdapter.update(bitacoraRegistro, observacionEditText.getText().toString(), semaforoStatus);

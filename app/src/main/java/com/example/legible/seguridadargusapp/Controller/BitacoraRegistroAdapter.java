@@ -105,8 +105,6 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
     public void onBindViewHolder(BitacoraRegistroAdapter.ViewHolder holder, final int position) {
         final BitacoraRegistro bitacoraRegistro = mRegistro.get(position);
         holder.mObservacionTextView.setText(bitacoraRegistro.getObservacion());
-        holder.mHoraTextView.setText(bitacoraRegistro.getHora());
-        // Todo: Set Creation Date when Event was created
         holder.mTextViewFecha.setText(bitacoraRegistro.getDateCreation());
 
         switch ((int) bitacoraRegistro.getSemaforo()){
@@ -217,13 +215,12 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mObservacionTextView;
-        private TextView mHoraTextView, mTextViewFecha;
+        private TextView mTextViewFecha;
         private LinearLayout mSemaforoView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mObservacionTextView = (TextView) itemView.findViewById(R.id.textViewBitacoraRegistroObservacion);
-            mHoraTextView = (TextView) itemView.findViewById(R.id.textViewBitacoraRegistroHora);
             mSemaforoView = (LinearLayout) itemView.findViewById(R.id.LinearLayoutSemaforoRepresentation);
             mTextViewFecha = (TextView) itemView.findViewById(R.id.textViewFecha);
         }
