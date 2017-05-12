@@ -102,25 +102,39 @@ public class BitacoraRegistroNoResueltoAdapter
     }
 
     public void update(BitacoraRegistro bitacoraRegistro, String newObservacion, long newSemaforoStatus){
-        bitacoraRegistro.setObservacion(newObservacion);
-        bitacoraRegistro.setSemaforo(newSemaforoStatus);
 
 
-        remove(bitacoraRegistro);
+        if (!bitacoraRegistro.getObservacion().equals(newObservacion) || bitacoraRegistro.getSemaforo()!= newSemaforoStatus) {
 
-        // Son de la misma fecha
-        // Todo Remove with old code
-        if (bitacoraRegistro.getDateCreationKey().equals(new DatePost().getDateKey())){
-            // Se agrega dentro de la otra lista y tiene to_do el dia para resolver
-            DatabaseReference bitacoraRegistroNRRef = FirebaseDatabase.getInstance().getReference()
-                    .child("Argus")
-                    .child("BitacoraRegistro")
-                    .child(new DatePost().getDateKey())
-                    .child(ClienteRecyclerAdapter.mySupervisorKey)
-                    .child(new DatePost().getTimeCompletetKey());
 
-            bitacoraRegistroNRRef.setValue(bitacoraRegistro);
+            bitacoraRegistro.setObservacion(newObservacion);
+            bitacoraRegistro.setSemaforo(newSemaforoStatus);
+
+            remove(bitacoraRegistro);
+
+            if (newSemaforoStatus == 1) {
+
+                // Son de la misma fecha
+                if (bitacoraRegistro.getDateCreationKey().equals(new DatePost().getDateKey())) {
+                    // Se agrega dentro de la otra lista y tiene to_do el dia para resolver
+                    DatabaseReference bitacoraRegistroNRRef = FirebaseDatabase.getInstance().getReference()
+                            .child("Argus")
+                            .child("BitacoraRegistro")
+                            .child(new DatePost().getDateKey())
+                            .child(ClienteRecyclerAdapter.mySupervisorKey)
+                            .child(new DatePost().getTimeCompletetKey());
+
+                    bitacoraRegistroNRRef.setValue(bitacoraRegistro);
+                }
+            } else {
+                add(bitacoraRegistro);
+            }
+
         }
+    }
+
+    private void add(BitacoraRegistro bitacoraRegistro){
+        mBitacoraRegistroNRref.child(bitacoraRegistro.getKey()).setValue(bitacoraRegistro);
     }
 
     private void remove(BitacoraRegistro bitacoraRegistro) {
