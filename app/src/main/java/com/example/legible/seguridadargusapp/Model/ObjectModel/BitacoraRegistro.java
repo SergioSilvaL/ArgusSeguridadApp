@@ -15,6 +15,7 @@ public class BitacoraRegistro {
     private String zona;
     private String dateCreation;
     private String dateCreationKey; // Todo see when creation key really needes to be set
+    private Boolean isSupervisorResponsibility;
 
     public BitacoraRegistro(){}
 
@@ -25,6 +26,7 @@ public class BitacoraRegistro {
         this.zona = zona;
         this.dateCreation = dateCreation;
         dateCreationKey = new DatePost().getDateKey();
+        isSupervisorResponsibility = true;
     }
 
     public BitacoraRegistro(String observacion, long semaforo, String supervisor, String zona, String hora, String dateCreation) {
@@ -107,5 +109,13 @@ public class BitacoraRegistro {
 
     public void setDateCreation(String dateCreation) {
         this.dateCreation = dateCreation;
+    }
+
+    public Boolean getSupervisorResponsibility() {
+        return isSupervisorResponsibility;
+    }
+
+    public void setSupervisorResponsibility(Boolean supervisorResponsibility) {
+        isSupervisorResponsibility = supervisorResponsibility;
     }
 }

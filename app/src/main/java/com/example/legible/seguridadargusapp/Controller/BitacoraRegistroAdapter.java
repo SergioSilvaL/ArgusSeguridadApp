@@ -1,13 +1,15 @@
 package com.example.legible.seguridadargusapp.Controller;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.legible.seguridadargusapp.Model.ObjectModel.BitacoraRegistro;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.DatePost;
@@ -33,11 +35,13 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
 
     private List<BitacoraRegistro> mRegistro;
     private Callback mCallback;
+    private Context mContext;
     private DatabaseReference mBitacoraRegistroRef;
     private DatabaseReference mBitacoraRegistroFechaRef;
 
-    public BitacoraRegistroAdapter(Callback callback){
+    public BitacoraRegistroAdapter(Callback callback, Context context){
         mCallback = callback;
+        mContext = context;
         mRegistro = new ArrayList<>();
         mBitacoraRegistroFechaRef = FirebaseDatabase.getInstance().getReference().child("Argus").child("BitacoraRegistro").child(new DatePost().getDateKey());
         mBitacoraRegistroRef = FirebaseDatabase.getInstance().getReference().child("Argus").child("BitacoraRegistro").child(new DatePost().getDateKey()).child(ClienteRecyclerAdapter.mySupervisorKey);
@@ -119,12 +123,23 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
                 break;
         }
 
+        if (bitacoraRegistro.getSupervisorResponsibility()) {
+            holder.mRatingBarSupervisorResponsibilityIndicator.setRating(1);
+        }
+
+        // Si es la responsabilidad del Supervisor de Resolverlo, lo podra editar  y resolverlo
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCallback.onAddEdit(bitacoraRegistro);
+                if (bitacoraRegistro.getSupervisorResponsibility()) {
+                    mCallback.onAddEdit(bitacoraRegistro);
+                }else{
+                    Toast.makeText(mContext, "No le corresponde al Supervisor", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
+
 
     }
 
@@ -217,12 +232,14 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
         private TextView mObservacionTextView;
         private TextView mTextViewFecha;
         private LinearLayout mSemaforoView;
+        private RatingBar mRatingBarSupervisorResponsibilityIndicator;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mObservacionTextView = (TextView) itemView.findViewById(R.id.textViewBitacoraRegistroObservacion);
             mSemaforoView = (LinearLayout) itemView.findViewById(R.id.LinearLayoutSemaforoRepresentation);
             mTextViewFecha = (TextView) itemView.findViewById(R.id.textViewFecha);
+            mRatingBarSupervisorResponsibilityIndicator = (RatingBar) itemView.findViewById(R.id.ratingBarSupervisorResponsibilityIndicator);
         }
     }
 

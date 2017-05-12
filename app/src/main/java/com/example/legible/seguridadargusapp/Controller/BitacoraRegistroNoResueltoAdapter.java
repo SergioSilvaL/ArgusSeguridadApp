@@ -1,5 +1,6 @@
 package com.example.legible.seguridadargusapp.Controller;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,11 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.legible.seguridadargusapp.Model.ObjectModel.BitacoraRegistro;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.DatePost;
 import com.example.legible.seguridadargusapp.R;
+import com.example.legible.seguridadargusapp.View.Activity.BitacoraRegistroActivity;
+import com.example.legible.seguridadargusapp.View.Activity.GuardiaSignatureActivity;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,9 +36,11 @@ public class BitacoraRegistroNoResueltoAdapter
     private Callback mCallback;
     private List<BitacoraRegistro> mRegistroList;
     private DatabaseReference mBitacoraRegistroNRref;
+    private Context mContext;
 
-    public BitacoraRegistroNoResueltoAdapter(Callback callback){
+    public BitacoraRegistroNoResueltoAdapter(Callback callback, Context context){
         mCallback  = callback;
+        mContext = context;
         mRegistroList = new ArrayList<>();
         mBitacoraRegistroNRref = FirebaseDatabase.getInstance().getReference()
                 .child("Argus")
@@ -69,12 +76,24 @@ public class BitacoraRegistroNoResueltoAdapter
                 break;
         }
 
+
+        if (bitacoraRegistro.getSupervisorResponsibility()) {
+            holder.mRatingBarSupervisorResponsibilityIndicator.setRating(1);
+        }
+
+        // Si es la responsabilidad del Supervisor de Resolverlo, lo podra editar  y resolverlo
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCallback.onEdit(bitacoraRegistro);
+                if (bitacoraRegistro.getSupervisorResponsibility()) {
+                    mCallback.onEdit(bitacoraRegistro);
+                }else{
+                    Toast.makeText(mContext, "No le corresponde al Supervisor", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
+
     }
 
     @Override
@@ -110,14 +129,16 @@ public class BitacoraRegistroNoResueltoAdapter
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mObservacionTextView;
-        private LinearLayout mSemaforoView;
         private TextView mTextViewFecha;
+        private LinearLayout mSemaforoView;
+        private RatingBar mRatingBarSupervisorResponsibilityIndicator;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mObservacionTextView = (TextView) itemView.findViewById(R.id.textViewBitacoraRegistroObservacion);
             mSemaforoView = (LinearLayout) itemView.findViewById(R.id.LinearLayoutSemaforoRepresentation);
             mTextViewFecha = (TextView) itemView.findViewById(R.id.textViewFecha);
+            mRatingBarSupervisorResponsibilityIndicator = (RatingBar) itemView.findViewById(R.id.ratingBarSupervisorResponsibilityIndicator);
         }
     }
 

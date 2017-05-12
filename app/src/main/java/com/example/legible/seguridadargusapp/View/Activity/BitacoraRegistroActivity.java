@@ -41,13 +41,13 @@ public class BitacoraRegistroActivity extends AppCompatActivity implements Bitac
             }
         });
 
-        mBitacoraRegistroAdapter = new BitacoraRegistroAdapter(this);
+        mBitacoraRegistroAdapter = new BitacoraRegistroAdapter(this, this);
         RecyclerView recyclerviewBitacoraRegistro = (RecyclerView) findViewById(R.id.recyclerViewBitacoraRegistro);
         recyclerviewBitacoraRegistro.setLayoutManager(new LinearLayoutManager(this));
         recyclerviewBitacoraRegistro.setHasFixedSize(true);
         recyclerviewBitacoraRegistro.setAdapter(mBitacoraRegistroAdapter);
 
-        mBitacoraRegistroNoResueltoAdapter = new BitacoraRegistroNoResueltoAdapter(this);
+        mBitacoraRegistroNoResueltoAdapter = new BitacoraRegistroNoResueltoAdapter(this, this);
         RecyclerView recyclerviewBitacoraRegistroNoResuelto = (RecyclerView) findViewById(R.id.recyclerViewBitacoraRegistroNoResuelto);
         recyclerviewBitacoraRegistroNoResuelto.setLayoutManager(new LinearLayoutManager(this));
         recyclerviewBitacoraRegistroNoResuelto.setHasFixedSize(true);
