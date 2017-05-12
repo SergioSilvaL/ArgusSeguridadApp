@@ -1,5 +1,6 @@
 package com.example.legible.seguridadargusapp.View.Activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
@@ -42,23 +43,23 @@ import java.util.Map;
 
 public class GuardiaSignatureActivity extends AppCompatActivity {
 
-    FrameLayout viewSignaturePad;
-    LinearLayout viewNoAsistioInput, viewHourController;
-    CheckBox checkBoxCF;
-    boolean isConfirmarInasistencia = false;
-    SignaturePad signaturePad;
-    Button saveButton, clearButton, cancelButton, restarHoraButtonController, sumarHoraButtonController;
-    EditText editTextObservacion;
-    TextView textViewCurrentGuardiaName, textViewCurrentHour;
+    private FrameLayout viewSignaturePad;
+    private LinearLayout viewNoAsistioInput, viewHourController;
+    private CheckBox checkBoxCF;
+    private boolean isConfirmarInasistencia = false;
+    private SignaturePad signaturePad;
+    private Button saveButton, clearButton, cancelButton, restarHoraButtonController, sumarHoraButtonController;
+    private EditText editTextObservacion;
+    private TextView textViewCurrentGuardiaName, textViewCurrentHour;
+    private ProgressDialog progressDialog;
+
 
     //Reference for Bitacora
-    Boolean dobleTurno = false;
-    Boolean cubreDescanso = false;
-    Boolean asistio = true;
-    Boolean horasExtra = false;
+    private Boolean dobleTurno = false;
+    private Boolean cubreDescanso = false;
+    private Boolean asistio = true;
+    private Boolean horasExtra = false;
     private long hourTotalStatus = 0;
-
-
 
 
     String turno, guardiaNombre,guardiaKey,guardiaFirma;
@@ -73,19 +74,30 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
     // Database References
 
     DatabaseReference mRefBitacora =
-            FirebaseDatabase.getInstance().getReference().child("Argus").child("Bitacora");
+            FirebaseDatabase.getInstance().getReference()
+                    .child("Argus")
+                    .child("Bitacora");
 
     private DatabaseReference mBitacoraRegistroRef =
-            FirebaseDatabase.getInstance().getReference().child("Argus").child("BitacoraRegistro").child(new DatePost().getDateKey()).child(ClienteRecyclerAdapter.mySupervisorKey);
+            FirebaseDatabase.getInstance().getReference()
+                    .child("Argus")
+                    .child("BitacoraRegistro")
+                    .child(new DatePost().getDateKey())
+                    .child(ClienteRecyclerAdapter.mySupervisorKey);
 
     private DatabaseReference mBitacoraFechaRef =
-            FirebaseDatabase.getInstance().getReference().child("Argus").child("Bitacora").child(new DatePost().getDateKey());
+            FirebaseDatabase.getInstance().getReference()
+                    .child("Argus")
+                    .child("Bitacora")
+                    .child(new DatePost().getDateKey());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setXmlViews();
+
+        createProgressDialog();
 
         //change screen orientation to landscape mode
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -164,7 +176,8 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               uploadContent();
+                progressDialog.show();
+                uploadContent();
             }
         });
 
@@ -243,7 +256,9 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 //Handle unsuccesful uploads
-                Log.v("GuadriaSignature","OnFailure" );
+                progressDialog.dismiss();
+                FirebaseErrorMessageShow(e.toString());
+                Log.v(TAG,"OnFailure" + e.toString() );
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -256,6 +271,8 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                 setDownLoadUrlOnGuardiaFirmaOrGuardiaFirmaExtra(taskSnapshot);
 
                 pushData();
+
+                progressDialog.dismiss();
 
                 Intent resultIntent = new Intent();
 
@@ -395,8 +412,6 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
 
         }
     }
-
-
 
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
@@ -557,6 +572,8 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
         @Override
         public void onCancelled(DatabaseError databaseError) {
 
+            progressDialog.dismiss();
+            FirebaseErrorMessageShow(databaseError.toString());
         }
     }
 
@@ -570,8 +587,20 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
         @Override
         public void onCancelled(DatabaseError databaseError) {
 
+            progressDialog.dismiss();
+            FirebaseErrorMessageShow(databaseError.toString());
         }
+    }
 
+    private void FirebaseErrorMessageShow(String e){
+        Toast.makeText(this, e, Toast.LENGTH_LONG).show();
+    }
+
+    private void createProgressDialog(){
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("CARGANDO...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
     }
 
 }
