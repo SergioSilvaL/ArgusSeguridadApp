@@ -78,11 +78,10 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     .child("Argus")
                     .child("Bitacora");
 
-    private DatabaseReference mBitacoraRegistroRef =
+    private DatabaseReference mBitacoraRegistroNRRef =
             FirebaseDatabase.getInstance().getReference()
                     .child("Argus")
-                    .child("BitacoraRegistro")
-                    .child(new DatePost().getDateKey())
+                    .child("BitacoraRegistroNoResuelto")
                     .child(ClienteRecyclerAdapter.mySupervisorKey);
 
     private DatabaseReference mBitacoraFechaRef =
@@ -391,12 +390,9 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                 referenceNot.child("NotificacionTmp").push().setValue(notificacion);
                 referenceNot.child("Notificacion").push().setValue(notificacion);
 
-                // Enviar Confirmacion de asistencia bitacora
-                mBitacoraRegistroRef = FirebaseDatabase.getInstance().getReference().child("Argus")
-                        .child("BitacoraRegistro").child(new DatePost().getDateKey()).child(ClienteRecyclerAdapter.mySupervisorKey);
+                mBitacoraRegistroNRRef.child(new DatePost().getTimeCompletetKey()).setValue(new BitacoraRegistro("Confirmacion de Inasistencia : " + observacion, 3, ClienteRecyclerAdapter.mySupervisor, ClienteRecyclerAdapter.myZona, new DatePost().get24HourFormat()));
 
-                mBitacoraRegistroRef.push().setValue(new BitacoraRegistro("Confirmacion de Inasistencia : "+ observacion, 1, ClienteRecyclerAdapter.mySupervisor, ClienteRecyclerAdapter.myZona, new DatePost().get24HourFormat()));
-
+                updateBitacoraRegistroNRSupervisorInfo(ClienteRecyclerAdapter.mySupervisor);
 
             }
 
@@ -601,6 +597,12 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
         progressDialog.setMessage("CARGANDO...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
+    }
+
+    private void updateBitacoraRegistroNRSupervisorInfo(String supervisor){
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("/supervisor", supervisor);
+        mBitacoraRegistroNRRef.updateChildren(childUpdates);
     }
 
 }

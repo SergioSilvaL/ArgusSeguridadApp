@@ -21,6 +21,9 @@ import com.example.legible.seguridadargusapp.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by sergiosilva on 3/8/17.
  */
@@ -43,8 +46,8 @@ public class GuardiaTemporalAddDialogFragment extends DialogFragment{
     private DatabaseReference mNotificationTmpRef =
             FirebaseDatabase.getInstance().getReference().child("Argus").child("NotificacionTmp");
 
-    private DatabaseReference mBitacoraRegistroRef =
-            FirebaseDatabase.getInstance().getReference().child("Argus").child("BitacoraRegistro").child(new DatePost().getDateKey()).child(ClienteRecyclerAdapter.mySupervisorKey);
+    private DatabaseReference mBitacoraRegistroNRRef =
+            FirebaseDatabase.getInstance().getReference().child("Argus").child("BitacoraRegistroNoResuelto").child(ClienteRecyclerAdapter.mySupervisorKey);
 
     public GuardiaTemporalAddDialogFragment(){}
 
@@ -143,10 +146,18 @@ public class GuardiaTemporalAddDialogFragment extends DialogFragment{
         mNotificationTmpRef.child(key).child("informacion").setValue(guardia);
 
         // Todo: Send info to Bitacora
-        mBitacoraRegistroRef.child(key).setValue(new BitacoraRegistro(descripcion, 1, ClienteRecyclerAdapter.mySupervisor, ClienteRecyclerAdapter.myZona, new DatePost().get24HourFormat()));
+        mBitacoraRegistroNRRef.child(new DatePost().getTimeCompletetKey()).setValue(new BitacoraRegistro(descripcion, 3, ClienteRecyclerAdapter.mySupervisor, ClienteRecyclerAdapter.myZona, new DatePost().get24HourFormat()));
+
+        updateBitacoraRegistroNRSupervisorInfo(supervisorNombre);
 
         Toast.makeText(getContext(),"Se envio una solicitud con exito",Toast.LENGTH_LONG).show();
 
+    }
+
+    private void updateBitacoraRegistroNRSupervisorInfo(String supervisor){
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("/supervisor", supervisor);
+        mBitacoraRegistroNRRef.updateChildren(childUpdates);
     }
 }
 
