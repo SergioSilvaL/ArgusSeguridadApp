@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -15,8 +14,6 @@ import android.widget.Toast;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.BitacoraRegistro;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.DatePost;
 import com.example.legible.seguridadargusapp.R;
-import com.example.legible.seguridadargusapp.View.Activity.BitacoraRegistroActivity;
-import com.example.legible.seguridadargusapp.View.Activity.GuardiaSignatureActivity;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,7 +21,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by sergiosilva on 5/9/17.
@@ -134,12 +133,20 @@ public class BitacoraRegistroNoResueltoAdapter
     }
 
     private void add(BitacoraRegistro bitacoraRegistro){
-        mBitacoraRegistroNRref.child(bitacoraRegistro.getKey()).setValue(bitacoraRegistro);
+        mBitacoraRegistroNRref.child(new DatePost().getTimeCompletetKey()).setValue(bitacoraRegistro);
+        updateBitacoraRegistroNRSupervisorInfo(bitacoraRegistro.getSupervisor());
     }
 
     private void remove(BitacoraRegistro bitacoraRegistro) {
         mBitacoraRegistroNRref.child(bitacoraRegistro.getKey()).removeValue();
     }
+
+    private void updateBitacoraRegistroNRSupervisorInfo(String supervisor){
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("/supervisor", supervisor);
+        mBitacoraRegistroNRref.updateChildren(childUpdates);
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mObservacionTextView;
@@ -160,10 +167,14 @@ public class BitacoraRegistroNoResueltoAdapter
     private class BitacoraRegistroNRChildListener implements ChildEventListener {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            BitacoraRegistro registro = dataSnapshot.getValue(BitacoraRegistro.class);
-            registro.setKey(dataSnapshot.getKey());
-            mRegistroList.add(mRegistroList.size(), registro);
-            notifyDataSetChanged();
+
+            // TODO: ADD
+            if (!dataSnapshot.getKey().equals("supervisor")) {
+                BitacoraRegistro registro = dataSnapshot.getValue(BitacoraRegistro.class);
+                registro.setKey(dataSnapshot.getKey());
+                mRegistroList.add(mRegistroList.size(), registro);
+                notifyDataSetChanged();
+            }
         }
 
         @Override

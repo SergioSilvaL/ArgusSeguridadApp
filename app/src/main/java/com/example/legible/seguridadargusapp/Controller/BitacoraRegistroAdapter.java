@@ -38,6 +38,7 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
     private Context mContext;
     private DatabaseReference mBitacoraRegistroRef;
     private DatabaseReference mBitacoraRegistroFechaRef;
+    private DatabaseReference mBitacoraRegistroNRRef;
 
     public BitacoraRegistroAdapter(Callback callback, Context context){
         mCallback = callback;
@@ -46,6 +47,10 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
         mBitacoraRegistroFechaRef = FirebaseDatabase.getInstance().getReference().child("Argus").child("BitacoraRegistro").child(new DatePost().getDateKey());
         mBitacoraRegistroRef = FirebaseDatabase.getInstance().getReference().child("Argus").child("BitacoraRegistro").child(new DatePost().getDateKey()).child(ClienteRecyclerAdapter.mySupervisorKey);
         mBitacoraRegistroRef.addChildEventListener(new bitacoraRegistroChildEventListener());
+        mBitacoraRegistroNRRef = FirebaseDatabase.getInstance().getReference()
+                .child("Argus")
+                .child("BitacoraRegistroNoResuelto")
+                .child(ClienteRecyclerAdapter.mySupervisorKey);
     }
 
     private class bitacoraRegistroChildEventListener implements ChildEventListener {
@@ -158,12 +163,8 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
         if (bitacoraRegistro.getSemaforo()== 1) {
             mBitacoraRegistroRef.child(new DatePost().getTimeCompletetKey()).setValue(bitacoraRegistro);
         }else{
-            DatabaseReference bitacoraRegistroNRRef = FirebaseDatabase.getInstance().getReference()
-                    .child("Argus")
-                    .child("BitacoraRegistroNoResuelto")
-                    .child(ClienteRecyclerAdapter.mySupervisorKey)
-                    .child(new DatePost().getTimeCompletetKey());
-            bitacoraRegistroNRRef.setValue(bitacoraRegistro);
+            mBitacoraRegistroNRRef.child(new DatePost().getTimeCompletetKey()).setValue(bitacoraRegistro);
+            updateBitacoraRegistroNRSupervisorInfo(bitacoraRegistro.getSupervisor());
         }
     }
 
@@ -195,7 +196,7 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
         childUpdates.put("/supervisor", supervisor);
         childUpdates.put("/zona", zona);
         mBitacoraRegistroRef.updateChildren(childUpdates);
-    }
+            }
 
     public void update(BitacoraRegistro bitacoraRegistro, String newObservacion, long newSemaforoStatus){
         addEditNotification(newSemaforoStatus, newObservacion);
@@ -208,16 +209,24 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
         }else{
             // Delete from current List and add to new List;
             // add
-            DatabaseReference bitacoraRegistroNRRef = FirebaseDatabase.getInstance().getReference()
-                    .child("Argus")
-                    .child("BitacoraRegistroNoResuelto")
-                    .child(ClienteRecyclerAdapter.mySupervisorKey)
-                    .child(new DatePost().getTimeCompletetKey());
-            bitacoraRegistroNRRef.setValue(bitacoraRegistro);
+            mBitacoraRegistroNRRef.child(new DatePost().getTimeCompletetKey()).setValue(bitacoraRegistro);
+            // Updates Bitacora Registro No Resuelto Supervisor Reference
+            updateBitacoraRegistroNRSupervisorInfo(bitacoraRegistro.getSupervisor());
 
             // Delete
             remove(bitacoraRegistro);
         }
+    }
+
+    private void updateBitacoraRegistroNRSupervisorInfo(String supervisor){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
+                .child("Argus")
+                .child("BitacoraRegistroNoResuelto")
+                .child(ClienteRecyclerAdapter.mySupervisorKey);
+
+        Map<String, Object> childUpdate = new HashMap<>();
+        childUpdate.put("/supervisor", supervisor);
+        reference.updateChildren(childUpdate);
     }
 
     public void remove(BitacoraRegistro bitacoraRegistro){
