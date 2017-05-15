@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -130,6 +131,8 @@ public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecycler
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
+        Collections.sort(mClient, new CompareServices());
 
         final Cliente currentCliente = mClient.get(position);
 

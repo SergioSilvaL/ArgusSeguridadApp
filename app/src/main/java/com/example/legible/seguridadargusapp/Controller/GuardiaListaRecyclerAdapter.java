@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -221,6 +222,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
             horasExtra = Long.valueOf(myHorasExtra);
         }
 
+        Collections.sort(mGuardiasList, new CompareGuard());
 
         final guardias guardia = mGuardiasList.get(position);
 
