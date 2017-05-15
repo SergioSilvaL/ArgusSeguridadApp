@@ -8,11 +8,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.legible.seguridadargusapp.Model.ObjectModel.Cliente;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.supervisores;
 import com.example.legible.seguridadargusapp.R;
 import com.example.legible.seguridadargusapp.Controller.ClienteRecyclerAdapter;
@@ -24,6 +28,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 
 /**
@@ -154,6 +160,39 @@ public class ClienteFragment extends Fragment {
         getActivity().finish();
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem mSearchMenuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) mSearchMenuItem.getActionView();
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //Perform final Search
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                newText = newText.toLowerCase();
+                ArrayList<Cliente> newList = new ArrayList<>();
+
+                for(Cliente cliente : ClienteRecyclerAdapter.filterClientes){
+                    String name = cliente.getClienteNombre().toLowerCase();
+
+                    if (name.contains(newText)){
+                        newList.add(cliente);
+                    }
+                }
+
+                mAdapter.setFilter(newList);
+                return false;
+            }
+        });
+    }
 }

@@ -30,13 +30,15 @@ import java.util.List;
 public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecyclerAdapter.ViewHolder> {
 
     private Context mContext;
-    private final List<Cliente> mClient;
+    private List<Cliente> mClient;
     public static String myCliente;
     public static String myZona;
     public static String mySupervisor;
     public static String mySupervisorKey;
     //Firebase Reference
     private DatabaseReference mClientRef;
+
+    public static List<Cliente> filterClientes;
 
 
     public ClienteRecyclerAdapter(Context context, String Zona,String supervisor) {
@@ -57,6 +59,14 @@ public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecycler
         myZona = Zona;
         mySupervisor = supervisor;
 
+        filterClientes = mClient;
+
+    }
+
+    public void setFilter(ArrayList<Cliente> newList){
+        mClient = new ArrayList<>();
+        mClient.addAll(newList);
+        notifyDataSetChanged();
     }
 
 
