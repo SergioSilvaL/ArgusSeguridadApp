@@ -31,5 +31,9 @@
 
     <string name="No_Connection_To_Internet">Conexión Inestable a Internet</string>
     <string name="title_activity_consignas">Consignas</string>
-    <string name="title_activity_bitacora_registro">Bitacora    </string>
+    <string name="title_activity_bitacora_registro">Bitacora</string>
+    <string name="GuardiaMoveDialog_Error_Loading_Clients">Error cargando Clientes dentro la base de datos</string>
+    <string name="button_cancelar">Cancelar</string>
+    <string name="button_anadir">Anadir</string>
+    <string name="solicitud_enviada">Su solicitud se ha enviado con exito</string>
 </resources>
