@@ -44,15 +44,16 @@ public class SignInActivity extends AppCompatActivity{
     private ProgressBar progressBar;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseUser firebaseUser;
-
+    //Get Firebase Reference
+    private DatabaseReference mSupervisorDatabaseRef =
+            FirebaseDatabase.getInstance().getReference()
+                    .child("Argus")
+                    .child("supervisores");
     private String mError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // TODO: Eliminate this line of code
-        FirebaseAuth.getInstance().signOut();
 
         //Check to see if user is alreaedy loggedIn
         checkUserAuth();
@@ -218,13 +219,6 @@ public class SignInActivity extends AppCompatActivity{
             Toast.makeText(SignInActivity.this, mError , Toast.LENGTH_LONG).show();
         }
     }
-
-    //Get Firebase Reference
-    private DatabaseReference mSupervisorDatabaseRef =
-            FirebaseDatabase.getInstance().getReference()
-                    .child("Argus")
-                    .child("supervisores");
-
     public void checkSupervisor(){
 
 
@@ -273,8 +267,6 @@ public class SignInActivity extends AppCompatActivity{
 
 
     }
-
-
     private boolean isConnectedToInternet() {
 
 
