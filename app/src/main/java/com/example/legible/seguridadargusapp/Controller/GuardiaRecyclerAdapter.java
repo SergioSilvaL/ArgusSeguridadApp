@@ -1,6 +1,8 @@
 package com.example.legible.seguridadargusapp.Controller;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,8 @@ import android.widget.TextView;
 
 import com.example.legible.seguridadargusapp.Model.ObjectModel.guardias;
 import com.example.legible.seguridadargusapp.R;
+import com.example.legible.seguridadargusapp.View.DialogFragment.GuardiaInfoDialogFragment;
+import com.example.legible.seguridadargusapp.View.DialogFragment.GuardiaMoveDialogFragment;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,13 +32,15 @@ public class GuardiaRecyclerAdapter extends RecyclerView.Adapter<GuardiaRecycler
 
     private Context mContext;
     private List<guardias> mGuardia;
+    private android.support.v4.app.FragmentManager fm;
 
     private DatabaseReference mGuardiasRef;
 
 
     public static List<guardias> filterGuardias;
 
-    public GuardiaRecyclerAdapter(Context context){
+    public GuardiaRecyclerAdapter(Context context, android.support.v4.app.FragmentManager fm){
+        this.fm = fm;
         mGuardia =  new ArrayList<>();
         mContext = context;
 
@@ -69,8 +75,12 @@ public class GuardiaRecyclerAdapter extends RecyclerView.Adapter<GuardiaRecycler
                 }
             }
 
-            if (bandera == false){
+                                // Vertifies that all guards inside the list are available(Disponible)
+            if (bandera == false && currentGuardia.isUsuarioDisponible()){
+
+                currentGuardia.setUsuarioKey(dataSnapshot.getKey());
                 mGuardia.add(0, currentGuardia);
+
             }
 
             notifyDataSetChanged();
@@ -97,9 +107,6 @@ public class GuardiaRecyclerAdapter extends RecyclerView.Adapter<GuardiaRecycler
         }
     }
 
-
-
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -120,6 +127,61 @@ public class GuardiaRecyclerAdapter extends RecyclerView.Adapter<GuardiaRecycler
 
         holder.bindToView(currentGuardia);
 
+
+        // Makes Cards Clickable
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showGuardiaOptionsMenu(currentGuardia.getUsuarioKey(), currentGuardia.getUsuarioNombre());
+            }
+        });
+
+    }
+
+    public void showGuardiaOptionsMenu(final String key,final String guardiaNombre){
+
+        final String options[] = {"Detalles", "Mover"};
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+        dialog.setTitle("Opciones");
+        dialog.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case 0 :
+                        // Detallles;
+                        showGuardiaInfoDialogFragment(key);
+                        break;
+
+                    case 1 :
+                        //Mover
+                        showMoveGuardiaDialogFragment(key,guardiaNombre);
+
+                        break;
+                    default:
+                        dialog.dismiss();
+                }
+            }
+        });
+
+        dialog.show();
+
+    }
+
+    public void showGuardiaInfoDialogFragment(String guardiaRef){
+
+        GuardiaInfoDialogFragment df = GuardiaInfoDialogFragment.newInstance(guardiaRef);
+        df.show(fm,"fragment_guardia_info");
+    }
+
+    public void showMoveGuardiaDialogFragment(String key,String guardiaNombre){
+        GuardiaMoveDialogFragment df = GuardiaMoveDialogFragment.newInstance(
+                null,
+                ClienteRecyclerAdapter.mySupervisor,
+                key,
+                guardiaNombre);
+
+        df.show(fm,"fragment_guardia_move");
     }
 
     @Override

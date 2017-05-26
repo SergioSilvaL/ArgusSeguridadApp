@@ -49,7 +49,7 @@ public class GuardiaFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
 
         //Create the Adapter
-        mAdapter = new GuardiaRecyclerAdapter(this.getContext());
+        mAdapter = new GuardiaRecyclerAdapter(this.getContext(), getFragmentManager());
 
         //Binding
         recyclerView.setAdapter(mAdapter);
