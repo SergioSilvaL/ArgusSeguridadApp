@@ -13,9 +13,11 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.legible.seguridadargusapp.Controller.ClienteRecyclerAdapter;
+import com.example.legible.seguridadargusapp.Controller.GuardiaRecyclerAdapter;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.DatePost;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.GuardiaMoveBasicInfo;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.Notificacion;
+import com.example.legible.seguridadargusapp.Model.ObjectModel.guardias;
 import com.example.legible.seguridadargusapp.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,6 +39,11 @@ public class GuardiaMoveDialogFragment extends DialogFragment{
     private Spinner spinner;
 
     private static final String NOTIFICATION_ACTION = "MG";
+
+    private guardias currentGuardia;
+
+    private DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("Argus");
+
 
     // Firebase Reference(s)
 
@@ -64,7 +71,7 @@ public class GuardiaMoveDialogFragment extends DialogFragment{
     // Since Fragments need an empty constructor, if you wish to add parameters, you'll need to use newInstance
 
     public static GuardiaMoveDialogFragment newInstance(
-            String cliente,String supervisor,String guardiaKey,String guardiaNombre){
+            String clienteActual, String supervisor,String guardiaKey,String guardiaNombre){
 
         // Instanciate the Object
         GuardiaMoveDialogFragment fragment = new GuardiaMoveDialogFragment();
@@ -74,7 +81,7 @@ public class GuardiaMoveDialogFragment extends DialogFragment{
 
         // Save the components for later use
         args.putString("supervisorNombre",supervisor);
-        args.putString("clienteNombre",cliente);
+        args.putString("clienteNombre",clienteActual);
         args.putString("guardiaKey",guardiaKey);
         args.putString("guardiaNombre",guardiaNombre);
 
@@ -111,11 +118,8 @@ public class GuardiaMoveDialogFragment extends DialogFragment{
                 // Uploads the details handeled on the fragment
                 uploadData();
 
-                // TODO: Adds Guard to the new Client
-
-
-                // TODO: Deletes Guard inside the current Client
-
+                // Move the current Guard to the new Client
+                moveGuardiaToNewClient();
 
             }
         });
@@ -129,6 +133,44 @@ public class GuardiaMoveDialogFragment extends DialogFragment{
         });
 
         return builder.create();
+    }
+
+    // TODO: Move Guardia first then eliminate him
+
+    private void moveGuardiaToNewClient() {
+
+        Log.v(TAG, "Current Guardia Key is " + getArguments().getString("guardiaKey"));
+
+
+        // TODO Extract the object Info
+
+        /*
+          1.1 Extraer Informacion del Cliente
+        * 1. Si el usuario fue movido dentro del contexto de un cliente se extrai
+        * 2. Si el usuario fue movido dentro del fragmento de Guardias se extrai desde otro Base de datos
+        * 3. Sabemos que si pasa null como cliente significa que no tiene cliente asignado
+        * 4. Ya que extraemos el guardia y sus datos respectivmos procedemos a eliminarlos
+        * */
+
+
+        // No tiene Cliente Asignado
+        if (getArguments().getString("clienteNombre")== null){
+
+            mRef = mRef.child("guardias")
+                    .child(getArguments().getString("guardiaKey"));
+
+            mRef.addListenerForSingleValueEvent(new mRefListener());
+
+        }else{// Cliente asignado
+
+            mRef = mRef.child("Clientes")
+                    .child(getArguments().getString("clienteNombre"))
+                    .child("clienteGuardias")
+                    .child(getArguments().getString("guardiaKey"));
+
+            mRef.addListenerForSingleValueEvent(new mRefListener());
+        }
+
     }
 
     private void uploadData(){
@@ -163,12 +205,14 @@ public class GuardiaMoveDialogFragment extends DialogFragment{
         mRefTmpNofication.child(key).setValue(notificacion);
         mRefTmpNofication.child(key).child("informacion").setValue(guardiaMoveBasicInfo);
 
+        // TODO: Add FullTime key to Object
+
         // Bitacora Registro value set
         mBitacoraRegistroRef.child(key).setValue(notificacion);
         mBitacoraRegistroRef.child(key).child("informacion").setValue(guardiaMoveBasicInfo);
 
         // Demonstrates that the data uploaded was succes.
-        Toast.makeText(getContext(), R.string.solicitud_enviada,Toast.LENGTH_LONG).show();
+        //Toast.makeText(getContext(), R.string.solicitud_enviada,Toast.LENGTH_LONG).show();
 
 
     }
@@ -191,12 +235,12 @@ public class GuardiaMoveDialogFragment extends DialogFragment{
                     String Cliente = ds.child("clienteNombre").getValue(String.class);
 
                     //  Makes sure the current client doesn't get included inside the list.
-                    if (!Cliente.equals(ClienteRecyclerAdapter.myCliente)){
+                    //if (!Cliente.equals(getArguments().getString("clienteNombre"))) {
 
                         // Adds the Client inside list of Clientes.
                         clientes.add(Cliente);
-                    }
 
+                    //}
 
                 }
 
@@ -213,13 +257,65 @@ public class GuardiaMoveDialogFragment extends DialogFragment{
 
                 // Firebase Error
                 Log.e(TAG, databaseError.toString());
-                Toast.makeText(
-                        GuardiaMoveDialogFragment.this.getContext(),
-                        R.string.GuardiaMoveDialog_Error_Loading_Clients,
-                        Toast.LENGTH_LONG)
-                        .show();
+                showFirebaseErrorToast(String.valueOf(R.string.GuardiaMoveDialog_Error_Loading_Clients));
 
             }
         });
+    }
+
+    private void showFirebaseErrorToast(String message){
+
+        // Displays a toast which will notify the user there was a firebas network error
+        Toast.makeText(
+                GuardiaMoveDialogFragment.this.getContext(),
+                message,
+                Toast.LENGTH_LONG)
+                .show();
+    }
+
+    private class mRefListener implements ValueEventListener {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+
+            // Get User Info
+            currentGuardia = dataSnapshot.getValue(guardias.class);
+
+            // If it doesn't have a client asisgned it doesn't get removed
+            if (getArguments().getString("clienteNombre")!= null) {
+                remove(dataSnapshot);
+            }else{
+                // Updates the current status to not available inside Current Guard and updates it
+                currentGuardia.setUsuarioDisponible(false);
+                mRef.setValue(currentGuardia);
+            }
+
+            add();
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    }
+
+    private void add(){
+
+        DatabaseReference mClienteRef =
+                FirebaseDatabase
+                .getInstance()
+                .getReference()
+                .child("Argus")
+                .child("Clientes")
+                .child(spinner.getSelectedItem().toString())// Replace with new cliente
+                .child("clienteGuardias");
+
+        mClienteRef.child(getArguments().getString("guardiaKey")).setValue(currentGuardia);
+
+
+    }
+
+    private void remove(DataSnapshot dataSnapshot){
+        dataSnapshot.getRef().removeValue();
     }
 }

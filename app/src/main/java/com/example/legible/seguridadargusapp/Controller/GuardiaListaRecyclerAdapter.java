@@ -42,7 +42,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
     public static List<guardias> mGuardiasList;
     private Context mContext;
     private DatabaseReference guardiaListaRef;
-    private String clienteRef;
+    private String clienteActual;
     private android.support.v4.app.FragmentManager fm;
 
     public static String myGuardiaCaptura;
@@ -58,10 +58,10 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
 
 
 
-    public GuardiaListaRecyclerAdapter(Context context, String clienteRef, android.support.v4.app.FragmentManager fm){
+    public GuardiaListaRecyclerAdapter(Context context, String clienteActual, android.support.v4.app.FragmentManager fm){
 
         mGuardiasList =  new ArrayList<>();
-        this.clienteRef = clienteRef;
+        this.clienteActual = clienteActual;
         mContext = context;
         this.fm = fm;
 
@@ -71,7 +71,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
         guardiaListaRef = FirebaseDatabase.getInstance().getReference()
                 .child("Argus")
                 .child("Clientes")
-                .child(clienteRef)
+                .child(clienteActual)
                 .child("clienteGuardias");
 
 
@@ -398,7 +398,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
     }
 
     public void showMoveGuardiaDialogFragment(String key,String guardiaNombre){
-        GuardiaMoveDialogFragment df = GuardiaMoveDialogFragment.newInstance(clienteRef,ClienteRecyclerAdapter.mySupervisor,key,guardiaNombre);
+        GuardiaMoveDialogFragment df = GuardiaMoveDialogFragment.newInstance(clienteActual,ClienteRecyclerAdapter.mySupervisor,key,guardiaNombre);
         df.show(fm,"fragment_guardia_move");
     }
 
