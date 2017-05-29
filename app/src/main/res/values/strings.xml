@@ -37,4 +37,5 @@
     <string name="button_anadir">Anadir</string>
     <string name="solicitud_enviada">Su solicitud se ha enviado con exito</string>
     <string name="firebase_onCanceld_databaseError_message">Error de red</string>
+    <string name="action_tutorial">Tutuorial</string>
 </resources>

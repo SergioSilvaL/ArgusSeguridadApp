@@ -14,6 +14,7 @@ import com.example.legible.seguridadargusapp.Controller.ClienteRecyclerAdapter;
 import com.example.legible.seguridadargusapp.R;
 import com.example.legible.seguridadargusapp.Controller.GuardiaListaRecyclerAdapter;
 import com.example.legible.seguridadargusapp.View.DialogFragment.GuardiaTemporalAddDialogFragment;
+import com.example.legible.seguridadargusapp.View.DialogFragment.TutorialViewDialogFragment;
 
 public class GuardiaListaActivity extends AppCompatActivity {
 
@@ -79,6 +80,10 @@ public class GuardiaListaActivity extends AppCompatActivity {
                 openConsigna();
                 return true;
 
+            case R.id.action_tutorial:
+                openTutorial();
+                return true;
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -94,6 +99,12 @@ public class GuardiaListaActivity extends AppCompatActivity {
         fm = getSupportFragmentManager();
         dialogFragment.show(fm,"fragment_guarida_temporal_add");
 
+    }
+
+    public void openTutorial(){
+        TutorialViewDialogFragment df = new TutorialViewDialogFragment();
+        fm = getSupportFragmentManager();
+        df.show(fm,"dialog_fragment_tutorial");
     }
 
     @Override

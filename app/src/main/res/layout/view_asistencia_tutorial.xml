@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="15dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/asistio"
+            android:id="@+id/imageView3" />
+
+        <TextView
+            android:text="Asistió"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/textView"
+            android:fontFamily="sans-serif"
+            android:textSize="18sp"
+            android:textStyle="normal|bold"
+
+            android:gravity="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/noasistio"
+            />
+
+        <TextView
+            android:text="Inasistencia"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            android:fontFamily="sans-serif"
+            android:textSize="18sp"
+            android:textStyle="normal|bold"
+            android:textAlignment="viewStart"
+            android:gravity="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/dobleturno" />
+
+        <TextView
+            android:text="Doble Turno"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="sans-serif"
+            android:textSize="18sp"
+            android:textStyle="normal|bold"
+
+            android:gravity="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/descansoelaborado"
+            />
+
+        <TextView
+            android:text="Descanso Elaborado"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            android:fontFamily="sans-serif"
+            android:textSize="18sp"
+            android:textStyle="normal|bold"
+            android:gravity="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/horasextra"
+            />
+
+        <TextView
+            android:text="Horas Extra"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            android:fontFamily="sans-serif"
+            android:textSize="18sp"
+            android:textStyle="normal|bold"
+            android:gravity="center" />
+    </LinearLayout>
+
+</LinearLayout>
