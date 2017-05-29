@@ -146,7 +146,7 @@ public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecycler
 
         final Cliente currentCliente = mClient.get(position);
 
-        holder.bindToView(currentCliente);
+        holder.bindToView(currentCliente, position + 1);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,8 +183,9 @@ public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecycler
 
         }
 
-        public void bindToView(Cliente currentCliente) {
-            textViewZonaName.setText(currentCliente.getClienteNombre());
+        public void bindToView(Cliente currentCliente, int position) {
+            // Prints Client with it's Current Position
+            textViewZonaName.setText(position + ". " + currentCliente.getClienteNombre());
         }
     }
 }
