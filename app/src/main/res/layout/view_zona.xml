@@ -3,8 +3,8 @@
                   xmlns:app="http://schemas.android.com/apk/res-auto"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:background="#ddd"
                   android:orientation="vertical"
+                    app:cardBackgroundColor="@android:color/white"
                   android:paddingBottom="8dp"
                   android:paddingLeft="12dp"
                   android:paddingRight="12dp"
@@ -33,14 +33,13 @@
                 <TextView
                     android:id="@+id/textViewZonaName"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/cardview_image"
                     android:paddingBottom="5dp"
-                    android:text="AGUA DE HERMOSILLO"
-                    android:textSize="24sp"
-                    android:layout_alignBottom="@+id/cardview_image"/>
+                    android:text="12. Cubredescansos Zona Sur"
+                    android:textSize="24sp" />
 
                 <!--<TextView-->
                     <!--android:id="@+id/short_description"-->
