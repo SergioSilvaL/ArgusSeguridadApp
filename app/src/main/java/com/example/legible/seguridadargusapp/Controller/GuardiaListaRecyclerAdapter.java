@@ -246,7 +246,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
                 imageDoble = 0;
 
                 if ((guardia.getUsuarioNombre().equals(myGuardiaCaptura) && cubreDescanso)|| guardia.isUsuarioCubreTurno()){
-                    imageDoble = android.R.drawable.presence_online;
+                    imageDoble = R.drawable.descansoelaborado;
                 }
 
                 if (guardia.getUsuarioAsistenciaFecha()!= null) {
@@ -268,7 +268,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
                 imageDoble = 0;
 
                 if ((guardia.getUsuarioNombre().equals(myGuardiaCaptura) && dobleTurno)|| guardia.isUsuarioDobleTurno()){
-                    imageDoble = android.R.drawable.presence_online;
+                    imageDoble = R.drawable.dobleturno;
                 }
 
                 if (guardia.getUsuarioAsistenciaFecha()!= null) {
@@ -289,7 +289,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
                 imageDoble = 0;
 
                 if ((guardia.getUsuarioNombre().equals(myGuardiaCaptura) && (horasExtra>0))|| guardia.getUsuarioHorasExtra()>0){
-                    imageDoble = android.R.drawable.presence_online;
+                    imageDoble = R.drawable.horasextra;
                 }
 
                 if (guardia.getUsuarioAsistenciaFecha()!= null) {
@@ -313,7 +313,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
                 imageDoble = 0;
 
                 if ((guardia.getUsuarioNombre().equals(myGuardiaCaptura) && asistio)|| guardia.isUsuarioAsistio()){
-                    imageDoble = android.R.drawable.presence_online;
+                    imageDoble = R.drawable.asistio;
                 }
 
                 if (guardia.getUsuarioAsistenciaFecha()!= null) {
@@ -324,7 +324,7 @@ public class GuardiaListaRecyclerAdapter extends RecyclerView.Adapter<GuardiaLis
                 }
 
                 if ((guardia.getUsuarioNombre().equals(myGuardiaCaptura) && !asistio)|| !guardia.isUsuarioAsistio()){
-                    imageDoble = android.R.drawable.presence_busy;
+                    imageDoble = R.drawable.noasistio;
 
                     // set the rest of the views to empty
                     holder.asistenciaDobleTurno.setBackgroundResource(0);
