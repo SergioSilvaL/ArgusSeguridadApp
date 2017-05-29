@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.support.v4.app.DialogFragment;
 
+import com.example.legible.seguridadargusapp.R;
+
 
 /**
  * Created by sergiosilva on 5/29/17.
