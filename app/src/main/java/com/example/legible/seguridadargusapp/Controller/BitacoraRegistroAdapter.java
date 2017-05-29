@@ -154,16 +154,23 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
     }
 
     public void add(BitacoraRegistro bitacoraRegistro){
+
         bitacoraRegistro.setHora(new DatePost().get24HourFormat());
 
         updateSupervisorInfo(ClienteRecyclerAdapter.mySupervisor, ClienteRecyclerAdapter.myZona);
         updateFechaInfo();
         addEditNotification(bitacoraRegistro.getSemaforo(), bitacoraRegistro.getObservacion());
 
+        // TODO: NEW
+
+        String key = new DatePost().getTimeCompletetKey();
+
+        bitacoraRegistro.setKey(key);
+
         if (bitacoraRegistro.getSemaforo()== 1) {
-            mBitacoraRegistroRef.child(new DatePost().getTimeCompletetKey()).setValue(bitacoraRegistro);
+            mBitacoraRegistroRef.child(key).setValue(bitacoraRegistro);
         }else{
-            mBitacoraRegistroNRRef.child(new DatePost().getTimeCompletetKey()).setValue(bitacoraRegistro);
+            mBitacoraRegistroNRRef.child(key).setValue(bitacoraRegistro);
             updateBitacoraRegistroNRSupervisorInfo(bitacoraRegistro.getSupervisor());
         }
     }

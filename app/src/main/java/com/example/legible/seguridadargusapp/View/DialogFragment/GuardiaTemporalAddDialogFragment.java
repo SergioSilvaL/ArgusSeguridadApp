@@ -145,8 +145,21 @@ public class GuardiaTemporalAddDialogFragment extends DialogFragment{
         mNotificationTmpRef.child(key).setValue(notificacion);
         mNotificationTmpRef.child(key).child("informacion").setValue(guardia);
 
+        String bitacoraRegistroNRKey = new DatePost().getTimeCompletetKey();
+
+
+
         // Todo: Send info to Bitacora
-        mBitacoraRegistroNRRef.child(new DatePost().getTimeCompletetKey()).setValue(new BitacoraRegistro(descripcion, 3, ClienteRecyclerAdapter.mySupervisor, ClienteRecyclerAdapter.myZona, new DatePost().get24HourFormat()));
+        mBitacoraRegistroNRRef.child(bitacoraRegistroNRKey).setValue(new BitacoraRegistro(
+                descripcion,
+                3,
+                ClienteRecyclerAdapter.mySupervisor,
+                ClienteRecyclerAdapter.myZona,
+                new DatePost().get24HourFormat()));
+
+        // TODO: Update Info to
+        mNotificationTmpRef.child(key).child("bitacoraInformacion")
+                .setValue(new BitacoraRegistro(new DatePost().getDateKey(), ClienteRecyclerAdapter.mySupervisorKey, bitacoraRegistroNRKey));
 
         updateBitacoraRegistroNRSupervisorInfo(supervisorNombre);
 

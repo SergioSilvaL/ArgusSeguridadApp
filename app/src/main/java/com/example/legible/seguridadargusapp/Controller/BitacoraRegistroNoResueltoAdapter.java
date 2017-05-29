@@ -133,7 +133,17 @@ public class BitacoraRegistroNoResueltoAdapter
     }
 
     private void add(BitacoraRegistro bitacoraRegistro){
-        mBitacoraRegistroNRref.child(new DatePost().getTimeCompletetKey()).setValue(bitacoraRegistro);
+
+        // TODO : NEW
+
+        // adds the currrent key to bitacoraRegistro Object
+
+
+        String key = new DatePost().getTimeCompletetKey();
+
+        bitacoraRegistro.setKey(key);
+
+        mBitacoraRegistroNRref.child(key).setValue(bitacoraRegistro);
         updateBitacoraRegistroNRSupervisorInfo(bitacoraRegistro.getSupervisor());
     }
 

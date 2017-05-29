@@ -9,15 +9,23 @@ import com.google.firebase.database.Exclude;
 public class BitacoraRegistro {
     private String hora;
     private String observacion;
+    private String observacionKey;
     private long semaforo;
     private String key;
     private String supervisor;
+    private String supervisorKey;
     private String zona;
     private String dateCreation;
     private String dateCreationKey; // Todo see when creation key really needes to be set
     private Boolean isSupervisorResponsibility;
 
     public BitacoraRegistro(){}
+
+    public BitacoraRegistro(String codigoFecha, String supervisorKey, String observacionKey){
+        dateCreationKey = codigoFecha;
+        this.supervisorKey = supervisorKey;
+        this.observacionKey = observacionKey;
+    }
 
     public BitacoraRegistro(String observacion, long semaforo, String supervisor, String zona, String dateCreation) {
         this.observacion = observacion;
@@ -117,5 +125,21 @@ public class BitacoraRegistro {
 
     public void setSupervisorResponsibility(Boolean supervisorResponsibility) {
         isSupervisorResponsibility = supervisorResponsibility;
+    }
+
+    public String getObservacionKey() {
+        return observacionKey;
+    }
+
+    public void setObservacionKey(String observacionKey) {
+        this.observacionKey = observacionKey;
+    }
+
+    public String getSupervisorKey() {
+        return supervisorKey;
+    }
+
+    public void setSupervisorKey(String supervisorKey) {
+        this.supervisorKey = supervisorKey;
     }
 }
