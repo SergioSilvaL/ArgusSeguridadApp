@@ -4,7 +4,7 @@
     <string name="action_sign_out">Cerrar Sesión</string>
     <string name="action_add_guardia">Agregar Guardia Temporal</string>
     <string name="action_add_incidente">Agregar Incidente</string>
-    <string name="action_bitacora">Eventos</string>
+    <string name="action_bitacora">Bitacora</string>
     <string name="action_consigna">Consigna(s)</string>
 
     <string name="dialog_bitacora_registro_add_title">Añadir Bitacora</string>
@@ -36,4 +36,5 @@
     <string name="button_cancelar">Cancelar</string>
     <string name="button_anadir">Anadir</string>
     <string name="solicitud_enviada">Su solicitud se ha enviado con exito</string>
+    <string name="firebase_onCanceld_databaseError_message">Error de red</string>
 </resources>
