@@ -387,10 +387,25 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                 DatabaseReference referenceNot =
                         FirebaseDatabase.getInstance().getReference().child("Argus");
 
-                referenceNot.child("NotificacionTmp").push().setValue(notificacion);
+                String notificationTmpKey = referenceNot.push().getKey();
+
+                referenceNot.child("NotificacionTmp").child(notificationTmpKey).setValue(notificacion);
                 referenceNot.child("Notificacion").push().setValue(notificacion);
 
-                mBitacoraRegistroNRRef.child(new DatePost().getTimeCompletetKey()).setValue(new BitacoraRegistro("Confirmacion de Inasistencia : " + observacion, 3, ClienteRecyclerAdapter.mySupervisor, ClienteRecyclerAdapter.myZona, new DatePost().get24HourFormat()));
+                String bitacoraRegistroNRKey = new DatePost().getTimeCompletetKey();
+
+                mBitacoraRegistroNRRef.child(bitacoraRegistroNRKey).setValue(new BitacoraRegistro("Confirmacion de Inasistencia : " + observacion, 3, ClienteRecyclerAdapter.mySupervisor, ClienteRecyclerAdapter.myZona, new DatePost().get24HourFormat()));
+
+                // add BitacoraInformacion to Notificacion Tmp for web reference use
+                // TODO: ADD Notification key
+                referenceNot.child("NotificacionTmp")
+                        .child(notificationTmpKey)
+                        .child("bitacoraInformacion")
+                        .setValue(new BitacoraRegistro
+                                (new DatePost().getDateKey(),
+                                        ClienteRecyclerAdapter.mySupervisorKey,
+                                        bitacoraRegistroNRKey));
+
 
                 updateBitacoraRegistroNRSupervisorInfo(ClienteRecyclerAdapter.mySupervisor);
 
@@ -420,6 +435,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     cubreDescanso = false;
                     dobleTurno = false;
                     horasExtra = false;
+                    hourTotalStatus = 0;
                     Toast.makeText(GuardiaSignatureActivity.this,"Asistencia",Toast.LENGTH_SHORT).show();
                     //View(s)
                     viewSignaturePad.setVisibility(View.VISIBLE);
@@ -432,6 +448,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
             case R.id.radioButtonNoAsistio:
                 if (checked)
                     asistio= false;
+                    hourTotalStatus = 0;
                     Toast.makeText(GuardiaSignatureActivity.this,"Inasistencia",Toast.LENGTH_SHORT).show();
                     viewNoAsistioInput.setVisibility(View.VISIBLE);
                     viewSignaturePad.setVisibility(View.GONE);
@@ -446,6 +463,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     asistio =false;
                     dobleTurno = false;
                     horasExtra = false;
+                    hourTotalStatus = 0;
                     Toast.makeText(GuardiaSignatureActivity.this,"Descanzo Laborado",Toast.LENGTH_SHORT).show();
                     viewSignaturePad.setVisibility(View.VISIBLE);
                     viewNoAsistioInput.setVisibility(View.GONE);
@@ -462,6 +480,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     cubreDescanso = false;
                     asistio = false;
                     horasExtra = false;
+                    hourTotalStatus = 0;
                     Toast.makeText(GuardiaSignatureActivity.this,"Doble Turno",Toast.LENGTH_SHORT).show();
                     viewSignaturePad.setVisibility(View.VISIBLE);
                     viewNoAsistioInput.setVisibility(View.GONE);
