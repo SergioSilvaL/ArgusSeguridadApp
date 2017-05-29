@@ -49,7 +49,7 @@ public class GuardiaMoveDialogFragment extends DialogFragment{
 
     // Clients inside database reference
     private DatabaseReference mRefCliente =
-            FirebaseDatabase.getInstance().getReference().child("Argus").child("Clientes");
+            FirebaseDatabase.getInstance().getReference().child("Argus").child("Zonas").child(ClienteRecyclerAdapter.myZona).child("zonaClientes");
 
     // Notification database reference
     private DatabaseReference mRefNotification =
@@ -232,7 +232,7 @@ public class GuardiaMoveDialogFragment extends DialogFragment{
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
 
                     // Gets the property(s) of the client, in this case the clients name.
-                    String Cliente = ds.child("clienteNombre").getValue(String.class);
+                    String Cliente = ds.getKey();
 
                     //  Makes sure the current client doesn't get included inside the list.
                     //if (!Cliente.equals(getArguments().getString("clienteNombre"))) {
