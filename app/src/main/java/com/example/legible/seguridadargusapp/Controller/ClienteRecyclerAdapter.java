@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.legible.seguridadargusapp.Model.ObjectModel.CONSTANTS;
 import com.example.legible.seguridadargusapp.View.Activity.GuardiaListaActivity;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.Cliente;
 import com.example.legible.seguridadargusapp.R;
@@ -51,7 +50,7 @@ public class ClienteRecyclerAdapter extends RecyclerView.Adapter<ClienteRecycler
         mClientRef = FirebaseDatabase.getInstance().getReference()
                 .child("Argus")
                 .child("Zonas")
-                .child(myZona)
+                .child(Zona)
                 .child("zonaClientes");
 
 

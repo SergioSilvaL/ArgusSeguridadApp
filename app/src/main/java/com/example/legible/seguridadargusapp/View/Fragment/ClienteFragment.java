@@ -39,7 +39,21 @@ import java.util.ArrayList;
 public class ClienteFragment extends Fragment {
 
     private ClienteRecyclerAdapter mAdapter;
+    private String zonaSupervisorRef, zonaRef;
+    private RecyclerView recyclerView;
+    private View view;
+    private Context context;
+    //Test it out on here
     private static final String TAG = "ClientFragment";
+
+
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+    //Get Firebase Reference
+    private DatabaseReference mDatabaseReference =
+            FirebaseDatabase.getInstance().getReference()
+                    .child("Argus")
+                    .child("supervisores");
 
     public ClienteFragment() {
         // Required empty public constructor
@@ -52,23 +66,98 @@ public class ClienteFragment extends Fragment {
 
         //Inflates the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_cliente, container, false);
+        view = inflater.inflate(R.layout.fragment_cliente, container, false);
 
-        //Create the Adapter
-        ClienteRecyclerAdapter mAdapter = new ClienteRecyclerAdapter(
-                ClienteFragment.this.getContext(),
-                ClienteRecyclerAdapter.myZona,
-                ClienteRecyclerAdapter.mySupervisor);
+//        //Capture the recyclerView
+//
+//        recyclerView = (RecyclerView)
+//                view.findViewById(R.id.recyclerView);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+//        recyclerView.setHasFixedSize(true);
 
-        RecyclerView recyclerView = (RecyclerView)
-                view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setHasFixedSize(true);
 
-        recyclerView.setAdapter(mAdapter);
+        mDatabaseReference.addListenerForSingleValueEvent(new ZonaReferenceEventListener());
+
+
+        //IF CLIENTES RECYCLERVIEW IS NOT LOADING
+        //REPLACE WITH THIS CODE
+
+//        if (view !=  null){
+//            return view;
+//        }else{
+//
+//            try {
+//                Thread.sleep(2000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            return view;
+//        }
+
 
         return view;
 
+    }
+
+    class ZonaReferenceEventListener implements ValueEventListener{
+
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+
+            boolean isSupervisor = false;
+
+            for(DataSnapshot data: dataSnapshot.getChildren()){
+
+                supervisores supervisor = data.getValue(supervisores.class);
+
+                if(user.getEmail().equals(supervisor.getUsuarioEmail())){
+
+                    isSupervisor = true;
+                    zonaSupervisorRef = supervisor.getUsuarioNombre();
+                    zonaRef = supervisor.getUsuarioZona();
+                    ClienteRecyclerAdapter.mySupervisorKey = data.getKey();
+                    //Create the Adapter
+                    mAdapter = new ClienteRecyclerAdapter(ClienteFragment.this.getContext(), zonaRef, zonaSupervisorRef);
+                    //Binding
+
+                    //Capture the recyclerView
+
+                    recyclerView = (RecyclerView)
+                            view.findViewById(R.id.recyclerView);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                    recyclerView.setHasFixedSize(true);
+
+                    recyclerView.setAdapter(mAdapter);
+
+                    return;
+
+                }
+            }
+
+            if (!isSupervisor){
+                signOut();
+            }
+
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    }
+
+    public void signOut () {
+
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(getActivity(),SignInActivity.class);
+
+        //Todo: String recource
+        Toast.makeText(getContext(),"Error, Solo los Supervisores tiene acceso al Sistema Movil",Toast.LENGTH_LONG).show();
+        startActivity(intent);
+        getActivity().finish();
+
+        getActivity().finish();
     }
 
     @Override

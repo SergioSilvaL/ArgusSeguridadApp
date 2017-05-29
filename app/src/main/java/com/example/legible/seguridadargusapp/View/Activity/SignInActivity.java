@@ -7,8 +7,6 @@ import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -16,24 +14,14 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.legible.seguridadargusapp.Controller.ClienteRecyclerAdapter;
-import com.example.legible.seguridadargusapp.Model.ObjectModel.CONSTANTS;
 import com.example.legible.seguridadargusapp.Model.ObjectModel.FirebaseExceptionConstants;
-import com.example.legible.seguridadargusapp.Model.ObjectModel.supervisores;
 import com.example.legible.seguridadargusapp.R;
-import com.example.legible.seguridadargusapp.View.Fragment.ClienteFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class SignInActivity extends AppCompatActivity{
 
@@ -43,12 +31,7 @@ public class SignInActivity extends AppCompatActivity{
     private Button buttonLogin;
     private ProgressBar progressBar;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
-    FirebaseUser firebaseUser;
-    //Get Firebase Reference
-    private DatabaseReference mSupervisorDatabaseRef =
-            FirebaseDatabase.getInstance().getReference()
-                    .child("Argus")
-                    .child("supervisores");
+
     private String mError;
 
     @Override
@@ -158,12 +141,10 @@ public class SignInActivity extends AppCompatActivity{
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         progressBar.setVisibility(View.GONE);
-
                         if (task.isSuccessful()) {
-
-                            firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                            checkSupervisor();
-
+                            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
                         }
                     }
                 })
@@ -187,6 +168,8 @@ public class SignInActivity extends AppCompatActivity{
                                     ,Toast.LENGTH_LONG).show();
 
                         }
+
+
 
 //                        String inputErrorField = FirebaseExceptionConstants.getFirebaseExceptionConstantsErrorInputField(
 //                                (((FirebaseAuthException) e).getErrorCode()));
@@ -219,54 +202,7 @@ public class SignInActivity extends AppCompatActivity{
             Toast.makeText(SignInActivity.this, mError , Toast.LENGTH_LONG).show();
         }
     }
-    public void checkSupervisor(){
 
-
-
-        mSupervisorDatabaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                boolean isSupervisor = false;
-
-                for (DataSnapshot data: dataSnapshot.getChildren()){
-
-                    supervisores supervisor = data.getValue(supervisores.class);
-
-                    if (firebaseUser.getEmail().equals(supervisor.getUsuarioEmail())){
-
-                        ClienteRecyclerAdapter.mySupervisor = supervisor.getUsuarioNombre();
-                        ClienteRecyclerAdapter.myZona = supervisor.getUsuarioZona();
-                        ClienteRecyclerAdapter.mySupervisorKey = data.getKey();
-
-                        Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-
-                        isSupervisor = true;
-
-
-                    }
-                }
-
-                if (!isSupervisor){
-                    Toast.makeText(
-                            SignInActivity.this,
-                            "Error, Solo supervisores tienen acceso a la Applicacion Movil",
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-
-        });
-
-
-    }
     private boolean isConnectedToInternet() {
 
 
