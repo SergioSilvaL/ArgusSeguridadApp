@@ -33,6 +33,17 @@ public class Notificacion {
     private long semaforo;
     public String observacionKey;
 
+
+    public String getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(String dateCreation) {
+        this.dateCreation = dateCreation;
+    }
+
+    private String dateCreation;
+
     public String getObservacionKey() {
         return observacionKey;
     }

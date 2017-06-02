@@ -156,6 +156,7 @@ public class GuardiaTemporalAddDialogFragment extends DialogFragment{
 
         bitacoraRegistro.setObservacionKey(bitacoraRegistroNRKey);
         bitacoraRegistro.setHora(new DatePost().get24HourFormat());
+        bitacoraRegistro.setDateCreation(new DatePost().getDatePost());
         // Todo: Send info to Bitacora
         mBitacoraRegistroNRRef.child(bitacoraRegistroNRKey).setValue(bitacoraRegistro);
 

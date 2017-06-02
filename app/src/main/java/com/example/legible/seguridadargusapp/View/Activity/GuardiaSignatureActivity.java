@@ -397,6 +397,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                 BitacoraRegistro bitacoraRegistro = new BitacoraRegistro("Confirmacion de Inasistencia : " + observacion, 3, ClienteRecyclerAdapter.mySupervisor, ClienteRecyclerAdapter.myZona, new DatePost().get24HourFormat());
                 bitacoraRegistro.setObservacionKey(bitacoraRegistroNRKey);
                 bitacoraRegistro.setHora(new DatePost().get24HourFormat());
+                bitacoraRegistro.setDateCreation(new DatePost().getDatePost());
                 mBitacoraRegistroNRRef.child(bitacoraRegistroNRKey).setValue(bitacoraRegistro);
 
                 // add BitacoraInformacion to Notificacion Tmp for web reference use

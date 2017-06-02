@@ -222,6 +222,7 @@ public class GuardiaMoveDialogFragment extends DialogFragment{
 
         notificacion.setObservacionKey(timeCompletetKey);
         notificacion.setHora(new DatePost().get24HourFormat());
+        notificacion.setDateCreation(new DatePost().getDatePost());
 
         mBitacoraRegistroNRRef.child(timeCompletetKey).setValue(notificacion);
         mBitacoraRegistroNRRef.child(timeCompletetKey).child("informacion").setValue(guardiaMoveBasicInfo);
