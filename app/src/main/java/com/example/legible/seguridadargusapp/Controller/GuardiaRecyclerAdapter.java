@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,26 +65,33 @@ public class GuardiaRecyclerAdapter extends RecyclerView.Adapter<GuardiaRecycler
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-            guardias currentGuardia =  dataSnapshot.getValue(guardias.class);
+            try {
 
-            boolean bandera = false;
+                guardias currentGuardia = dataSnapshot.getValue(guardias.class);
 
-            if (mGuardia.size()>0){
-                for (guardias guardia : mGuardia){
-                    if (guardia.getUsuarioNombre().equals(currentGuardia.getUsuarioNombre()))
-                        bandera = true;
+                boolean bandera = false;
+
+                if (mGuardia.size() > 0) {
+                    for (guardias guardia : mGuardia) {
+                        if (guardia.getUsuarioNombre().equals(currentGuardia.getUsuarioNombre()))
+                            bandera = true;
+                    }
                 }
+
+                // Vertifies that all guards inside the list are available(Disponible)
+                if (bandera == false && currentGuardia.isUsuarioDisponible()) {
+
+                    currentGuardia.setUsuarioKey(dataSnapshot.getKey());
+                    mGuardia.add(0, currentGuardia);
+
+                }
+
+                notifyDataSetChanged();
+            }catch (Exception e){
+                Log.v("Guardia Listener", e.toString());
             }
 
-                                // Vertifies that all guards inside the list are available(Disponible)
-            if (bandera == false && currentGuardia.isUsuarioDisponible()){
 
-                currentGuardia.setUsuarioKey(dataSnapshot.getKey());
-                mGuardia.add(0, currentGuardia);
-
-            }
-
-            notifyDataSetChanged();
         }
 
         @Override
