@@ -34,7 +34,7 @@ public class TutorialViewDialogFragment extends DialogFragment {
         builder.setView(view);
 
         // data is uploaded when the 'anadir' button is clicked.
-        builder.setPositiveButton(R.string.button_anadir, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();

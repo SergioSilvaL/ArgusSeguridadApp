@@ -87,7 +87,7 @@ public class GuardiaTemporalAddDialogFragment extends DialogFragment{
 
         builder.setView(view);
 
-        builder.setPositiveButton("anadair", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Agregar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
