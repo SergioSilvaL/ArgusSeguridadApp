@@ -8,9 +8,47 @@ public class Notificacion {
 
     public String accion="";
     public String observacion;
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String descripcion;
     public String fecha;
     public String referenceKey;
     public String fechaCodigo;
+    private long semaforo;
+    public String observacionKey;
+
+    public String getObservacionKey() {
+        return observacionKey;
+    }
+
+    public void setObservacionKey(String observacionKey) {
+        this.observacionKey = observacionKey;
+    }
+
+    public boolean getSupervisorResponsibility() {
+        return supervisorResponsibility;
+    }
+
+    public void setSupervisorResponsibility(boolean supervisorResponsibility) {
+        this.supervisorResponsibility = supervisorResponsibility;
+    }
+
+    private boolean supervisorResponsibility;
+
+    public long getSemaforo() {
+        return semaforo;
+    }
+
+    public void setSemaforo(long semaforo) {
+        this.semaforo = semaforo;
+    }
 
     public String getCliente() {
         return cliente;
@@ -50,6 +88,10 @@ public class Notificacion {
         this.accion = accion;
         this.observacion = descripcion;
         this.fecha = fecha;
+        this.semaforo = 3;
+        this.supervisorResponsibility = true;
+        this.descripcion = observacion;
+
     }
 
     public String getAccion() {

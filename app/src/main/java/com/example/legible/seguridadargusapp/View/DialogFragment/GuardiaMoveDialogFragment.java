@@ -208,8 +208,22 @@ public class GuardiaMoveDialogFragment extends DialogFragment{
         // TODO: Add FullTime key to Object
 
         // Bitacora Registro value set
-        mBitacoraRegistroRef.child(key).setValue(notificacion);
-        mBitacoraRegistroRef.child(key).child("informacion").setValue(guardiaMoveBasicInfo);
+
+        // Send to level 3
+
+        // TODO: Move to no Resuelto
+
+        String timeCompletetKey = new DatePost().getTimeCompletetKey();
+
+        DatabaseReference mBitacoraRegistroNRRef =
+                FirebaseDatabase.getInstance().getReference().child("Argus").child("BitacoraRegistroNoResuelto")
+                        .child(ClienteRecyclerAdapter.mySupervisorKey);
+
+
+        notificacion.setObservacionKey(timeCompletetKey);
+
+        mBitacoraRegistroNRRef.child(timeCompletetKey).setValue(notificacion);
+        mBitacoraRegistroNRRef.child(timeCompletetKey).child("informacion").setValue(guardiaMoveBasicInfo);
 
         // Demonstrates that the data uploaded was succes.
         //Toast.makeText(getContext(), R.string.solicitud_enviada,Toast.LENGTH_LONG).show();
