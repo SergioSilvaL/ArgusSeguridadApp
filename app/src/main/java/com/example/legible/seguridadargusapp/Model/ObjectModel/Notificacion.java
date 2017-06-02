@@ -17,6 +17,15 @@ public class Notificacion {
         this.descripcion = descripcion;
     }
 
+    public String getHora() {
+        return Hora;
+    }
+
+    public void setHora(String hora) {
+        Hora = hora;
+    }
+
+    private String Hora;
     public String descripcion;
     public String fecha;
     public String referenceKey;
