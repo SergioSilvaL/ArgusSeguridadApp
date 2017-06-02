@@ -84,14 +84,14 @@
             />
 
         <TextView
-            android:text="Descanso Elaborado"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
 
             android:fontFamily="sans-serif"
             android:textSize="18sp"
             android:textStyle="normal|bold"
-            android:gravity="center" />
+            android:gravity="center"
+            android:text="Descanso Laborado" />
     </LinearLayout>
 
     <LinearLayout

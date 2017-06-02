@@ -464,7 +464,7 @@ public class GuardiaSignatureActivity extends AppCompatActivity {
                     dobleTurno = false;
                     horasExtra = false;
                     hourTotalStatus = 0;
-                    Toast.makeText(GuardiaSignatureActivity.this,"Descanzo Laborado",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GuardiaSignatureActivity.this,"Descanso Laborado",Toast.LENGTH_SHORT).show();
                     viewSignaturePad.setVisibility(View.VISIBLE);
                     viewNoAsistioInput.setVisibility(View.GONE);
                     viewHourController.setVisibility(View.GONE);
