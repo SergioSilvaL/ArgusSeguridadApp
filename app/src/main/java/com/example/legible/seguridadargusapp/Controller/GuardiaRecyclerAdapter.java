@@ -65,7 +65,7 @@ public class GuardiaRecyclerAdapter extends RecyclerView.Adapter<GuardiaRecycler
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-            try {
+            if (!dataSnapshot.getKey().equals("undefined")){
 
                 guardias currentGuardia = dataSnapshot.getValue(guardias.class);
 
@@ -87,8 +87,6 @@ public class GuardiaRecyclerAdapter extends RecyclerView.Adapter<GuardiaRecycler
                 }
 
                 notifyDataSetChanged();
-            }catch (Exception e){
-                Log.v("Guardia Listener", e.toString());
             }
 
 
