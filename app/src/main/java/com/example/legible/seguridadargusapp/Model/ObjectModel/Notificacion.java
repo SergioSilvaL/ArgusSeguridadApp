@@ -93,6 +93,7 @@ public class Notificacion {
         this.observacion = descripcion;
         this.fecha = fecha;
         this.referenceKey = referenceKey;
+        this.descripcion = observacion;
     }
 
     public Notificacion(String accion, String descripcion, String fecha,String fechaCodigo,String referenceKey, String cliente){
@@ -102,6 +103,7 @@ public class Notificacion {
         this.fechaCodigo = fechaCodigo;
         this.referenceKey = referenceKey;
         this.cliente = cliente;
+        this.descripcion = descripcion;
     }
 
     public Notificacion(String accion, String descripcion, String fecha) {

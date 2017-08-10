@@ -71,12 +71,12 @@ public class BitacoraRegistro {
         this.hora = hora;
     }
 
-    public String getObservacion() {
+    public String getDescripcion() {
         return observacion;
     }
 
-    public void setObservacion(String observacion) {
-        this.observacion = observacion;
+    public void setDescripcion(String descripcion) {
+        this.observacion = descripcion;
     }
 
     public long getSemaforo() {

@@ -3,6 +3,7 @@ package com.example.legible.seguridadargusapp.Controller;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,7 @@ public class BitacoraRegistroNoResueltoAdapter
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final BitacoraRegistro bitacoraRegistro = mRegistroList.get(position);
-        holder.mObservacionTextView.setText(bitacoraRegistro.getObservacion());
+        holder.mObservacionTextView.setText(bitacoraRegistro.getDescripcion());
         holder.mTextViewFecha.setText(bitacoraRegistro.getDateCreation());
 
         switch ((int) bitacoraRegistro.getSemaforo()){
@@ -103,10 +104,10 @@ public class BitacoraRegistroNoResueltoAdapter
     public void update(BitacoraRegistro bitacoraRegistro, String newObservacion, long newSemaforoStatus){
 
 
-        if (!bitacoraRegistro.getObservacion().equals(newObservacion) || bitacoraRegistro.getSemaforo()!= newSemaforoStatus) {
+        if (!bitacoraRegistro.getDescripcion().equals(newObservacion) || bitacoraRegistro.getSemaforo()!= newSemaforoStatus) {
 
 
-            bitacoraRegistro.setObservacion(newObservacion);
+            bitacoraRegistro.setDescripcion(newObservacion);
             bitacoraRegistro.setSemaforo(newSemaforoStatus);
 
             remove(bitacoraRegistro);
@@ -121,7 +122,7 @@ public class BitacoraRegistroNoResueltoAdapter
                             .child("BitacoraRegistro")
                             .child(new DatePost().getDateKey())
                             .child(ClienteRecyclerAdapter.mySupervisorKey)
-                            .child(new DatePost().getTimeCompletetKey());
+                            .child(bitacoraRegistro.getObservacionKey());
 
                     bitacoraRegistroNRRef.setValue(bitacoraRegistro);
                 }
@@ -134,12 +135,16 @@ public class BitacoraRegistroNoResueltoAdapter
 
     private void add(BitacoraRegistro bitacoraRegistro){
 
-        // TODO : NEW
+        String key;
 
-        // adds the currrent key to bitacoraRegistro Object
+        if (bitacoraRegistro.getObservacionKey() == null) {
+            key = new DatePost().getTimeCompletetKey();
+        }else{
+            key = bitacoraRegistro.getObservacionKey();
+        }
 
+        bitacoraRegistro.setObservacionKey(key);
 
-        String key = new DatePost().getTimeCompletetKey();
 
         bitacoraRegistro.setKey(key);
 
@@ -179,11 +184,18 @@ public class BitacoraRegistroNoResueltoAdapter
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
             // TODO: ADD
-            if (!dataSnapshot.getKey().equals("supervisor")) {
-                BitacoraRegistro registro = dataSnapshot.getValue(BitacoraRegistro.class);
-                registro.setKey(dataSnapshot.getKey());
-                mRegistroList.add(mRegistroList.size(), registro);
-                notifyDataSetChanged();
+            if (!dataSnapshot.getKey().equals("supervisor") && !dataSnapshot.getKey().equals("fecha")) {
+
+                try {
+                    BitacoraRegistro registro = dataSnapshot.getValue(BitacoraRegistro.class);
+                    registro.setKey(dataSnapshot.getKey());
+                    mRegistroList.add(mRegistroList.size(), registro);
+                    notifyDataSetChanged();
+                }catch (Exception e){
+                    Log.v("BRegistroNoResuelto", e.toString());
+                }
+
+
             }
         }
 

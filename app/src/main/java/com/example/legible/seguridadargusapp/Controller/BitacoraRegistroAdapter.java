@@ -59,7 +59,7 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
 
             if (!dataSnapshot.getKey().equals("supervisor") && !dataSnapshot.getKey().equals("zona")) {
                 BitacoraRegistro registro = dataSnapshot.getValue(BitacoraRegistro.class);
-                if (registro.getObservacion() != null) {
+                if (registro.getDescripcion() != null) {
                     registro.setKey(dataSnapshot.getKey());
                     mRegistro.add(mRegistro.size(), registro);
                     notifyDataSetChanged();
@@ -113,7 +113,7 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
     @Override
     public void onBindViewHolder(BitacoraRegistroAdapter.ViewHolder holder, final int position) {
         final BitacoraRegistro bitacoraRegistro = mRegistro.get(position);
-        holder.mObservacionTextView.setText(bitacoraRegistro.getObservacion());
+        holder.mObservacionTextView.setText(bitacoraRegistro.getDescripcion());
         holder.mTextViewFecha.setText(bitacoraRegistro.getDateCreation());
 
         switch ((int) bitacoraRegistro.getSemaforo()){
@@ -159,17 +159,19 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
 
         updateSupervisorInfo(ClienteRecyclerAdapter.mySupervisor, ClienteRecyclerAdapter.myZona);
         updateFechaInfo();
-        addEditNotification(bitacoraRegistro.getSemaforo(), bitacoraRegistro.getObservacion());
+        addEditNotification(bitacoraRegistro.getSemaforo(), bitacoraRegistro.getDescripcion());
 
         // TODO: NEW
 
         String key = new DatePost().getTimeCompletetKey();
 
         bitacoraRegistro.setKey(key);
+        bitacoraRegistro.setObservacionKey(key);
 
         if (bitacoraRegistro.getSemaforo()== 1) {
             mBitacoraRegistroRef.child(key).setValue(bitacoraRegistro);
         }else{
+            bitacoraRegistro.setObservacionKey(key);
             mBitacoraRegistroNRRef.child(key).setValue(bitacoraRegistro);
             updateBitacoraRegistroNRSupervisorInfo(bitacoraRegistro.getSupervisor());
         }
@@ -209,14 +211,15 @@ public class BitacoraRegistroAdapter extends RecyclerView.Adapter<BitacoraRegist
         addEditNotification(newSemaforoStatus, newObservacion);
 
 
-        bitacoraRegistro.setObservacion(newObservacion);
+        bitacoraRegistro.setDescripcion(newObservacion);
         bitacoraRegistro.setSemaforo(newSemaforoStatus);
         if (newSemaforoStatus==1) {
-            mBitacoraRegistroRef.child(bitacoraRegistro.getKey()).setValue(bitacoraRegistro);
+
+            mBitacoraRegistroRef.child(bitacoraRegistro.getObservacionKey()).setValue(bitacoraRegistro);
         }else{
             // Delete from current List and add to new List;
             // add
-            mBitacoraRegistroNRRef.child(new DatePost().getTimeCompletetKey()).setValue(bitacoraRegistro);
+            mBitacoraRegistroNRRef.child(bitacoraRegistro.getObservacionKey()).setValue(bitacoraRegistro);
             // Updates Bitacora Registro No Resuelto Supervisor Reference
             updateBitacoraRegistroNRSupervisorInfo(bitacoraRegistro.getSupervisor());
 

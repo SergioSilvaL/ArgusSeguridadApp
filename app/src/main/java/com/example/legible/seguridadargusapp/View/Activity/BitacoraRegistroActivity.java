@@ -91,7 +91,7 @@ public class BitacoraRegistroActivity extends AppCompatActivity implements Bitac
 
         if (bitacoraRegistro != null) {
             // pre-populate
-            observacionEditText.setText(bitacoraRegistro.getObservacion());
+            observacionEditText.setText(bitacoraRegistro.getDescripcion());
         }
 
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
