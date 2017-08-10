@@ -33,7 +33,7 @@ public class ConsignasActivity extends AppCompatActivity implements ConsignasAda
         RecyclerView recyclerViewConsignas = (RecyclerView) findViewById(R.id.recyclerViewConsignas);
         recyclerViewConsignas.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewConsignas.setHasFixedSize(true);
-        consignasAdapter = new ConsignasAdapter(this);
+        consignasAdapter = new ConsignasAdapter(this, this);
         recyclerViewConsignas.setAdapter(consignasAdapter);
 
         //Fab Button

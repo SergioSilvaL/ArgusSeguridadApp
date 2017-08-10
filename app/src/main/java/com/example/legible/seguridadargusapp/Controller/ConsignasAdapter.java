@@ -1,13 +1,16 @@
 package com.example.legible.seguridadargusapp.Controller;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.legible.seguridadargusapp.Model.ObjectModel.Consigna;
 import com.example.legible.seguridadargusapp.R;
+import com.example.legible.seguridadargusapp.View.Activity.ConsignasActivity;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,9 +29,10 @@ public class ConsignasAdapter extends RecyclerView.Adapter<ConsignasAdapter.View
     private List<String> mConsignas;
     private Callback mCallback;
     DatabaseReference mConsigaTareaRef;
+    private Context mContext;
 
-    public ConsignasAdapter(Callback callback) {
-
+    public ConsignasAdapter(Callback callback, Context context) {
+        mContext = context;
         mCallback = callback;
         mConsignas = new ArrayList<>();
         mConsigaTareaRef  = FirebaseDatabase.getInstance().getReference().child("Argus").child("Consigna").child(ClienteRecyclerAdapter.myCliente);
@@ -54,12 +58,12 @@ public class ConsignasAdapter extends RecyclerView.Adapter<ConsignasAdapter.View
 
         @Override
         public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+            Toast.makeText(mContext, "Intente  de nuevo", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
-
+            Toast.makeText(mContext, "Intente  de nuevo", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -104,7 +108,7 @@ public class ConsignasAdapter extends RecyclerView.Adapter<ConsignasAdapter.View
     }
 
     public void add(String consigna){
-        mConsigaTareaRef.child(consigna).push().setValue(new Consigna("prueba"));
+        mConsigaTareaRef.child(consigna).push().setValue(new Consigna(""));
     }
 
     public void update(){}
