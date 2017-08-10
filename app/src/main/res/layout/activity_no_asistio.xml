@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_no_asistio"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.legible.seguridadargusapp.View.Activity.Captura.NoAsistioActivity"
+    android:orientation="vertical">
+
+    <include layout="@layout/header"/>
+    <LinearLayout
+        android:id="@+id/viewNoAsistioInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_red_dark"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <CheckBox
+                android:text="Enviar Solicitud de Asistencia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onCheckboxClicked"
+                android:layout_margin="1sp"
+                android:layout_weight="1"
+                android:background="@color/cardview_light_background"
+                android:id="@+id/CheckBoxCI" />
+
+            <EditText
+                android:gravity="top|left"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:inputType="text"
+                android:hint="observación"
+                android:id="@+id/editTxtObservacion"
+                android:layout_weight="0.95"
+                android:layout_margin="1sp"
+                android:background="@color/cardview_light_background" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/capturabase"/>
+
+</LinearLayout>

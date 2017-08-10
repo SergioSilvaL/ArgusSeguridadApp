@@ -55,6 +55,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.legible.seguridadargusapp.View.Activity.GuardiaListaActivity" />
         </activity>
+        <activity android:name=".View.Activity.Captura.NoAsistioActivity"></activity>
+        <activity
+            android:name=".View.Activity.Captura.AsistioActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".View.Activity.Captura.HorasExtraActivity" />
+        <activity android:name=".View.Activity.Captura.DobleTurnoActivity" />
+        <activity android:name=".View.Activity.Captura.CubreDescansoActivity" />
+        <activity android:name=".View.Activity.Captura.TipoCapturaActivity"></activity>
     </application>
 
 </manifest>

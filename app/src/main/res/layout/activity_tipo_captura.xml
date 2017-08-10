@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:id="@+id/activity_tipo_captura"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.legible.seguridadargusapp.View.Activity.Captura.TipoCapturaActivity">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/btnCapturaAsistencia"
+                    android:onClick="capturaClick"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:elevation="4dp"
+                    android:padding="16dp"
+                    android:clickable="true">
+
+                    <ImageView
+
+                        android:src="@drawable/asistio"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="Asistencia"
+                        android:textSize="36sp"
+                        android:layout_gravity="center" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:onClick="capturaClick"
+                    android:id="@+id/btnCapturaInAsistencia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:elevation="4dp"
+                    android:padding="16dp"
+                    android:clickable="true">
+
+                    <ImageView
+
+                        android:src="@drawable/noasistio"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="Inasistencia"
+                        android:textSize="36sp"
+                        android:layout_gravity="center" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:onClick="capturaClick"
+                    android:id="@+id/btnCapturaDobleTurno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:elevation="4dp"
+                    android:padding="16dp"
+                    android:clickable="true">
+
+                    <ImageView
+
+                        android:src="@drawable/dobleturno"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="DobleTurno"
+                        android:textSize="36sp"
+                        android:layout_gravity="center" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:onClick="capturaClick"
+                    android:id="@+id/btnCapturaCubreDescanso"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:elevation="4dp"
+                    android:padding="16dp"
+                    android:clickable="true">
+
+                    <ImageView
+
+                        android:src="@drawable/descansoelaborado"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" />
+
+                    <TextView
+                        android:id="@+id/txtTipoCaptura"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="Cubre Descanso"
+                        android:textSize="36sp"
+                        android:layout_gravity="center" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/btnCapturaHorasExtra"
+                    android:onClick="capturaClick"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:elevation="4dp"
+                    android:padding="16dp"
+                    android:layout_marginTop="5dp"
+                    android:clickable="true">
+
+                    <ImageView
+
+                        android:src="@drawable/horasextra"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="Horas Extra"
+                        android:textSize="36sp"
+                        android:layout_gravity="center" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>
